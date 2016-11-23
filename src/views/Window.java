@@ -15,7 +15,7 @@ public class Window extends JFrame{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocation(50,50);
 		setPreferredSize(new Dimension(620,400));
-		//ssetLayout(new GridLayout(3,1));
+		setLayout(new GridLayout(1,3));
 		add(new Register());
 		
 		pack();
