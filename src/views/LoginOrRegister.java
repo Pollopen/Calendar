@@ -41,13 +41,14 @@ public class LoginOrRegister extends JPanel {
 			if(e.getSource() == loginButton){
 				
 				System.out.println("logged in");
-				
+				setVisible(false);
 				
 			}
 			
 			if(e.getSource() == registerButton){
 				
 				System.out.println("registrerad hej");
+				setVisible(false);
 				
 			}
 		}
