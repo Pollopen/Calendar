@@ -1,5 +1,6 @@
 package views;
 
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,6 +19,8 @@ public class Login extends JPanel {
 	
 	public Login()
 	{
+		
+		setLayout(new GridLayout(6,1));
 		// Login text
 		regHere = new JLabel("Logga in här!", JLabel.CENTER);
 		// Email 

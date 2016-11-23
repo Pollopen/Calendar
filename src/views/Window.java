@@ -8,7 +8,11 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class Window extends JFrame{
+public class Window extends JFrame {
+	
+	public static boolean getLoginStatus = false;
+	public static boolean getRegisterStatus = false;
+	
 	public Window()
 	{
 		super("En ruta");
@@ -16,14 +20,20 @@ public class Window extends JFrame{
 		setLocation(50,50);
 		setPreferredSize(new Dimension(620,400));
 		setLayout(new GridLayout(1,3));
-		add(new LoginOrRegister());
+		
+		add(new LoginOrRegister(getLoginStatus, getRegisterStatus));
+		
+		if(getLoginStatus == true)
+		{
+			add(new Login());
+		}
+		if(getRegisterStatus == true) {
+			add(new Register());
+		} 
+		
 		
 		
 		pack();
 		setVisible(true);
-	
-		
-		
-		
 	}
 }

@@ -9,11 +9,13 @@ import javax.swing.JPanel;
 
 public class LoginOrRegister extends JPanel {
 
+	private boolean gls;
 	private JLabel info;
 	private JButton loginButton, registerButton;
 	
-	public LoginOrRegister()
+	public LoginOrRegister(boolean getLoginStatus,boolean getRegisterStatus)
 	{
+		gls = getLoginStatus;
 		info = new JLabel("Klicka en av knapparna för att gå vidare!", JLabel.CENTER);
 		loginButton = new JButton("Logga in!");
 		registerButton = new JButton("Registrera dig!");
@@ -42,8 +44,9 @@ public class LoginOrRegister extends JPanel {
 				
 				System.out.println("logged in");
 				setVisible(false);
+				gls = true;
 				
-			}
+			} 
 			
 			if(e.getSource() == registerButton){
 				
