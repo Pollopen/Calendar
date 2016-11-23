@@ -11,7 +11,7 @@ public class Controller{
 		//String SQL="insert into user(email,password,fname,sname) values('kevinhedsand@yahoo.se','123','Kevin','Hedsand');";
 		//db.execute(SQL);
 	
-		Object[][]data = db.getData("select *from user");
+		//Object[][]data = db.getData("select *from user");
 
 	}
 
