@@ -4,10 +4,9 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-
-import database.JavaDB;
+import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 public class Window extends JFrame{
 	public Window()
@@ -16,12 +15,14 @@ public class Window extends JFrame{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocation(50,50);
 		setPreferredSize(new Dimension(620,400));
-		setLayout(new GridLayout(1,1));
+		//ssetLayout(new GridLayout(3,1));
+		add(new Register());
+		
 		pack();
 		setVisible(true);
-	}
-	public static void main(String[] args) {
-		new Window();
-
+	
+		
+		
+		
 	}
 }
