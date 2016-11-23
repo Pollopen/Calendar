@@ -16,7 +16,7 @@ public class Window extends JFrame{
 		setLocation(50,50);
 		setPreferredSize(new Dimension(620,400));
 		setLayout(new GridLayout(1,3));
-		add(new Register());
+		add(new LoginOrRegister());
 		
 		pack();
 		setVisible(true);
