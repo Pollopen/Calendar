@@ -1,14 +1,15 @@
 package controller;
 
 import database.JavaDB;
+import views.Window;
 
-public class Program {
+public class Program{
 
 	public static void main(String[] args) {
 	JavaDB db = new JavaDB("localhost","root","","calendar");
-	
-	String SQL="insert into user(email,password,fname,sname) values('kevinhedsand@yahoo.se','123','Kevin','Hedsand');";
-	db.execute(SQL);
+	new Window();
+	//String SQL="insert into user(email,password,fname,sname) values('kevinhedsand@yahoo.se','123','Kevin','Hedsand');";
+	//db.execute(SQL);
 	
 	Object[][]data = db.getData("select *from user");
 	
