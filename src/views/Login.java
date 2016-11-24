@@ -22,7 +22,7 @@ import database.JavaDB;
 
 public class Login extends JPanel {
 	
-	private JLabel  loginHere, emailHere, passHere, regHere;
+	private JLabel  loginLabel, emailLabel, passLabel, regLabel;
 	private JTextField emailField;
 	private JPasswordField passField;
 	private JButton loginButton, registerButton;
@@ -35,17 +35,17 @@ public class Login extends JPanel {
 		this.window = window;
 		//setLayout(new GridLayout(6,1));
 		// Login text
-		loginHere = new JLabel("Logga in här!", JLabel.CENTER);
+		loginLabel = new JLabel("Logga in här!", JLabel.CENTER);
 		// Email 
-		emailHere = new JLabel("Email: ");
+		emailLabel = new JLabel("Email: ");
 		emailField = new JTextField(40);
 		// Password
-		passHere = new JLabel("Lösenord: ");
+		passLabel = new JLabel("Lösenord: ");
 		passField = new JPasswordField(40);
 		// Login button
 		loginButton = new JButton("Logga in!");
 		// Registration
-		regHere = new JLabel("Inget konto? Registrera dig här!", JLabel.CENTER);
+		regLabel = new JLabel("Inget konto? Registrera dig här!", JLabel.CENTER);
 		registerButton = new JButton("Registrera dig!");
 		
 		
@@ -54,13 +54,13 @@ public class Login extends JPanel {
 		loginButton.addActionListener(lForButton);
 		registerButton.addActionListener(lForButton);
 		
-		add(loginHere);
-		add(emailHere);
+		add(loginLabel);
+		add(emailLabel);
 		add(emailField);
-		add(passHere);
+		add(passLabel);
 		add(passField);
 		add(loginButton);
-		add(regHere);
+		add(regLabel);
 		add(registerButton);
 		
 	}
