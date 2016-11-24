@@ -1,5 +1,7 @@
 package object;
 
-public class Event {
+import javax.swing.JPanel;
+
+public class Event extends JPanel {
 
 }
