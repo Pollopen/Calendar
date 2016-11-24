@@ -111,7 +111,7 @@ public class Register extends JPanel {
 					JOptionPane.showMessageDialog(window,
 						    "Tack för att du registrerade dig, "+fname+" "+sname,
 						    "Registrering lyckades!",
-						    JOptionPane.PLAIN_MESSAGE);
+						    JOptionPane.INFORMATION_MESSAGE);
 					
 					window.getLoginPage();
 					
