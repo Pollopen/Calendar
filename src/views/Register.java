@@ -90,7 +90,7 @@ public class Register extends JPanel {
 				String fname = fnameField.getText();
 				String sname = snameField.getText();
 				int pass1Length = pass1.length;
-				int pass2Length = pass1.length;
+				int pass2Length = pass2.length;
 				boolean passwordMatch=true;
 				String hashed="";
 				//password=String.valueOf(pass1);

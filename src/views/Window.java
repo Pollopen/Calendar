@@ -30,7 +30,7 @@ public class Window extends JFrame {
 		add(center);
 		center.removeAll();
 		
-		center.add(new Register());
+		center.add(new Login());
 		center.updateUI();
 		
 		
