@@ -33,10 +33,17 @@ public class Window extends JFrame {
 		setVisible(true);
 	}
 	
-	public void getRegister()
+	public void getRegisterPage()
 	{
 		center.removeAll();
 		center.add(new Register(this));
+		center.updateUI();
+	}
+	
+	public void getLoginPage()
+	{
+		center.removeAll();
+		center.add(new Login(this));
 		center.updateUI();
 	}
 }

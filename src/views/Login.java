@@ -83,7 +83,7 @@ public class Login extends JPanel {
 			
 			if(e.getSource() == registerButton)
 			{
-				window.getRegister();
+				window.getRegisterPage();
 			}
 		
 		}
