@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import org.mindrot.jbcrypt.BCrypt;
 
 import database.JavaDB;
+import object.User;
 
 public class Login extends JPanel {
 	
@@ -24,6 +25,7 @@ public class Login extends JPanel {
 	private JavaDB db = new JavaDB("localhost","root","","calendar");
 	private String loginPassHashed;
 	private Window window;
+	private User user;
 	
 	public Login(Window window)
 	{
@@ -71,14 +73,19 @@ public class Login extends JPanel {
 			if(e.getSource() == loginButton)
 			{
 				String loginEmail = emailField.getText();
-				Object[][]data = db.getData("SELECT * FROM user WHERE email = "+loginEmail+"");
+				Object[][]data = db.getData("select * from user where email = '"+loginEmail+"'");
+				
 				loginPassHashed=(String) data[0][2];	
 				
 				char[] loginPassCandidate = passField.getPassword();
-				if (BCrypt.checkpw(String.valueOf(loginPassCandidate), loginPassHashed))
+				if (BCrypt.checkpw(String.valueOf(loginPassCandidate), loginPassHashed)){
 					System.out.println("It matches");
-				else
+					user = new User(Integer.parseInt((String) data[0][0]), (String) data[0][1], (String) data[0][3], (String) data[0][4],(String) data[0][5]);
+					//user = new user (int,string,string,string);
+					user.getAll();
+				}else{
 					System.out.println("It does not match");
+				}
 			}
 			
 			if(e.getSource() == registerButton)
