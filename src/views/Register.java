@@ -109,7 +109,7 @@ public class Register extends JPanel {
 					db.execute(SQL);
 					
 					JOptionPane.showMessageDialog(window,
-						    "Du är nu registrerad",
+						    "Tack för att du registrerade dig, "+fname+" "+sname,
 						    "Registrering lyckades!",
 						    JOptionPane.PLAIN_MESSAGE);
 					
