@@ -11,10 +11,10 @@ import database.JavaDB;
 
 public class Register extends JPanel {
 	
-	private JLabel regHere, emailLabel, passLabel, passConfLabel, fnameLabel, snameLabel, loginEmailLabel, loginPassLabel;
-	private JTextField emailField, fnameField, snameField, loginEmailField;
-	private JPasswordField  passField, passConfField, loginPassField;
-	private JButton regButton, loginButton;
+	private JLabel regHere, emailLabel, passLabel, passConfLabel, fnameLabel, snameLabel;
+	private JTextField emailField, fnameField, snameField;
+	private JPasswordField  passField, passConfField;
+	private JButton regButton;
 	private JavaDB db = new JavaDB("localhost","root","","calendar");
 	private Window window;
 	
@@ -38,15 +38,8 @@ public class Register extends JPanel {
 		fnameField = new JTextField(40);
 		snameLabel = new JLabel("Efternamn: ");
 		snameField = new JTextField(40);
-		
-		loginEmailLabel = new JLabel("Email: ");
-		loginEmailField = new JTextField(40);
-		loginPassLabel = new JLabel("Lösenord: ");
-		loginPassField = new JPasswordField(40);
-		
 		// Reg button
 		regButton = new JButton("Registrera dig!");
-		loginButton = new JButton("Logga in");
 		
 		ListenForButton lForButton = new ListenForButton();
 		
@@ -54,7 +47,6 @@ public class Register extends JPanel {
 		// occurs on the button
 		
 		regButton.addActionListener(lForButton);
-		loginButton.addActionListener(lForButton);
 		
 		add(regHere);
 		add(emailLabel);
@@ -68,11 +60,6 @@ public class Register extends JPanel {
 		add(snameLabel);
 		add(snameField);
 		add(regButton);
-		add(loginEmailLabel);
-		add(loginEmailField);
-		add(loginPassLabel);
-		add(loginPassField);
-		add(loginButton);
 	}
 	
 
@@ -100,8 +87,6 @@ public class Register extends JPanel {
 				if(pass1Length==pass2Length){
 					for(int i=1; i<=pass1Length; i++){
 						if(pass1[i-1]==pass2[i-1]){
-							
-							//password += pass1[i-1];
 						}else{
 							passwordMatch=false;
 						}
@@ -118,17 +103,6 @@ public class Register extends JPanel {
 					db.execute(SQL);
 				}
 				
-			}
-			if(e.getSource() == loginButton){
-				String loginEmail = loginEmailField.getText();
-				Object[][]data = db.getData("SELECT * FROM user WHERE email = "+loginEmail+"");
-				String loginPassHashed=(String) data[0][2];
-				System.out.println(data[0][2]);
-				char[] loginPassCandidate = loginPassField.getPassword();
-				if (BCrypt.checkpw(String.valueOf(loginPassCandidate), loginPassHashed))
-					System.out.println("It matches");
-				else
-					System.out.println("It does not match");
 			}
 		
 		}
