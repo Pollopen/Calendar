@@ -1,8 +1,3 @@
-
-
-
-
-
 package views;
 
 import java.awt.GridLayout;
