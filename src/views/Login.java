@@ -19,7 +19,6 @@ public class Login extends JPanel {
 	
 	public Login()
 	{
-		
 		//setLayout(new GridLayout(6,1));
 		// Login text
 		loginHere = new JLabel("Logga in här!", JLabel.CENTER);
@@ -60,9 +59,9 @@ public class Login extends JPanel {
 		
 		// Check if the source of the event was the button
 			
-			if(e.getSource() == loginButton){
+			if(e.getSource() == loginButton)
+			{
 				
-			
 			}
 			
 			if(e.getSource() == registerButton)

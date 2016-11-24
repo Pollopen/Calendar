@@ -1,17 +1,15 @@
 package views;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.JPanel;
 
 public class Window extends JFrame {
-	
-	// public static boolean getLoginStatus = false;
-	// public static boolean getRegisterStatus = false;
+
+	private JPanel center;
 	
 	public Window()
 	{
@@ -21,21 +19,29 @@ public class Window extends JFrame {
 		setPreferredSize(new Dimension(620,400));
 		setLayout(new GridLayout(1,3));
 		
-		add(new Login());
+		center = new JPanel();
+		center.setLayout(new GridLayout(1,1));
+		center.setPreferredSize(new Dimension(620,400));
+		center.setBackground(new Color(255,0,0));
+		center.add(new Login());
+		center.setVisible(true);
 		
-		/*
-		if(getLoginStatus == true)
-		{
-			add(new Login());
-		}
-		if(getRegisterStatus == true) {
-			add(new Register());
-		} 
-		*/
 		
+		add(center);
+		center.removeAll();
+		
+		center.add(new Register());
+		center.updateUI();
 		
 		
 		pack();
 		setVisible(true);
+	}
+	
+	public void getRegister()
+	{
+		center.removeAll();
+		center.add(new Register());
+		center.updateUI();
 	}
 }
