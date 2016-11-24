@@ -16,9 +16,11 @@ public class Login extends JPanel {
 	private JTextField emailReg;
 	private JPasswordField passReg;
 	private JButton loginButton, registerButton;
+	private Window window;
 	
-	public Login()
+	public Login(Window window)
 	{
+		this.window = window;
 		//setLayout(new GridLayout(6,1));
 		// Login text
 		loginHere = new JLabel("Logga in här!", JLabel.CENTER);
@@ -66,7 +68,7 @@ public class Login extends JPanel {
 			
 			if(e.getSource() == registerButton)
 			{
-				
+				window.getRegister();
 			}
 		
 		}

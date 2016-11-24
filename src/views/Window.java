@@ -23,15 +23,10 @@ public class Window extends JFrame {
 		center.setLayout(new GridLayout(1,1));
 		center.setPreferredSize(new Dimension(620,400));
 		center.setBackground(new Color(255,0,0));
-		center.add(new Login());
+		center.add(new Login(this));
 		center.setVisible(true);
 		
-		
 		add(center);
-		center.removeAll();
-		
-		center.add(new Register());
-		center.updateUI();
 		
 		
 		pack();
@@ -41,7 +36,7 @@ public class Window extends JFrame {
 	public void getRegister()
 	{
 		center.removeAll();
-		center.add(new Register());
+		center.add(new Register(this));
 		center.updateUI();
 	}
 }

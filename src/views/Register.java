@@ -16,11 +16,13 @@ public class Register extends JPanel {
 	private JPasswordField  passField, passConfField, loginPassField;
 	private JButton regButton, loginButton;
 	private JavaDB db = new JavaDB("localhost","root","","calendar");
+	private Window window;
 	
-	public Register()
+	public Register(Window window)
 	{
-		setLayout(new GridLayout(20,1));
+		this.window = window;
 		
+		setLayout(new GridLayout(20,1));
 		// Stor text at top
 		regHere = new JLabel("Registrera dig här!", JLabel.CENTER);
 		// Email
