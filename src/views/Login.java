@@ -1,8 +1,14 @@
+
+
+
+
+
 package views;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -10,12 +16,18 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import org.mindrot.jbcrypt.BCrypt;
+
+import database.JavaDB;
+
 public class Login extends JPanel {
 	
 	private JLabel  loginHere, emailHere, passHere, regHere;
-	private JTextField emailReg;
-	private JPasswordField passReg;
+	private JTextField emailField;
+	private JPasswordField passField;
 	private JButton loginButton, registerButton;
+	private JavaDB db = new JavaDB("localhost","root","","calendar");
+	private String loginPassHashed;
 	private Window window;
 	
 	public Login(Window window)
@@ -26,10 +38,10 @@ public class Login extends JPanel {
 		loginHere = new JLabel("Logga in här!", JLabel.CENTER);
 		// Email 
 		emailHere = new JLabel("Email: ");
-		emailReg = new JTextField(40);
+		emailField = new JTextField(40);
 		// Password
 		passHere = new JLabel("Lösenord: ");
-		passReg = new JPasswordField(40);
+		passField = new JPasswordField(40);
 		// Login button
 		loginButton = new JButton("Logga in!");
 		// Registration
@@ -44,9 +56,9 @@ public class Login extends JPanel {
 		
 		add(loginHere);
 		add(emailHere);
-		add(emailReg);
+		add(emailField);
 		add(passHere);
-		add(passReg);
+		add(passField);
 		add(loginButton);
 		add(regHere);
 		add(registerButton);
@@ -63,7 +75,15 @@ public class Login extends JPanel {
 			
 			if(e.getSource() == loginButton)
 			{
+				String loginEmail = emailField.getText();
+				Object[][]data = db.getData("SELECT * FROM user WHERE email = "+loginEmail+"");
+				loginPassHashed=(String) data[0][2];	
 				
+				char[] loginPassCandidate = passField.getPassword();
+				if (BCrypt.checkpw(String.valueOf(loginPassCandidate), loginPassHashed))
+					System.out.println("It matches");
+				else
+					System.out.println("It does not match");
 			}
 			
 			if(e.getSource() == registerButton)
