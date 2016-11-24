@@ -11,11 +11,11 @@ import database.JavaDB;
 
 public class Register extends JPanel {
 	
-	JLabel regHere, emailLabel, passLabel, passConfLabel, fnameLabel, snameLabel, loginEmailLabel, loginPassLabel;
-	JTextField emailField, fnameField, snameField, loginEmailField;
-	JPasswordField  passField, passConfField, loginPassField;
-	JButton regButton, loginButton;
-	JavaDB db = new JavaDB("localhost","root","","calendar");
+	private JLabel regHere, emailLabel, passLabel, passConfLabel, fnameLabel, snameLabel, loginEmailLabel, loginPassLabel;
+	private JTextField emailField, fnameField, snameField, loginEmailField;
+	private JPasswordField  passField, passConfField, loginPassField;
+	private JButton regButton, loginButton;
+	private JavaDB db = new JavaDB("localhost","root","","calendar");
 	
 	public Register()
 	{

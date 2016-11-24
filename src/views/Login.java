@@ -12,17 +12,17 @@ import javax.swing.JTextField;
 
 public class Login extends JPanel {
 	
-	private JLabel  regHere, emailHere, passHere;
+	private JLabel  loginHere, emailHere, passHere, regHere;
 	private JTextField emailReg;
 	private JPasswordField passReg;
-	private JButton loginButton;
+	private JButton loginButton, registerButton;
 	
 	public Login()
 	{
 		
-		setLayout(new GridLayout(6,1));
+		//setLayout(new GridLayout(6,1));
 		// Login text
-		regHere = new JLabel("Logga in här!", JLabel.CENTER);
+		loginHere = new JLabel("Logga in här!", JLabel.CENTER);
 		// Email 
 		emailHere = new JLabel("Email: ");
 		emailReg = new JTextField(40);
@@ -31,18 +31,24 @@ public class Login extends JPanel {
 		passReg = new JPasswordField(40);
 		// Login button
 		loginButton = new JButton("Logga in!");
+		// Registration
+		regHere = new JLabel("Inget konto? Registrera dig här!", JLabel.CENTER);
+		registerButton = new JButton("Registrera dig!");
 		
 		
 		ListenForButton lForButton = new ListenForButton();
 		
 		loginButton.addActionListener(lForButton);
+		registerButton.addActionListener(lForButton);
 		
-		add(regHere);
+		add(loginHere);
 		add(emailHere);
 		add(emailReg);
 		add(passHere);
 		add(passReg);
 		add(loginButton);
+		add(regHere);
+		add(registerButton);
 		
 	}
 	
@@ -57,6 +63,11 @@ public class Login extends JPanel {
 			if(e.getSource() == loginButton){
 				
 			
+			}
+			
+			if(e.getSource() == registerButton)
+			{
+				
 			}
 		
 		}

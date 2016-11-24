@@ -10,8 +10,8 @@ import javax.swing.JTextField;
 
 public class Window extends JFrame {
 	
-	public static boolean getLoginStatus = false;
-	public static boolean getRegisterStatus = false;
+	// public static boolean getLoginStatus = false;
+	// public static boolean getRegisterStatus = false;
 	
 	public Window()
 	{
@@ -21,8 +21,9 @@ public class Window extends JFrame {
 		setPreferredSize(new Dimension(620,400));
 		setLayout(new GridLayout(1,3));
 		
-		add(new LoginOrRegister(getLoginStatus, getRegisterStatus));
+		add(new Login());
 		
+		/*
 		if(getLoginStatus == true)
 		{
 			add(new Login());
@@ -30,6 +31,7 @@ public class Window extends JFrame {
 		if(getRegisterStatus == true) {
 			add(new Register());
 		} 
+		*/
 		
 		
 		
