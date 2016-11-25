@@ -31,21 +31,16 @@ package views;
  */ 
 
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.ButtonGroup;
-import javax.swing.JMenuBar;
-import javax.swing.KeyStroke;
-import javax.swing.ImageIcon;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
-import javax.swing.JFrame;
+import javax.swing.JTextArea;
 /*
  * This class exists solely to show you what menus look like.
  * It has no menu-related event handling.
@@ -53,14 +48,19 @@ import javax.swing.JFrame;
 public class MenuList {
     JTextArea output;
     JScrollPane scrollPane;
+    JMenuBar menuBar;
+    JMenu menu, submenu;
+    JMenuItem menuItem, menuLogout;
+    JRadioButtonMenuItem rbMenuItem;
+    JCheckBoxMenuItem cbMenuItem;
+    Window window;
 
-    public JMenuBar createMenuBar() {
-        JMenuBar menuBar;
-        JMenu menu, submenu;
-        JMenuItem menuItem;
-        JRadioButtonMenuItem rbMenuItem;
-        JCheckBoxMenuItem cbMenuItem;
+    public JMenuBar createMenuBar(Window window) {
+    	this.window = window;
 
+        ListenForButton lForButton = new ListenForButton();
+
+        
         //Create the menu bar.
         menuBar = new JMenuBar();
 
@@ -82,8 +82,9 @@ public class MenuList {
         
         menu.addSeparator();
         
-        menuItem = new JMenuItem("Log out");
-        menu.add(menuItem);
+        menuLogout = new JMenuItem("Log out");
+        menu.add(menuLogout);
+        menuLogout.addActionListener(lForButton);
 
         //a submenu
         menu.addSeparator();
@@ -99,4 +100,17 @@ public class MenuList {
 
         return menuBar;
     }
+    private class ListenForButton implements ActionListener {
+
+		// This method is called when an event occurs
+
+		public void actionPerformed(ActionEvent e) {
+
+			// Check if the source of the event was the button
+
+			if (e.getSource() == menuLogout) {
+				window.getLoginPage();
+			}
+		}
+	}
 }

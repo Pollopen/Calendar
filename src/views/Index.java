@@ -19,7 +19,7 @@ public class Index extends JPanel {
 		this.window = window;
 
 		MenuList menu = new MenuList();
-        window.setJMenuBar(menu.createMenuBar());
+        window.setJMenuBar(menu.createMenuBar(window));
 		
 		// Main panel
 		mainPanel = new JPanel();

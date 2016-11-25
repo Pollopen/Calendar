@@ -31,6 +31,7 @@ public class Login extends JPanel {
 	private User user;
 
 	public Login(Window window) {
+		user=null;
 		this.window = window;
 		
 		main = new JPanel();
