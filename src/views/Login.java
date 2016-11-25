@@ -6,8 +6,6 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.Point;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -24,7 +22,7 @@ import database.JavaDB;
 import object.User;
 
 public class Login extends JPanel {
-	
+
 	private JPanel form, main;
 	private JLabel loginLabel, emailLabel, passLabel, regLabel;
 	private JTextField emailField;
@@ -37,106 +35,97 @@ public class Login extends JPanel {
 	private User user;
 
 	public Login(Window window) {
-		user=null;
+		user = null;
 		this.window = window;
-		
+
 		main = new JPanel();
-		main.setPreferredSize(new Dimension(1400,800));
+		main.setPreferredSize(new Dimension(1400, 800));
 		this.add(main);
-		
+
 		form = new JPanel();
 		form.setLayout(new GridBagLayout());
-		form.setPreferredSize(new Dimension(480,700));
+		form.setPreferredSize(new Dimension(480, 700));
 		form.setVisible(true);
 		form.setBorder(BorderFactory.createLineBorder(Color.black));
-		
+
 		main.add(form);
-		
+
 		gbc = new GridBagConstraints();
-		
+
 		// Login text
 		loginLabel = new JLabel("Logga in här!", JLabel.CENTER);
 		loginLabel.setFont(new Font("Serif", Font.PLAIN, 25));
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.insets = new Insets(0,0,10,0);
-		
+		gbc.insets = new Insets(0, 0, 10, 0);
+
 		form.add(loginLabel, gbc);
-		
+
 		// Email
 		emailLabel = new JLabel("Email: ");
 		emailLabel.setFont(new Font("Serif", Font.PLAIN, 20));
 		emailField = new JTextField(30);
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		gbc.insets = new Insets(0,0,10,0);
-		
+		gbc.insets = new Insets(0, 0, 10, 0);
+
 		form.add(emailLabel, gbc);
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 2;
-		gbc.insets = new Insets(0,0,10,0);
-		
+		gbc.insets = new Insets(0, 0, 10, 0);
+
 		form.add(emailField, gbc);
-		
+
 		// Password
 		passLabel = new JLabel("Lösenord: ");
 		passLabel.setFont(new Font("Serif", Font.PLAIN, 20));
 		passField = new JPasswordField(30);
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 3;
-		gbc.insets = new Insets(0,0,10,0);
-		
+		gbc.insets = new Insets(0, 0, 10, 0);
+
 		form.add(passLabel, gbc);
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 4;
-		gbc.insets = new Insets(0,0,10,0);
-		
+		gbc.insets = new Insets(0, 0, 10, 0);
+
 		form.add(passField, gbc);
-		
+
 		// Login button
 		loginButton = new JButton("Logga in!");
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 5;
-		gbc.insets = new Insets(0,0,10,0);
-		
+		gbc.insets = new Insets(0, 0, 10, 0);
+
 		form.add(loginButton, gbc);
-		
-		
-		
+
 		// Registration
 		regLabel = new JLabel("Inget konto? Registrera dig här!", JLabel.CENTER);
 		regLabel.setFont(new Font("Serif", Font.PLAIN, 20));
 		registerButton = new JButton("Registrera dig!");
-		
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 6;
-		gbc.insets = new Insets(0,0,10,0);
-		
+		gbc.insets = new Insets(0, 0, 10, 0);
+
 		form.add(regLabel, gbc);
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 7;
-		gbc.insets = new Insets(0,0,10,0);
-		
+		gbc.insets = new Insets(0, 0, 10, 0);
+
 		form.add(registerButton, gbc);
 
 		ListenForButton lForButton = new ListenForButton();
 
 		loginButton.addActionListener(lForButton);
 		registerButton.addActionListener(lForButton);
-
-		
-		
-		
-		
-	
 
 	}
 
