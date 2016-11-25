@@ -22,6 +22,7 @@ public class Register extends JPanel {
 	private JPasswordField passField, passConfField;
 	private JButton regButton;
 	private JavaDB db = new JavaDB("localhost", "root", "", "calendar");
+	private int user_id;
 	private Window window;
 
 	public Register(Window window) {
@@ -104,6 +105,17 @@ public class Register extends JPanel {
 					hashed = BCrypt.hashpw(String.valueOf(pass1), BCrypt.gensalt());
 					String SQL = "INSERT INTO user(email,password,fname,sname) VALUES('" + email + "','" + hashed
 							+ "','" + fname + "','" + sname + "');";
+
+					db.execute(SQL);
+
+					SQL = "SELECT * FROM user WHERE email = '" + email + "'";
+					Object[][] data = db.getData(SQL);
+
+					user_id = Integer.parseInt((String) data[0][0]);
+
+					SQL = "INSERT INTO calendar(creator_id,name,description,notification) VALUES('" + user_id
+							+ "','Min kalender','Det här är din standard kalender',1);";
+
 					db.execute(SQL);
 
 					JOptionPane.showMessageDialog(window, "Tack för att du registrerade dig, " + fname + " " + sname,
