@@ -44,6 +44,7 @@ public class User {
 		System.out.println(sname);
 		System.out.println(created);
 	}
+
 	public int getId() {
 		return id;
 	}
@@ -75,14 +76,10 @@ public class User {
 	public void setSname(String sname) {
 		this.sname = sname;
 	}
-/*
-	public int getCreated() {
-		return created;
-	}
-
-	public void setCreated(int created) {
-		this.created = created;
-	}
-
-*/
+	/*
+	 * public int getCreated() { return created; }
+	 * 
+	 * public void setCreated(int created) { this.created = created; }
+	 * 
+	 */
 }
