@@ -15,10 +15,11 @@ public class Event extends JPanel {
 	private String created;
 	private String start_time;
 	private String length;
+	private String edited;
 	private boolean notification;
 
 	public Event(int e_id, int cal_id, int create_id, String event_name, String event_location, String event_desc,
-			String event_created, String event_start, String event_length, boolean event_notice) {
+			String event_created, String event_start, String event_length, String event_edited, boolean event_notice) {
 		event_id = e_id;
 		calendar_id = cal_id;
 		creator_id = create_id;
@@ -28,10 +29,8 @@ public class Event extends JPanel {
 		created = event_created;
 		start_time = event_start;
 		length = event_length;
+		edited = event_edited;
 		notification = event_notice;
-		
-		
-
 	}
 
 	public int getEvent_id() {
@@ -112,6 +111,14 @@ public class Event extends JPanel {
 
 	public void setCreated(String created) {
 		this.created = created;
+	}
+
+	public String getEdited() {
+		return edited;
+	}
+
+	public void setEdited(String edited) {
+		this.edited = edited;
 	}
 
 }

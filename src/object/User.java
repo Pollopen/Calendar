@@ -25,16 +25,14 @@ public class User {
 		int numberofresults=data.length;
 		int eventnum;
 		calArray = new Calendar[numberofresults];
-		Object[][]data2 = db.getData("SELECT COUNT(event.event_id) FROM calendar INNER JOIN event ON calendar.cal_id = event.cal_id WHERE calendar.creator_id = 1");
-		eventArray = new Event[Integer.parseInt((String) data2[0][0])];
 		for(int i=0;i<=numberofresults;i++){
 			calArray[i]= new Calendar(Integer.parseInt((String) data[i][0]), Integer.parseInt((String) data[i][1]), (String) data[i][2], (String) data[i][3], (String) data[i][4], (String) data[i][5], Integer.parseInt((String) data[i][6]));
-			Object[][]data3 = db.getData("SELECT * FROM event where cal_id = "+calArray[i].getCal_id());
-			eventnum=data3.length;
-			for(int j=0;j<=eventnum;j++){
-				
-			}
-			
+		}
+		Object[][]data3 = db.getData("SELECT * FROM calendar RIGHT JOIN event ON calendar.cal_id = event.cal_id WHERE calendar.creator_id = "+id);
+		eventnum=data3.length;
+		eventArray = new Event[eventnum];
+		for(int j=0;j<=eventnum;j++){
+			eventArray[j] = new Event(Integer.parseInt((String) data3[j][7]), Integer.parseInt((String) data3[j][8]), Integer.parseInt((String) data3[j][9]), (String) data3[j][10], (String) data3[j][11], (String) data3[j][12], (String) data3[j][13], (String) data3[j][14], (String) data3[j][15], (String) data3[j][16], (boolean) data3[j][17]);
 		}
 	}
 	public void getAll() {
