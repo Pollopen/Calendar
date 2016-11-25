@@ -23,7 +23,7 @@ import object.User;
 
 public class Login extends JPanel {
 
-	private JPanel form, main;
+	private JPanel form, main, padding;
 	private JLabel loginLabel, emailLabel, passLabel, regLabel;
 	private JTextField emailField;
 	private JPasswordField passField;
@@ -38,19 +38,33 @@ public class Login extends JPanel {
 		user = null;
 		this.window = window;
 
+		gbc = new GridBagConstraints();
+
 		main = new JPanel();
 		main.setPreferredSize(new Dimension(1400, 800));
+		main.setLayout(new GridBagLayout());
+
 		this.add(main);
+
+		padding = new JPanel();
+		padding.setPreferredSize(new Dimension(480, 50));
+		padding.setVisible(true);
+
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+
+		main.add(padding, gbc);
 
 		form = new JPanel();
 		form.setLayout(new GridBagLayout());
-		form.setPreferredSize(new Dimension(480, 700));
+		form.setPreferredSize(new Dimension(480, 600));
 		form.setVisible(true);
 		form.setBorder(BorderFactory.createLineBorder(Color.black));
 
-		main.add(form);
+		gbc.gridx = 0;
+		gbc.gridy = 0;
 
-		gbc = new GridBagConstraints();
+		main.add(form, gbc);
 
 		// Login text
 		loginLabel = new JLabel("Logga in här!", JLabel.CENTER);
@@ -65,7 +79,8 @@ public class Login extends JPanel {
 		// Email
 		emailLabel = new JLabel("Email: ");
 		emailLabel.setFont(new Font("Serif", Font.PLAIN, 20));
-		emailField = new JTextField(30);
+		emailField = new JTextField();
+		emailField.setPreferredSize(new Dimension(300, 30));
 
 		gbc.gridx = 0;
 		gbc.gridy = 1;
@@ -82,7 +97,8 @@ public class Login extends JPanel {
 		// Password
 		passLabel = new JLabel("Lösenord: ");
 		passLabel.setFont(new Font("Serif", Font.PLAIN, 20));
-		passField = new JPasswordField(30);
+		passField = new JPasswordField();
+		passField.setPreferredSize(new Dimension(300, 30));
 
 		gbc.gridx = 0;
 		gbc.gridy = 3;
