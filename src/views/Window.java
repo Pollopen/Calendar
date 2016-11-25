@@ -3,6 +3,8 @@ package views;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Point;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,9 +16,14 @@ public class Window extends JFrame {
 	public Window() {
 		super("En ruta");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setLocation(50, 50);
-		setPreferredSize(new Dimension(620, 400));
+		setPreferredSize(new Dimension(1400, 800));
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		Point middle = new Point(screenSize.width / 2, screenSize.height / 2);
+		Point newLocation = new Point(middle.x - (1400 / 2), 
+		                              middle.y - (800 / 2));
+		setLocation(newLocation);
 		setLayout(new GridLayout(1, 3));
+		setResizable(false);
 
 		center = new JPanel();
 		center.setLayout(new GridLayout(1, 1));
@@ -29,6 +36,12 @@ public class Window extends JFrame {
 
 		pack();
 		setVisible(true);
+	}
+	
+	public void getIndexPage() {
+		center.removeAll();
+		center.add(new Index(this));
+		center.updateUI();
 	}
 
 	public void getRegisterPage() {

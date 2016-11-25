@@ -82,6 +82,7 @@ public class Login extends JPanel {
 					// user = new user (int,string,string,string);
 					user.getAll();
 					user.reloadarrays();
+					window.getIndexPage();
 				} else {
 					System.out.println("It does not match");
 				}
