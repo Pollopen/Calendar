@@ -77,7 +77,8 @@ public class Login extends JPanel {
 				char[] loginPassCandidate = passField.getPassword();
 				if (BCrypt.checkpw(String.valueOf(loginPassCandidate), loginPassHashed)) {
 					System.out.println("It matches");
-					user = new User(Integer.parseInt((String) data[0][0]), (String) data[0][1], (String) data[0][3],(String) data[0][4], (String) data[0][5]);
+					user = new User(Integer.parseInt((String) data[0][0]), (String) data[0][1], (String) data[0][3],
+							(String) data[0][4], (String) data[0][5]);
 					// user = new user (int,string,string,string);
 					user.getAll();
 					user.reloadarrays();
