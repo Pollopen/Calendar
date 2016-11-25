@@ -1,9 +1,10 @@
 package views;
 
-import java.awt.GridLayout;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -17,46 +18,100 @@ import database.JavaDB;
 import object.User;
 
 public class Login extends JPanel {
-
+	
+	private JPanel main;
 	private JLabel loginLabel, emailLabel, passLabel, regLabel;
 	private JTextField emailField;
 	private JPasswordField passField;
 	private JButton loginButton, registerButton;
 	private JavaDB db = new JavaDB("localhost", "root", "", "calendar");
 	private String loginPassHashed;
+	private GridBagConstraints gbc;
 	private Window window;
 	private User user;
 
 	public Login(Window window) {
 		this.window = window;
-		// setLayout(new GridLayout(6,1));
+		
+		main = new JPanel();
+		main.setLayout(new GridBagLayout());
+		main.setPreferredSize(new Dimension(1400,800));
+		main.setVisible(true);
+		this.add(main);
+		
+		gbc = new GridBagConstraints();
+		
 		// Login text
 		loginLabel = new JLabel("Logga in här!", JLabel.CENTER);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		
+		main.add(loginLabel, gbc);
+		
 		// Email
 		emailLabel = new JLabel("Email: ");
 		emailField = new JTextField(40);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		
+		main.add(emailLabel, gbc);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		
+		main.add(emailField, gbc);
+		
 		// Password
 		passLabel = new JLabel("Lösenord: ");
 		passField = new JPasswordField(40);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 3;
+		
+		main.add(passLabel, gbc);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 4;
+		
+		main.add(passField, gbc);
+		
 		// Login button
 		loginButton = new JButton("Logga in!");
+		
+		gbc.gridx = 0;
+		gbc.gridy = 5;
+		
+		main.add(loginButton, gbc);
+		
+		
+		
 		// Registration
 		regLabel = new JLabel("Inget konto? Registrera dig här!", JLabel.CENTER);
 		registerButton = new JButton("Registrera dig!");
+		
+		
+		gbc.gridx = 0;
+		gbc.gridy = 6;
+		
+		main.add(regLabel, gbc);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 7;
+		
+		main.add(registerButton, gbc);
 
 		ListenForButton lForButton = new ListenForButton();
 
 		loginButton.addActionListener(lForButton);
 		registerButton.addActionListener(lForButton);
 
-		add(loginLabel);
-		add(emailLabel);
-		add(emailField);
-		add(passLabel);
-		add(passField);
-		add(loginButton);
-		add(regLabel);
-		add(registerButton);
+		
+		
+		
+		
+	
 
 	}
 

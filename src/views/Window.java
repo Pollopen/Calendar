@@ -27,7 +27,7 @@ public class Window extends JFrame {
 
 		center = new JPanel();
 		center.setLayout(new GridLayout(1, 1));
-		center.setPreferredSize(new Dimension(620, 400));
+		center.setPreferredSize(new Dimension(1400, 800));
 		center.setBackground(new Color(255, 0, 0));
 		center.add(new Login(this));
 		center.setVisible(true);
