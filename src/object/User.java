@@ -10,37 +10,46 @@ public class User {
 	String created;
 	Calendar[] calArray;
 	Event[] eventArray;
-	
-	private JavaDB db = new JavaDB("localhost","root","","calendar");
-	
-	public User(int userid, String useremail, String userfname, String usersname, String usercreated){
-		id=userid;
-		email=useremail;
-		fname=userfname;
-		sname=usersname;
-		created=usercreated;
+
+	private JavaDB db = new JavaDB("localhost", "root", "", "calendar");
+
+	public User(int userid, String useremail, String userfname, String usersname, String usercreated) {
+		id = userid;
+		email = useremail;
+		fname = userfname;
+		sname = usersname;
+		created = usercreated;
 	}
-	public void reloadarrays(/*Array for which calendars to ignore*/){
-		Object[][]data = db.getData("select * from Calendar where creator_id = "+id);
-		int numberofresults=data.length;
+
+	public void reloadarrays(/* Array for which calendars to ignore */) {
+		Object[][] data = db.getData("select * from Calendar where creator_id = " + id);
+		int numberofresults = data.length;
 		int eventnum;
 		calArray = new Calendar[numberofresults];
-		for(int i=0;i<=numberofresults;i++){
-			calArray[i]= new Calendar(Integer.parseInt((String) data[i][0]), Integer.parseInt((String) data[i][1]), (String) data[i][2], (String) data[i][3], (String) data[i][4], (String) data[i][5], Integer.parseInt((String) data[i][6]));
+		for (int i = 0; i < numberofresults; i++) {
+			calArray[i] = new Calendar(Integer.parseInt((String) data[i][0]), Integer.parseInt((String) data[i][1]),
+					(String) data[i][2], (String) data[i][3], (String) data[i][4], (String) data[i][5],
+					Integer.parseInt((String) data[i][6]));
 		}
-		Object[][]data3 = db.getData("SELECT * FROM calendar RIGHT JOIN event ON calendar.cal_id = event.cal_id WHERE calendar.creator_id = "+id);
-		eventnum=data3.length;
+		Object[][] data3 = db.getData(
+				"SELECT * FROM calendar RIGHT JOIN event ON calendar.cal_id = event.cal_id WHERE calendar.creator_id = "
+						+ id);
+		eventnum = data3.length;
 		eventArray = new Event[eventnum];
-		for(int j=0;j<=eventnum;j++){
-			eventArray[j] = new Event(Integer.parseInt((String) data3[j][7]), Integer.parseInt((String) data3[j][8]), Integer.parseInt((String) data3[j][9]), (String) data3[j][10], (String) data3[j][11], (String) data3[j][12], (String) data3[j][13], (String) data3[j][14], (String) data3[j][15], (String) data3[j][16], (boolean) data3[j][17]);
+		for (int j = 0; j < eventnum; j++) {
+			eventArray[j] = new Event(Integer.parseInt((String) data3[j][7]), Integer.parseInt((String) data3[j][8]),
+					Integer.parseInt((String) data3[j][9]), (String) data3[j][10], (String) data3[j][11],
+					(String) data3[j][12], (String) data3[j][13], (String) data3[j][14], (String) data3[j][15],
+					(String) data3[j][16], Integer.parseInt((String) data3[j][17]));
 		}
-		for(int i=0;i>=calArray.length;i++){
+		for (int i = 0; i < calArray.length; i++) {
 			calArray[i].getAll();
 		}
-		for(int i=0;i>=eventArray.length;i++){
+		for (int i = 0; i < eventArray.length; i++) {
 			eventArray[i].getAll();
 		}
 	}
+
 	public void getAll() {
 		System.out.println(id);
 		System.out.println(email);

@@ -16,10 +16,10 @@ public class Event extends JPanel {
 	private String start_time;
 	private String length;
 	private String edited;
-	private boolean notification;
+	private int notification;
 
 	public Event(int e_id, int cal_id, int create_id, String event_name, String event_location, String event_desc,
-			String event_created, String event_start, String event_length, String event_edited, boolean event_notice) {
+			String event_created, String event_start, String event_length, String event_edited, int event_notice) {
 		event_id = e_id;
 		calendar_id = cal_id;
 		creator_id = create_id;
@@ -32,7 +32,7 @@ public class Event extends JPanel {
 		edited = event_edited;
 		notification = event_notice;
 	}
-	
+
 	public void getAll() {
 		System.out.print(event_id);
 		System.out.print(calendar_id);
@@ -46,6 +46,7 @@ public class Event extends JPanel {
 		System.out.print(edited);
 		System.out.println(notification);
 	}
+
 	public int getEvent_id() {
 		return event_id;
 	}
@@ -110,11 +111,11 @@ public class Event extends JPanel {
 		this.length = length;
 	}
 
-	public boolean isNotification() {
+	public int isNotification() {
 		return notification;
 	}
 
-	public void setNotification(boolean notification) {
+	public void setNotification(int notification) {
 		this.notification = notification;
 	}
 

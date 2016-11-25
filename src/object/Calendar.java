@@ -21,13 +21,13 @@ public class Calendar extends JPanel {
 		notification=not;
 	}
 	public void getAll() {
-		System.out.print(cal_id);
-		System.out.print(creator_id);
-		System.out.print(name);
-		System.out.print(description);
-		System.out.print(created);
-		System.out.print(edited);
-		System.out.println(notification);
+		System.out.print("Kalender id: "+cal_id+" ");
+		System.out.print("Skapar: "+creator_id+" ");
+		System.out.print("Kalender namn: "+name+" ");
+		System.out.print("Kalender beskrivning: "+description+" ");
+		System.out.print("Skapad: "+created+" ");
+		//System.out.print("Ändrad: "+edited+" ");
+		System.out.println("Notifikation: "+notification+" ");
 	}
 	public int getCal_id() {
 		return cal_id;
