@@ -51,6 +51,7 @@ public class Window extends JFrame {
 	}
 
 	public void getLoginPage() {
+		this.setJMenuBar(null);
 		center.removeAll();
 		center.add(new Login(this));
 		center.updateUI();
