@@ -9,7 +9,7 @@ public class Calendar extends JPanel {
 	String description;
 	String created;
 	String edited;
-	int Notification;
+	int notification;
 	
 	public Calendar(int caid,int crid, String cname, String cdesc, String ccreated, String cedited, int not){
 		cal_id=caid;
@@ -18,9 +18,17 @@ public class Calendar extends JPanel {
 		description=cdesc;
 		created=ccreated;
 		edited=cedited;
-		Notification=not;
+		notification=not;
 	}
-
+	public void getAll() {
+		System.out.print(cal_id);
+		System.out.print(creator_id);
+		System.out.print(name);
+		System.out.print(description);
+		System.out.print(created);
+		System.out.print(edited);
+		System.out.println(notification);
+	}
 	public int getCal_id() {
 		return cal_id;
 	}

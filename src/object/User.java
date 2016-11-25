@@ -34,6 +34,12 @@ public class User {
 		for(int j=0;j<=eventnum;j++){
 			eventArray[j] = new Event(Integer.parseInt((String) data3[j][7]), Integer.parseInt((String) data3[j][8]), Integer.parseInt((String) data3[j][9]), (String) data3[j][10], (String) data3[j][11], (String) data3[j][12], (String) data3[j][13], (String) data3[j][14], (String) data3[j][15], (String) data3[j][16], (boolean) data3[j][17]);
 		}
+		for(int i=0;i>=calArray.length;i++){
+			calArray[i].getAll();
+		}
+		for(int i=0;i>=eventArray.length;i++){
+			eventArray[i].getAll();
+		}
 	}
 	public void getAll() {
 		System.out.println(id);

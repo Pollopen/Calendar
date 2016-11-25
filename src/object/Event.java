@@ -32,7 +32,20 @@ public class Event extends JPanel {
 		edited = event_edited;
 		notification = event_notice;
 	}
-
+	
+	public void getAll() {
+		System.out.print(event_id);
+		System.out.print(calendar_id);
+		System.out.print(creator_id);
+		System.out.print(name);
+		System.out.print(loc);
+		System.out.print(description);
+		System.out.print(created);
+		System.out.print(start_time);
+		System.out.print(length);
+		System.out.print(edited);
+		System.out.println(notification);
+	}
 	public int getEvent_id() {
 		return event_id;
 	}
