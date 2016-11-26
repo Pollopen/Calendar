@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -156,20 +157,32 @@ public class Login extends JPanel {
 			if (e.getSource() == loginButton) {
 				String loginEmail = emailField.getText();
 				Object[][] data = db.getData("select * from user where email = '" + loginEmail + "'");
-
-				loginPassHashed = (String) data[0][2];
-
-				char[] loginPassCandidate = passField.getPassword();
-				if (BCrypt.checkpw(String.valueOf(loginPassCandidate), loginPassHashed)) {
-					System.out.println("It matches");
-					user = new User(Integer.parseInt((String) data[0][0]), (String) data[0][1], (String) data[0][3],
+				int accfound = 0;
+				try {
+					loginPassHashed = (String) data[0][2];
+					accfound=1;
+				} catch (ArrayIndexOutOfBoundsException e1) {
+					JOptionPane.showMessageDialog(window, "Vi hittar inget konto kopplat till den email-adressen, var god försök igen!",
+							"Inloggning misslyckades!", JOptionPane.INFORMATION_MESSAGE);
+				}
+				
+				
+				
+				if(accfound==1){
+					char[] loginPassCandidate = passField.getPassword();
+					if (BCrypt.checkpw(String.valueOf(loginPassCandidate), loginPassHashed)) {
+						System.out.println("It matches");
+						user = new User(Integer.parseInt((String) data[0][0]), (String) data[0][1], (String) data[0][3],
 							(String) data[0][4], (String) data[0][5]);
-					// user = new user (int,string,string,string);
-					user.getAll();
-					user.reloadarrays();
-					window.getIndexPage();
-				} else {
-					System.out.println("It does not match");
+						// user = new user (int,string,string,string);
+						user.getAll();
+						user.reloadarrays();
+						window.getIndexPage();
+					} else {
+						//System.out.println("It does not match");
+						JOptionPane.showMessageDialog(window, "Du har angivit fel lösenord för det hör kontot, var god försök igen!",
+							"Inloggning misslyckades!", JOptionPane.INFORMATION_MESSAGE);
+					}
 				}
 			}
 
