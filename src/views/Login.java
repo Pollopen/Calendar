@@ -166,8 +166,6 @@ public class Login extends JPanel {
 							"Inloggning misslyckades!", JOptionPane.INFORMATION_MESSAGE);
 				}
 				
-				
-				
 				if(accfound==1){
 					char[] loginPassCandidate = passField.getPassword();
 					if (BCrypt.checkpw(String.valueOf(loginPassCandidate), loginPassHashed)) {

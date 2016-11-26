@@ -112,7 +112,7 @@ public class Index extends JPanel {
 		rightPanel.setPreferredSize(new Dimension(1200, 700));
 		rightPanel.setLayout(new GridBagLayout());
 		rightPanel.setVisible(true);
-		rightPanel.setBackground(new Color(100, 100, 100));
+		rightPanel.setBackground(new Color(150, 150, 150));
 
 		gbc.gridx = 1;
 		gbc.gridy = 1;
@@ -120,7 +120,7 @@ public class Index extends JPanel {
 		mainPanel.add(rightPanel, gbc);
 		
 		rightPanel1 = new JPanel();
-		rightPanel1.setPreferredSize(new Dimension(1200, 100));
+		rightPanel1.setPreferredSize(new Dimension(1175, 675));
 		rightPanel1.setVisible(true);
 		rightPanel1.setBackground(new Color(255, 0, 0));
 
@@ -129,15 +129,6 @@ public class Index extends JPanel {
 
 		rightPanel.add(rightPanel1, gbc);
 		
-		rightPanel2 = new JPanel();
-		rightPanel2.setPreferredSize(new Dimension(1200, 600));
-		rightPanel2.setVisible(true);
-		rightPanel2.setBackground(new Color(0, 255, 0));
-
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-
-		rightPanel.add(rightPanel2, gbc);
 
 	}
 

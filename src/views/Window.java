@@ -16,11 +16,11 @@ public class Window extends JFrame {
 	public Window() {
 		super("En ruta");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setPreferredSize(new Dimension(1400, 800));
+		setPreferredSize(new Dimension(1420, 870));
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		Point middle = new Point(screenSize.width / 2, screenSize.height / 2);
-		Point newLocation = new Point(middle.x - (1400 / 2), 
-		                              middle.y - (800 / 2));
+		Point newLocation = new Point(middle.x - (1420 / 2), 
+		                              middle.y - (870 / 2));
 		setLocation(newLocation);
 		setLayout(new GridLayout(1, 3));
 		setResizable(false);
