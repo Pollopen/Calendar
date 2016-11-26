@@ -65,35 +65,35 @@ public class MenuList {
         menuBar = new JMenuBar();
 
         //Build the first menu.
-        menu = new JMenu("File");
+        menu = new JMenu("Arkiv");
         menuBar.add(menu);
 
         //a group of JMenuItems
-        menuItem = new JMenuItem("Reload");
+        menuItem = new JMenuItem("Ladda om");
         menu.add(menuItem);
         
         menu.addSeparator();
         
-        menuItem = new JMenuItem("Add Event");
+        menuItem = new JMenuItem("Lägg till händelse");
         menu.add(menuItem);
         
-        menuItem = new JMenuItem("Add Calender");
+        menuItem = new JMenuItem("Lägg till Kalender");
         menu.add(menuItem);
         
         menu.addSeparator();
         
-        menuLogout = new JMenuItem("Log out");
+        menuLogout = new JMenuItem("Logga ut");
         menu.add(menuLogout);
         menuLogout.addActionListener(lForButton);
 
         //a submenu
         menu.addSeparator();
-        submenu = new JMenu("Submenu");
+        submenu = new JMenu("Extra");
 
-        menuItem = new JMenuItem("Submenu");
+        menuItem = new JMenuItem("*Kommer snart*");
         submenu.add(menuItem);
 
-        menuItem = new JMenuItem("Submenu2");
+        menuItem = new JMenuItem("*Kommer snart*");
         submenu.add(menuItem);
         
         menu.add(submenu);
