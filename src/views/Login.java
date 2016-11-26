@@ -24,7 +24,7 @@ import object.User;
 
 public class Login extends JPanel {
 
-	private JPanel form, main, padding;
+	private JPanel form, main;
 	private JLabel loginLabel, emailLabel, passLabel, regLabel;
 	private JTextField emailField;
 	private JPasswordField passField;
@@ -46,15 +46,6 @@ public class Login extends JPanel {
 		main.setLayout(new GridBagLayout());
 
 		this.add(main);
-
-		padding = new JPanel();
-		padding.setPreferredSize(new Dimension(480, 50));
-		padding.setVisible(true);
-
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-
-		main.add(padding, gbc);
 
 		form = new JPanel();
 		form.setLayout(new GridBagLayout());
