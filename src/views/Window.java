@@ -25,36 +25,10 @@ public class Window extends JFrame {
 		setLayout(new GridLayout(1, 3));
 		setResizable(false);
 
-		center = new JPanel();
-		center.setLayout(new GridLayout(1, 1));
-		center.setPreferredSize(new Dimension(1400, 800));
-		center.setBackground(new Color(255, 0, 0));
-		center.add(new Login(this));
-		center.setVisible(true);
-
-		add(center);
+		this.add(new WindowPanel(this));
 
 		pack();
 		setVisible(true);
-	}
-	
-	public void getIndexPage() {
-		center.removeAll();
-		center.add(new Index(this));
-		center.updateUI();
-	}
-
-	public void getRegisterPage() {
-		center.removeAll();
-		center.add(new Register(this));
-		center.updateUI();
-	}
-
-	public void getLoginPage() {
-		this.setJMenuBar(null);
-		center.removeAll();
-		center.add(new Login(this));
-		center.updateUI();
 	}
 
 }
