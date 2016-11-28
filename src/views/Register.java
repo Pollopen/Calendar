@@ -62,7 +62,7 @@ public class Register extends JPanel {
 		
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.insets = new Insets(0, 0, 75, 0);
+		gbc.insets = new Insets(0, 0, 20, 0);
 		
 		form.add(regHere, gbc);
 		
@@ -154,16 +154,16 @@ public class Register extends JPanel {
 		form.add(snameField, gbc);
 		
 		// Reg button
-		regButton = new JButton("Registrera dig!");
+		regButton = new JButton("Registrera");
 
 		gbc.gridx = 0;
 		gbc.gridy = 11;
-		gbc.insets = new Insets(0, 0, 10, 0);
+		gbc.insets = new Insets(0, 0, 40, 0);
 		
 		form.add(regButton, gbc);
 		
 		// Login label + button
-		loginLabel = new JLabel("Har du redan ett konto? Logga in här:");
+		loginLabel = new JLabel("Har du redan ett konto?");
 		
 		gbc.gridx = 0;
 		gbc.gridy = 12;
