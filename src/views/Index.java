@@ -118,7 +118,7 @@ public class Index extends JPanel {
 		gbc.gridy = 1;
 
 		mainPanel.add(rightPanel, gbc);
-		
+		/*
 		calendarPanel = new JPanel();
 		calendarPanel.setPreferredSize(new Dimension(1175, 725));
 		calendarPanel.setVisible(true);
@@ -128,7 +128,7 @@ public class Index extends JPanel {
 		gbc.gridy = 0;
 
 		rightPanel.add(calendarPanel, gbc);
-		
+		*/
 
 	}
 
