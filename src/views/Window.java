@@ -56,4 +56,5 @@ public class Window extends JFrame {
 		center.add(new Login(this));
 		center.updateUI();
 	}
+
 }
