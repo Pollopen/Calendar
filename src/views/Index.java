@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 
 public class Index extends JPanel {
 
-	private JPanel mainPanel, leftPanel, leftPanel1, leftPanel2, leftPanel3, leftPanel4, rightPanel, rightPanel1, rightPanel2, upperLeftPanel, upperRightPanel;
+	private JPanel mainPanel, leftPanel, addEventButtonPanel, overviewPanel, CalendarChoicePanel, placeholderPanel, rightPanel, calendarPanel, upperLeftPanel, upperRightPanel;
 	private GridBagConstraints gbc;
 
 	private Window window;
@@ -33,7 +33,7 @@ public class Index extends JPanel {
 
 		// Upper left panel
 		upperLeftPanel = new JPanel();
-		upperLeftPanel.setPreferredSize(new Dimension(200, 100));
+		upperLeftPanel.setPreferredSize(new Dimension(200, 50));
 		upperLeftPanel.setLayout(new GridLayout(2, 2));
 		upperLeftPanel.setVisible(true);
 		upperLeftPanel.setBackground(new Color(255, 0, 0));
@@ -45,7 +45,7 @@ public class Index extends JPanel {
 
 		// Upper right panel
 		upperRightPanel = new JPanel();
-		upperRightPanel.setPreferredSize(new Dimension(1200, 100));
+		upperRightPanel.setPreferredSize(new Dimension(1200, 50));
 		upperRightPanel.setLayout(new GridLayout(2, 2));
 		upperRightPanel.setVisible(true);
 		upperRightPanel.setBackground(new Color(0, 255, 0));
@@ -57,7 +57,7 @@ public class Index extends JPanel {
 
 		// Left panel
 		leftPanel = new JPanel();
-		leftPanel.setPreferredSize(new Dimension(200, 700));
+		leftPanel.setPreferredSize(new Dimension(200, 750));
 		leftPanel.setLayout(new GridBagLayout());
 		leftPanel.setVisible(true);
 		leftPanel.setBackground(new Color(0, 0, 255));
@@ -67,49 +67,49 @@ public class Index extends JPanel {
 
 		mainPanel.add(leftPanel, gbc);
 		
-		leftPanel1 = new JPanel();
-		leftPanel1.setPreferredSize(new Dimension(200, 100));
-		leftPanel1.setVisible(true);
-		leftPanel1.setBackground(new Color(0, 0, 255));
+		addEventButtonPanel = new JPanel();
+		addEventButtonPanel.setPreferredSize(new Dimension(200, 100));
+		addEventButtonPanel.setVisible(true);
+		addEventButtonPanel.setBackground(new Color(0, 0, 255));
 		
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		
-		leftPanel.add(leftPanel1, gbc);
+		leftPanel.add(addEventButtonPanel, gbc);
 		
-		leftPanel2 = new JPanel();
-		leftPanel2.setPreferredSize(new Dimension(200, 200));
-		leftPanel2.setVisible(true);
-		leftPanel2.setBackground(new Color(100, 100, 100));
+		overviewPanel = new JPanel();
+		overviewPanel.setPreferredSize(new Dimension(200, 200));
+		overviewPanel.setVisible(true);
+		overviewPanel.setBackground(new Color(100, 100, 100));
 		
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		
-		leftPanel.add(leftPanel2, gbc);
+		leftPanel.add(overviewPanel, gbc);
 		
-		leftPanel3 = new JPanel();
-		leftPanel3.setPreferredSize(new Dimension(200, 200));
-		leftPanel3.setVisible(true);
-		leftPanel3.setBackground(new Color(255, 0, 255));
+		CalendarChoicePanel = new JPanel();
+		CalendarChoicePanel.setPreferredSize(new Dimension(200, 200));
+		CalendarChoicePanel.setVisible(true);
+		CalendarChoicePanel.setBackground(new Color(255, 0, 255));
 		
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		
-		leftPanel.add(leftPanel3, gbc);
+		leftPanel.add(CalendarChoicePanel, gbc);
 		
-		leftPanel4 = new JPanel();
-		leftPanel4.setPreferredSize(new Dimension(200, 200));
-		leftPanel4.setVisible(true);
-		leftPanel4.setBackground(new Color(255, 255, 0));
+		overviewPanel = new JPanel();
+		overviewPanel.setPreferredSize(new Dimension(200, 200));
+		overviewPanel.setVisible(true);
+		overviewPanel.setBackground(new Color(255, 255, 0));
 		
 		gbc.gridx = 0;
 		gbc.gridy = 3;
 		
-		leftPanel.add(leftPanel4, gbc);
+		leftPanel.add(overviewPanel, gbc);
 
 		// Right panel
 		rightPanel = new JPanel();
-		rightPanel.setPreferredSize(new Dimension(1200, 700));
+		rightPanel.setPreferredSize(new Dimension(1200, 750));
 		rightPanel.setLayout(new GridBagLayout());
 		rightPanel.setVisible(true);
 		rightPanel.setBackground(new Color(150, 150, 150));
@@ -119,15 +119,15 @@ public class Index extends JPanel {
 
 		mainPanel.add(rightPanel, gbc);
 		
-		rightPanel1 = new JPanel();
-		rightPanel1.setPreferredSize(new Dimension(1175, 675));
-		rightPanel1.setVisible(true);
-		rightPanel1.setBackground(new Color(255, 0, 0));
+		calendarPanel = new JPanel();
+		calendarPanel.setPreferredSize(new Dimension(1175, 725));
+		calendarPanel.setVisible(true);
+		calendarPanel.setBackground(new Color(255, 0, 0));
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 
-		rightPanel.add(rightPanel1, gbc);
+		rightPanel.add(calendarPanel, gbc);
 		
 
 	}
