@@ -25,11 +25,11 @@ import database.JavaDB;
 public class Register extends JPanel {
 
 	private JPanel main, form;
-	private JLabel regHere, emailLabel, passLabel, passConfLabel, fnameLabel, snameLabel;
+	private JLabel regHere, emailLabel, passLabel, passConfLabel, fnameLabel, snameLabel, loginLabel;
 	private JTextField emailField, fnameField, snameField;
 	private JPasswordField passField, passConfField;
-	private JButton regButton;
 	private JavaDB db = new JavaDB();
+	private JButton regButton, loginButton;
 	private GridBagConstraints gbc;
 	private int user_id;
 	private Window window;
@@ -162,6 +162,23 @@ public class Register extends JPanel {
 		
 		form.add(regButton, gbc);
 		
+		// Login label + button
+		loginLabel = new JLabel("Har du redan ett konto? Logga in här:");
+		
+		gbc.gridx = 0;
+		gbc.gridy = 12;
+		gbc.insets =  new Insets(0, 0, 10, 0);
+		
+		form.add(loginLabel, gbc);
+		
+		loginButton = new JButton("Klicka här för att logga in");
+		
+		gbc.gridx = 0;
+		gbc.gridy = 13;
+		gbc.insets = new Insets(0, 0, 10, 0);
+		
+		form.add(loginButton, gbc);
+		
 		
 		
 		ListenForButton lForButton = new ListenForButton();
@@ -170,6 +187,7 @@ public class Register extends JPanel {
 		// occurs on the button
 
 		regButton.addActionListener(lForButton);
+		loginButton.addActionListener(lForButton);
 
 	}
 
@@ -230,6 +248,11 @@ public class Register extends JPanel {
 
 				}
 
+			}
+			
+			if(e.getSource() == loginButton)
+			{
+				window.getLoginPage();
 			}
 
 		}

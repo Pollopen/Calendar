@@ -1,5 +1,12 @@
 package views;
 
-public class AddEvent {
+import javax.swing.JPanel;
 
+public class AddEvent extends JPanel {
+	
+	public AddEvent()
+	{
+		
+	}
+	
 }
