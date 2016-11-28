@@ -10,7 +10,8 @@ import javax.swing.JPanel;
 
 public class Index extends JPanel {
 
-	private JPanel mainPanel, leftPanel, addEventButtonPanel, overviewPanel, CalendarChoicePanel, placeholderPanel, rightPanel, calendarPanel, upperLeftPanel, upperRightPanel;
+	private JPanel mainPanel, leftPanel, addEventButtonPanel, overviewPanel, CalendarChoicePanel, placeholderPanel,
+			rightPanel, calendarPanel, upperLeftPanel, upperRightPanel;
 	private GridBagConstraints gbc;
 
 	private Window window;
@@ -19,8 +20,8 @@ public class Index extends JPanel {
 		this.window = window;
 
 		MenuList menu = new MenuList();
-    	window.setJMenuBar(menu.createMenuBar(window));
-		
+		window.setJMenuBar(menu.createMenuBar(window));
+
 		// Main panel
 		mainPanel = new JPanel();
 		mainPanel.setPreferredSize(new Dimension(1400, 800));
@@ -66,45 +67,45 @@ public class Index extends JPanel {
 		gbc.gridy = 1;
 
 		mainPanel.add(leftPanel, gbc);
-		
+
 		addEventButtonPanel = new JPanel();
 		addEventButtonPanel.setPreferredSize(new Dimension(200, 100));
 		addEventButtonPanel.setVisible(true);
 		addEventButtonPanel.setBackground(new Color(0, 0, 255));
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		
+
 		leftPanel.add(addEventButtonPanel, gbc);
-		
+
 		overviewPanel = new JPanel();
 		overviewPanel.setPreferredSize(new Dimension(200, 200));
 		overviewPanel.setVisible(true);
 		overviewPanel.setBackground(new Color(100, 100, 100));
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		
+
 		leftPanel.add(overviewPanel, gbc);
-		
+
 		CalendarChoicePanel = new JPanel();
 		CalendarChoicePanel.setPreferredSize(new Dimension(200, 200));
 		CalendarChoicePanel.setVisible(true);
 		CalendarChoicePanel.setBackground(new Color(255, 0, 255));
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 2;
-		
+
 		leftPanel.add(CalendarChoicePanel, gbc);
-		
+
 		overviewPanel = new JPanel();
 		overviewPanel.setPreferredSize(new Dimension(200, 200));
 		overviewPanel.setVisible(true);
 		overviewPanel.setBackground(new Color(255, 255, 0));
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 3;
-		
+
 		leftPanel.add(overviewPanel, gbc);
 
 		// Right panel
@@ -119,16 +120,24 @@ public class Index extends JPanel {
 
 		mainPanel.add(rightPanel, gbc);
 		/*
-		calendarPanel = new JPanel();
-		calendarPanel.setPreferredSize(new Dimension(1175, 725));
-		calendarPanel.setVisible(true);
-		calendarPanel.setBackground(new Color(255, 0, 0));
+		 * calendarPanel = new JPanel(); calendarPanel.setPreferredSize(new
+		 * Dimension(1175, 725)); calendarPanel.setVisible(true);
+		 * calendarPanel.setBackground(new Color(255, 0, 0));
+		 * 
+		 * gbc.gridx = 0; gbc.gridy = 0;
+		 * 
+		 * rightPanel.add(calendarPanel, gbc);
+		 */
 
-		gbc.gridx = 0;
-		gbc.gridy = 0;
+		getAddEventPage();
 
-		rightPanel.add(calendarPanel, gbc);
-		*/
+	}
+
+	public void getAddEventPage() {
+
+		rightPanel.removeAll();
+		rightPanel.add(new AddEvent(this));
+		rightPanel.updateUI();
 
 	}
 

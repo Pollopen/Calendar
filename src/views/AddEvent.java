@@ -17,22 +17,19 @@ public class AddEvent extends JPanel {
 	private JTextArea descriptionArea;
 	private GridBagConstraints gbc;
 	private Index index;
-	
-	public AddEvent(Index index)
-	{
+
+	public AddEvent(Index index) {
 		this.index = index;
 		gbc = new GridBagConstraints();
-	
+
 		main = new JPanel();
-		main.setPreferredSize(new Dimension(1175, 675));
-		//main.setLayout(new GridBagLayout());
-		main.setBackground(new Color(0,255,255));
+		main.setPreferredSize(new Dimension(1175, 725));
+		main.setLayout(new GridBagLayout());
+		main.setBackground(new Color(0, 255, 255));
 		main.setVisible(true);
-	
+
 		this.add(main);
-		
+
 	}
-	
-	
 
 }
