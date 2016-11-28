@@ -13,7 +13,7 @@ public class JavaDB {
 	public JavaDB() {
 		try {
 			Class.forName("org.gjt.mm.mysql.Driver").newInstance();
-			con = DriverManager.getConnection("jdbc:mysql://" + host + "/" + database, user, password);
+			con = DriverManager.getConnection("jdbc:mysql://" + host + "/" + database+ "?useSSL=false", user, password);
 		} catch (Exception error) {
 			JOptionPane.showMessageDialog(null, error);
 		}
