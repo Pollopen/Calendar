@@ -11,7 +11,7 @@ public class User {
 	Calendar[] calArray;
 	Event[] eventArray;
 
-	private JavaDB db = new JavaDB("localhost", "root", "", "calendar");
+	private JavaDB db = new JavaDB();
 
 	public User(int userid, String useremail, String userfname, String usersname, String usercreated) {
 		id = userid;

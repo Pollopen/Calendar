@@ -8,8 +8,9 @@ import javax.swing.JOptionPane;
 public class JavaDB {
 	private Connection con;
 	private Object[] fields;
+	private String host="localhost", database="calendar", user="root", password="";
 
-	public JavaDB(String host, String user, String password, String database) {
+	public JavaDB() {
 		try {
 			Class.forName("org.gjt.mm.mysql.Driver").newInstance();
 			con = DriverManager.getConnection("jdbc:mysql://" + host + "/" + database, user, password);

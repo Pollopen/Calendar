@@ -29,7 +29,7 @@ public class Login extends JPanel {
 	private JTextField emailField;
 	private JPasswordField passField;
 	private JButton loginButton, registerButton;
-	private JavaDB db = new JavaDB("localhost", "root", "", "calendar");
+	private JavaDB db = new JavaDB();
 	private String loginPassHashed;
 	private GridBagConstraints gbc;
 	private Window window;

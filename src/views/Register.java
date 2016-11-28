@@ -29,7 +29,7 @@ public class Register extends JPanel {
 	private JTextField emailField, fnameField, snameField;
 	private JPasswordField passField, passConfField;
 	private JButton regButton;
-	private JavaDB db = new JavaDB("localhost", "root", "", "calendar");
+	private JavaDB db = new JavaDB();
 	private GridBagConstraints gbc;
 	private int user_id;
 	private Window window;
