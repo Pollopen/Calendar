@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 public class JavaDB {
 	private Connection con;
 	private Object[] fields;
-	private String host="localhost", database="calendar", user="root", password="";
+	private String host="hedsand.com", database="calendar", user="calendar", password="qePlz249ER713diT";
 
 	public JavaDB() {
 		try {

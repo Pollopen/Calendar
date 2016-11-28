@@ -22,7 +22,7 @@ public class User {
 	}
 
 	public void reloadarrays(/* Array for which calendars to ignore */) {
-		Object[][] data = db.getData("select * from Calendar where creator_id = " + id);
+		Object[][] data = db.getData("select * from calendar where creator_id = " + id);
 		int numberofresults = data.length;
 		int eventnum;
 		calArray = new Calendar[numberofresults];
