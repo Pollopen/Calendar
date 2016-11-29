@@ -13,50 +13,52 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JSpinner;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
-import org.mindrot.jbcrypt.BCrypt;
-
-import object.User;
+import javax.swing.SpinnerDateModel;
 
 public class WindowPanel extends JPanel {
-	
-	private JPanel form, main, center, mainPanel, leftPanel, addEventButtonPanel, overviewPanel, CalendarChoicePanel, placeholderPanel,
-	rightPanel, upperLeftPanel, upperRightPanel;
-	private JLabel loginLabel, emailLabel, passLabel, regLabel, regHere, passConfLabel, fnameLabel, snameLabel;
-	private JTextField emailField, fnameField, snameField;
+
+	private JPanel form, main, center, mainPanel, leftPanel, addEventButtonPanel, overviewPanel, CalendarChoicePanel,
+			placeholderPanel, rightPanel, upperLeftPanel, upperRightPanel, top, centerLeft, centerRight;
+	private JLabel loginLabel, emailLabel, passLabel, regLabel, regHere, passConfLabel, fnameLabel, snameLabel,
+			nameLabel, locationLabel, startTimeLabel, endTimeLabel, descriptionLabel;
+	private JTextField emailField, fnameField, snameField, nameField, locationField;
 	private JPasswordField passField, passConfField;
 	private JButton loginButton, registerPageButton, registerButton, loginPageButton, regButton;
+	private JSpinner.DateEditor startDateSpinner, endDateSpinner;
+	private JSpinner startTimeSpinner, endTimeSpinner;
+	private JTextArea descriptionArea;
 	private ListenForButton lForButton;
 	private GridBagConstraints gbc;
 	private Window window;
-	
-	public WindowPanel(Window window){
-		this.window=window;
+
+	public WindowPanel(Window window) {
+		this.window = window;
 		gbc = new GridBagConstraints();
 		lForButton = new ListenForButton();
 		center = new JPanel();
 		center.setLayout(new GridLayout(1, 1));
 		center.setPreferredSize(new Dimension(1400, 800));
 		center.setBackground(new Color(255, 0, 0));
-		//center.add(new Login(this));
+		// center.add(new Login(this));
 		center.setVisible(true);
 
 		add(center);
 		getLoginPage();
 	}
+
 	public void getIndexPage() {
-		//center.removeAll();
-		//center.add(new Index(this));
-		//center.updateUI();
+		// center.removeAll();
+		// center.add(new Index(this));
+		// center.updateUI();
 		gbc = new GridBagConstraints();
 		MenuList menu = new MenuList();
 		window.setJMenuBar(menu.createMenuBar(window, this));
 		center.removeAll();
-		
 
 		// Main panel
 		mainPanel = new JPanel();
@@ -143,6 +145,9 @@ public class WindowPanel extends JPanel {
 		gbc.gridy = 1;
 
 		mainPanel.add(rightPanel, gbc);
+
+		getAddEventPage();
+
 		center.updateUI();
 		/*
 		 * calendarPanel = new JPanel(); calendarPanel.setPreferredSize(new
@@ -153,59 +158,56 @@ public class WindowPanel extends JPanel {
 		 * 
 		 * rightPanel.add(calendarPanel, gbc);
 		 */
+
 	}
 
 	public void getRegisterPage() {
-		//center.removeAll();
-		//center.add(new Register(this));
-		//center.updateUI();
+		// center.removeAll();
+		// center.add(new Register(this));
+		// center.updateUI();
 		center.removeAll();
 		main = new JPanel();
 		main.setPreferredSize(new Dimension(1400, 800));
 		main.setLayout(new GridBagLayout());
-		
+
 		center.add(main);
-		
+
 		form = new JPanel();
 		form.setLayout(new GridBagLayout());
-		form.setPreferredSize(new Dimension(480,600));
+		form.setPreferredSize(new Dimension(480, 600));
 		form.setBorder(BorderFactory.createLineBorder(Color.black));
 		form.setVisible(true);
-		
+
 		main.add(form);
 
-		
-		
-		
 		// Stor text at top
 		regHere = new JLabel("Registrera dig här!", JLabel.CENTER);
 		regHere.setFont(new Font("Serif", Font.PLAIN, 25));
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.insets = new Insets(0, 0, 20, 0);
-		
+
 		form.add(regHere, gbc);
-		
+
 		// Email
 		emailLabel = new JLabel("Email: ");
 		emailLabel.setFont(new Font("Serif", Font.PLAIN, 20));
 		emailField = new JTextField();
 		emailField.setPreferredSize(new Dimension(300, 30));
-		
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.insets = new Insets(0, 0, 10, 0);
 
 		form.add(emailLabel, gbc);
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		gbc.insets = new Insets(0, 0, 10, 0);
-		
+
 		form.add(emailField, gbc);
-		
+
 		// Password + password confirmation
 		passLabel = new JLabel("Lösenord: ");
 		passLabel.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -215,31 +217,31 @@ public class WindowPanel extends JPanel {
 		passConfLabel.setFont(new Font("Serif", Font.PLAIN, 20));
 		passConfField = new JPasswordField();
 		passConfField.setPreferredSize(new Dimension(300, 30));
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 3;
 		gbc.insets = new Insets(0, 0, 10, 0);
 
 		form.add(passLabel, gbc);
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 4;
 		gbc.insets = new Insets(0, 0, 10, 0);
-		
+
 		form.add(passField, gbc);
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 5;
 		gbc.insets = new Insets(0, 0, 10, 0);
-		
+
 		form.add(passConfLabel, gbc);
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 6;
 		gbc.insets = new Insets(0, 0, 10, 0);
-		
+
 		form.add(passConfField, gbc);
-		
+
 		// First name + last name
 		fnameLabel = new JLabel("Förnamn: ");
 		fnameLabel.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -249,59 +251,57 @@ public class WindowPanel extends JPanel {
 		snameLabel.setFont(new Font("Serif", Font.PLAIN, 20));
 		snameField = new JTextField();
 		snameField.setPreferredSize(new Dimension(300, 30));
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 7;
 		gbc.insets = new Insets(0, 0, 10, 0);
 
 		form.add(fnameLabel, gbc);
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 8;
 		gbc.insets = new Insets(0, 0, 10, 0);
-		
+
 		form.add(fnameField, gbc);
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 9;
 		gbc.insets = new Insets(0, 0, 10, 0);
-		
+
 		form.add(snameLabel, gbc);
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 10;
 		gbc.insets = new Insets(0, 0, 10, 0);
-		
+
 		form.add(snameField, gbc);
-		
+
 		// Reg button
 		regButton = new JButton("Registrera");
 
 		gbc.gridx = 0;
 		gbc.gridy = 11;
 		gbc.insets = new Insets(0, 0, 40, 0);
-		
+
 		form.add(regButton, gbc);
-		
+
 		// Login label + button
 		loginLabel = new JLabel("Har du redan ett konto?");
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 12;
-		gbc.insets =  new Insets(0, 0, 10, 0);
-		
+		gbc.insets = new Insets(0, 0, 10, 0);
+
 		form.add(loginLabel, gbc);
-		
+
 		loginPageButton = new JButton("Klicka här för att logga in");
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 13;
 		gbc.insets = new Insets(0, 0, 10, 0);
-		
+
 		form.add(loginPageButton, gbc);
-		
-		
-		
+
 		ListenForButton lForButton = new ListenForButton();
 
 		// Tell Java that you want to be alerted when an event
@@ -314,11 +314,9 @@ public class WindowPanel extends JPanel {
 
 	public void getLoginPage() {
 		/*
-		this.setJMenuBar(null);
-		center.removeAll();
-		center.add(new Login(this));
-		center.updateUI();
-		*/
+		 * this.setJMenuBar(null); center.removeAll(); center.add(new
+		 * Login(this)); center.updateUI();
+		 */
 		center.removeAll();
 		main = new JPanel();
 		main.setPreferredSize(new Dimension(1400, 800));
@@ -413,18 +411,133 @@ public class WindowPanel extends JPanel {
 		registerPageButton.addActionListener(lForButton);
 		center.updateUI();
 	}
+
 	public void getAddEventPage() {
 		rightPanel.removeAll();
-		
-		
-		
-		
-		
-		
-		
-		
+
+		gbc = new GridBagConstraints();
+
+		// Panel management
+
+		main = new JPanel();
+		main.setPreferredSize(new Dimension(1175, 725));
+		main.setLayout(new GridBagLayout());
+		// main.setBackground(new Color(0, 255, 255));
+		main.setVisible(true);
+
+		rightPanel.add(main);
+
+		top = new JPanel();
+		top.setPreferredSize(new Dimension(1175, 20));
+		top.setLayout(new GridBagLayout());
+		// top.setBackground(new Color(255, 0, 0));
+		top.setVisible(true);
+
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+
+		main.add(top, gbc);
+
+		center = new JPanel();
+		center.setPreferredSize(new Dimension(1175, 705));
+		center.setLayout(new GridBagLayout());
+		// center.setBackground(new Color(0, 255, 0));
+		center.setVisible(true);
+
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+
+		main.add(center, gbc);
+
+		centerLeft = new JPanel();
+		centerLeft.setPreferredSize(new Dimension(700, 705));
+		centerLeft.setLayout(new GridBagLayout());
+		// centerLeft.setBackground(new Color(0, 255, 0));
+		centerLeft.setVisible(true);
+
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+
+		center.add(centerLeft, gbc);
+
+		centerRight = new JPanel();
+		centerRight.setPreferredSize(new Dimension(475, 705));
+		centerRight.setLayout(new GridBagLayout());
+		// centerRight.setBackground(new Color(0, 0, 255));
+		centerRight.setVisible(true);
+
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+
+		center.add(centerRight, gbc);
+
+		// Everything on panels
+
+		// Event label + event field
+		nameLabel = new JLabel("Event namn");
+		nameLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+
+		centerLeft.add(nameLabel, gbc);
+
+		nameField = new JTextField();
+		nameField.setPreferredSize(new Dimension(300, 30));
+
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+
+		centerLeft.add(nameField, gbc);
+
+		// Event location label + location field
+
+		locationLabel = new JLabel("Plats");
+		locationLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+
+		centerLeft.add(locationLabel, gbc);
+
+		locationField = new JTextField();
+		locationField.setPreferredSize(new Dimension(300, 30));
+
+		gbc.gridx = 0;
+		gbc.gridy = 3;
+
+		centerLeft.add(locationField, gbc);
+
+		// Event start time + end time
+
+		startTimeLabel = new JLabel("Start på event");
+		startTimeLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+
+		gbc.gridx = 0;
+		gbc.gridy = 4;
+
+		centerLeft.add(startTimeLabel, gbc);
+
+		endTimeLabel = new JLabel("Slut på event");
+		endTimeLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+
+		gbc.gridx = 0;
+		gbc.gridy = 5;
+
+		centerLeft.add(endTimeLabel, gbc);
+
+		startTimeSpinner = new JSpinner(new SpinnerDateModel());
+		startDateSpinner = new JSpinner.DateEditor(startTimeSpinner, "HH:mm:ss");
+		startDateSpinner.setPreferredSize(new Dimension(300, 30));
+
+		gbc.gridx = 0;
+		gbc.gridy = 6;
+
+		centerLeft.add(startDateSpinner, gbc);
+
 		rightPanel.updateUI();
 	}
+
 	private class ListenForButton implements ActionListener {
 
 		// This method is called when an event occurs
@@ -436,11 +549,11 @@ public class WindowPanel extends JPanel {
 			if (e.getSource() == loginButton) {
 				String loginEmail = emailField.getText();
 				char[] loginPassCandidate = passField.getPassword();
-				if(Login.checkLogin(loginEmail,loginPassCandidate)){
+				if (Login.checkLogin(loginEmail, loginPassCandidate)) {
 					getIndexPage();
 				}
 			}
-				
+
 			if (e.getSource() == registerPageButton) {
 				getRegisterPage();
 			}
