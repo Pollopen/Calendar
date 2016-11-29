@@ -25,7 +25,7 @@ import object.User;
 public class WindowPanel extends JPanel {
 	
 	private JPanel form, main, center, mainPanel, leftPanel, addEventButtonPanel, overviewPanel, CalendarChoicePanel, placeholderPanel,
-	rightPanel, calendarPanel, upperLeftPanel, upperRightPanel;
+	rightPanel, upperLeftPanel, upperRightPanel;
 	private JLabel loginLabel, emailLabel, passLabel, regLabel, regHere, passConfLabel, fnameLabel, snameLabel;
 	private JTextField emailField, fnameField, snameField;
 	private JPasswordField passField, passConfField;
@@ -52,9 +52,11 @@ public class WindowPanel extends JPanel {
 		//center.removeAll();
 		//center.add(new Index(this));
 		//center.updateUI();
-		center.removeAll();
+		gbc = new GridBagConstraints();
 		MenuList menu = new MenuList();
-		window.setJMenuBar(menu.createMenuBar(window));
+		window.setJMenuBar(menu.createMenuBar(window, this));
+		center.removeAll();
+		
 
 		// Main panel
 		mainPanel = new JPanel();
@@ -63,8 +65,6 @@ public class WindowPanel extends JPanel {
 		mainPanel.setVisible(true);
 		mainPanel.setBackground(new Color(0, 0, 255));
 		center.add(mainPanel);
-
-		gbc = new GridBagConstraints();
 
 		// Upper left panel
 		upperLeftPanel = new JPanel();
@@ -131,16 +131,6 @@ public class WindowPanel extends JPanel {
 		gbc.gridy = 2;
 
 		leftPanel.add(CalendarChoicePanel, gbc);
-
-		overviewPanel = new JPanel();
-		overviewPanel.setPreferredSize(new Dimension(200, 200));
-		overviewPanel.setVisible(true);
-		overviewPanel.setBackground(new Color(255, 255, 0));
-
-		gbc.gridx = 0;
-		gbc.gridy = 3;
-
-		leftPanel.add(overviewPanel, gbc);
 
 		// Right panel
 		rightPanel = new JPanel();

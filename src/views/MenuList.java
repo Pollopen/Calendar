@@ -54,9 +54,11 @@ public class MenuList {
     JRadioButtonMenuItem rbMenuItem;
     JCheckBoxMenuItem cbMenuItem;
     Window window;
+    WindowPanel windowpanel;
 
-    public JMenuBar createMenuBar(Window window) {
+    public JMenuBar createMenuBar(Window window, WindowPanel windowpanel) {
     	this.window = window;
+    	this.windowpanel = windowpanel;
 
         ListenForButton lForButton = new ListenForButton();
 
@@ -109,7 +111,7 @@ public class MenuList {
 			// Check if the source of the event was the button
 
 			if (e.getSource() == menuLogout) {
-				window.getLoginPage();
+				windowpanel.getLoginPage();
 			}
 		}
 	}
