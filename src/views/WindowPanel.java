@@ -22,7 +22,7 @@ import javax.swing.SpinnerDateModel;
 
 public class WindowPanel extends JPanel {
 
-	private JPanel form, main, center, mainPanel, leftPanel, addEventButtonPanel, overviewPanel, CalendarChoicePanel,
+	private JPanel form, main, center, centerEvent, mainPanel, leftPanel, addEventButtonPanel, overviewPanel, CalendarChoicePanel,
 			placeholderPanel, rightPanel, upperLeftPanel, upperRightPanel, top, centerLeft, centerRight;
 	private JLabel loginLabel, emailLabel, passLabel, regLabel, regHere, passConfLabel, fnameLabel, snameLabel,
 			nameLabel, locationLabel, startTimeLabel, endTimeLabel, descriptionLabel;
@@ -438,16 +438,16 @@ public class WindowPanel extends JPanel {
 
 		main.add(top, gbc);
 
-		center = new JPanel();
-		center.setPreferredSize(new Dimension(1175, 705));
-		center.setLayout(new GridBagLayout());
+		centerEvent = new JPanel();
+		centerEvent.setPreferredSize(new Dimension(1175, 705));
+		centerEvent.setLayout(new GridBagLayout());
 		// center.setBackground(new Color(0, 255, 0));
-		center.setVisible(true);
+		centerEvent.setVisible(true);
 
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 
-		main.add(center, gbc);
+		main.add(centerEvent, gbc);
 
 		centerLeft = new JPanel();
 		centerLeft.setPreferredSize(new Dimension(700, 705));
@@ -458,7 +458,7 @@ public class WindowPanel extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 
-		center.add(centerLeft, gbc);
+		centerEvent.add(centerLeft, gbc);
 
 		centerRight = new JPanel();
 		centerRight.setPreferredSize(new Dimension(475, 705));
@@ -469,7 +469,7 @@ public class WindowPanel extends JPanel {
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 
-		center.add(centerRight, gbc);
+		centerEvent.add(centerRight, gbc);
 
 		// Everything on panels
 
