@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -34,8 +35,9 @@ public class WindowPanel extends JPanel {
 	private JPanel form, main, addCalTop, addCalMain, center, centerEvent, mainPanel, leftPanel, addEventButtonPanel, overviewPanel, CalendarChoicePanel,
 			placeholderPanel, rightPanel, upperLeftPanel, upperRightPanel, top, centerLeft, centerRight, addCalCenterRight, addCalCenterLeft, addCalCenter;
 	private JLabel loginLabel, emailLabel, passLabel, regLabel, regHere, passConfLabel, fnameLabel, snameLabel, calenderNameLabel, 
-			nameLabel, locationLabel, startTimeLabel, endTimeLabel, descriptionLabel, calendarNameLabel;
-	private JTextField emailField, fnameField, snameField, nameField, locationField, calenderNameField;
+			nameLabel, locationLabel, startTimeLabel, endTimeLabel, descriptionLabel, calendarDescLabel;
+	private JTextField emailField, fnameField, snameField, nameField, locationField, calenderNameField, calendarDescField;
+	private JTextArea calendarDescTextArea;
 	private JPasswordField passField, passConfField;
 	private JButton loginButton, registerPageButton, registerButton, loginPageButton, regButton;
 	private JTextArea descriptionArea;
@@ -598,24 +600,13 @@ public class WindowPanel extends JPanel {
 		addCalMain = new JPanel();
 		addCalMain.setPreferredSize(new Dimension(1175, 725));
 		addCalMain.setLayout(new GridBagLayout());
-		// main.setBackground(new Color(0, 255, 255));
+		//addCalMain.setBackground(new Color(0, 255, 255));
 		addCalMain.setVisible(true);
 
 		rightPanel.add(addCalMain);
 
-		addCalTop = new JPanel();
-		addCalTop.setPreferredSize(new Dimension(1175, 20));
-		addCalTop.setLayout(new GridBagLayout());
-		addCalTop.setBackground(new Color(255, 0, 0));
-		addCalTop.setVisible(true);
-
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-
-		addCalMain.add(addCalTop, gbc);
-
 		addCalCenter = new JPanel();
-		addCalCenter.setPreferredSize(new Dimension(1175, 705));
+		addCalCenter.setPreferredSize(new Dimension(1175, 725));
 		addCalCenter.setLayout(new GridBagLayout());
 		//addCalCenter.setBackground(new Color(0, 255, 0));
 		addCalCenter.setVisible(true);
@@ -626,7 +617,7 @@ public class WindowPanel extends JPanel {
 		addCalMain.add(addCalCenter, gbc);
 
 		addCalCenterLeft = new JPanel();
-		addCalCenterLeft.setPreferredSize(new Dimension(700, 705));
+		addCalCenterLeft.setPreferredSize(new Dimension(700, 725));
 		addCalCenterLeft.setLayout(new GridBagLayout());
 		addCalCenterLeft.setBackground(new Color(0, 255, 0));
 		addCalCenterLeft.setVisible(true);
@@ -636,20 +627,10 @@ public class WindowPanel extends JPanel {
 
 		addCalCenter.add(addCalCenterLeft, gbc);
 		
-		calenderNameLabel = new JLabel("Event namn");
-		calenderNameLabel.setFont(new Font("Serif", Font.PLAIN, 20));
-
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-
-		addCalCenterLeft.add(calenderNameLabel, gbc);
-
-		calenderNameField = new JTextField();
-		calenderNameField.setPreferredSize(new Dimension(300, 30));
-		addCalCenterLeft.add(calenderNameField, gbc);
+		
 
 		addCalCenterRight = new JPanel();
-		addCalCenterRight.setPreferredSize(new Dimension(475, 705));
+		addCalCenterRight.setPreferredSize(new Dimension(475, 725));
 		addCalCenterRight.setLayout(new GridBagLayout());
 		addCalCenterRight.setBackground(new Color(0, 0, 255));
 		addCalCenterRight.setVisible(true);
@@ -658,6 +639,41 @@ public class WindowPanel extends JPanel {
 		gbc.gridy = 0;
 
 		addCalCenter.add(addCalCenterRight, gbc);
+		
+		calenderNameLabel = new JLabel("kalendernamn");
+		calenderNameLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+
+		addCalCenterRight.add(calenderNameLabel, gbc);
+
+		calenderNameField = new JTextField();
+		calenderNameField.setPreferredSize(new Dimension(300, 30));
+		
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		
+		addCalCenterRight.add(calenderNameField, gbc);
+		
+		calendarDescLabel = new JLabel("kalenderbeskrivning");
+		calendarDescLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+
+		addCalCenterRight.add(calendarDescLabel, gbc);
+
+		calendarDescTextArea = new JTextArea();
+		calendarDescTextArea.setRows(5);
+		calendarDescTextArea.setColumns(28);
+		calendarDescTextArea.setLineWrap(true);
+		calendarDescTextArea.setWrapStyleWord(true);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 3;
+		
+		addCalCenterRight.add(calendarDescTextArea, gbc);
 
 		rightPanel.updateUI();
 	}
