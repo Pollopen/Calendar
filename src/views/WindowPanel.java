@@ -20,6 +20,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
 
+import database.SQLManager;
+import object.User;
+
 public class WindowPanel extends JPanel {
 
 	private JPanel form, main, center, centerEvent, mainPanel, leftPanel, addEventButtonPanel, overviewPanel, CalendarChoicePanel,
@@ -35,6 +38,7 @@ public class WindowPanel extends JPanel {
 	private ListenForButton lForButton;
 	private GridBagConstraints gbc;
 	private Window window;
+	private User user;
 
 	public WindowPanel(Window window) {
 		this.window = window;
@@ -46,8 +50,14 @@ public class WindowPanel extends JPanel {
 		center.setBackground(new Color(255, 0, 0));
 		// center.add(new Login(this));
 		center.setVisible(true);
-
 		add(center);
+		
+		
+		/*
+		 * TODO move all building of panels here?
+		 */
+		
+		
 		getLoginPage();
 	}
 
@@ -317,6 +327,8 @@ public class WindowPanel extends JPanel {
 		 * this.setJMenuBar(null); center.removeAll(); center.add(new
 		 * Login(this)); center.updateUI();
 		 */
+		user= null;
+		SQLManager.setUser(user);
 		center.removeAll();
 		main = new JPanel();
 		main.setPreferredSize(new Dimension(1400, 800));
@@ -549,7 +561,7 @@ public class WindowPanel extends JPanel {
 			if (e.getSource() == loginButton) {
 				String loginEmail = emailField.getText();
 				char[] loginPassCandidate = passField.getPassword();
-				if (Login.checkLogin(loginEmail, loginPassCandidate)) {
+				if (SQLManager.checkLogin(loginEmail, loginPassCandidate, window)) {
 					getIndexPage();
 				}
 			}
