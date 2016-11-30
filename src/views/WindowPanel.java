@@ -13,13 +13,13 @@ import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
 import javax.swing.SpinnerDateModel;
 
 import org.jdatepicker.impl.JDatePanelImpl;
@@ -32,15 +32,19 @@ import object.User;
 
 public class WindowPanel extends JPanel {
 
-	private JPanel form, main, addCalTop, addCalMain, center, centerEvent, mainPanel, leftPanel, addEventButtonPanel, overviewPanel, CalendarChoicePanel,
-			placeholderPanel, rightPanel, upperLeftPanel, upperRightPanel, top, centerLeft, centerRight, addCalCenterRight, addCalCenterLeft, addCalCenter;
-	private JLabel loginLabel, emailLabel, passLabel, regLabel, regHere, passConfLabel, fnameLabel, snameLabel, calenderNameLabel, 
-			nameLabel, locationLabel, startTimeLabel, endTimeLabel, descriptionLabel, calendarDescLabel;
-	private JTextField emailField, fnameField, snameField, nameField, locationField, calenderNameField, calendarDescField;
+	private JPanel form, main, addCalTop, addCalMain, center, centerEvent, mainPanel, leftPanel, addEventButtonPanel,
+			overviewPanel, CalendarChoicePanel, placeholderPanel, rightPanel, upperLeftPanel, upperRightPanel, top,
+			centerLeft, centerRight, addCalCenterRight, addCalCenterLeft, addCalCenter;
+	private JLabel loginLabel, emailLabel, passLabel, regLabel, regHere, passConfLabel, fnameLabel, snameLabel,
+			calenderNameLabel, nameLabel, locationLabel, startTimeLabel, endTimeLabel, eventDescLabel,
+			calendarDescLabel;
+	private JTextField emailField, fnameField, snameField, nameField, locationField, calenderNameField,
+			calendarDescField;
 	private JTextArea calendarDescTextArea;
 	private JPasswordField passField, passConfField;
 	private JButton loginButton, registerPageButton, registerButton, loginPageButton, regButton;
-	private JTextArea descriptionArea;
+	private JTextArea eventDescArea;
+	private JCheckBox fullDayActivity;
 	private JSpinner startTimeSpinner, endTimeSpinner;
 	private JSpinner.DateEditor startTimeEditor, endTimeEditor;
 	private JDatePanelImpl startDatePanel, endDatePanel;
@@ -48,7 +52,7 @@ public class WindowPanel extends JPanel {
 	private UtilDateModel startModel, endModel;
 	private Properties startProperties, endProperties;
 	private ListenForButton lForButton;
-	private GridBagConstraints gbc;
+	private GridBagConstraints gbc, gbcLeft;
 	private Window window;
 	private User user;
 
@@ -436,10 +440,9 @@ public class WindowPanel extends JPanel {
 
 	public void getAddEventPage() {
 		rightPanel.removeAll();
-		
-		
 
 		gbc = new GridBagConstraints();
+		gbcLeft = new GridBagConstraints();
 		// Panel management
 
 		main = new JPanel();
@@ -546,6 +549,16 @@ public class WindowPanel extends JPanel {
 
 		centerLeft.add(startTimeLabel, gbc);
 
+		fullDayActivity = new JCheckBox();
+		fullDayActivity.setText("Heldags aktivitet?");
+
+		gbcLeft.gridx = 0;
+		gbcLeft.gridy = 5;
+		gbcLeft.insets = new Insets(0, 0, 10, 0);
+		gbcLeft.anchor = GridBagConstraints.WEST;
+
+		centerLeft.add(fullDayActivity, gbcLeft);
+
 		startModel = new UtilDateModel();
 		// model.setDate(20,04,2014);
 		// Need this...
@@ -556,32 +569,32 @@ public class WindowPanel extends JPanel {
 
 		startDatePanel = new JDatePanelImpl(startModel, startProperties);
 		startDatePicker = new JDatePickerImpl(startDatePanel, new DateLabelFormatter());
-		//startDatePicker.setPreferredSize(new Dimension(300, 30));
+		// startDatePicker.setPreferredSize(new Dimension(300, 30));
 
-		gbc.gridx = 0;
-		gbc.gridy = 5;
-		gbc.insets = new Insets(0, 0, 10, 0);
-		gbc.anchor = GridBagConstraints.WEST;
+		gbcLeft.gridx = 0;
+		gbcLeft.gridy = 6;
+		gbcLeft.insets = new Insets(0, 0, 10, 0);
+		gbcLeft.anchor = GridBagConstraints.WEST;
 
-		centerLeft.add(startDatePicker, gbc);
+		centerLeft.add(startDatePicker, gbcLeft);
 
 		startTimeSpinner = new JSpinner(new SpinnerDateModel());
 		startTimeEditor = new JSpinner.DateEditor(startTimeSpinner, "HH:mm");
 		startTimeSpinner.setEditor(startTimeEditor);
 		startTimeEditor.setPreferredSize(new Dimension(50, 23));
 
-		gbc.gridx = 1;
-		gbc.gridy = 5;
-		gbc.insets = new Insets(0, 10, 10, 0);
-		gbc.anchor = GridBagConstraints.WEST;
-		
-		centerLeft.add(startTimeSpinner, gbc);
-		
+		gbcLeft.gridx = 0;
+		gbcLeft.gridy = 6;
+		gbcLeft.insets = new Insets(0, 225, 10, 0);
+		gbcLeft.anchor = GridBagConstraints.WEST;
+
+		centerLeft.add(startTimeSpinner, gbcLeft);
+
 		endTimeLabel = new JLabel("Slut på event");
 		endTimeLabel.setFont(new Font("Serif", Font.PLAIN, 20));
 
 		gbc.gridx = 0;
-		gbc.gridy = 6;
+		gbc.gridy = 7;
 		gbc.insets = new Insets(0, 0, 10, 0);
 
 		centerLeft.add(endTimeLabel, gbc);
@@ -596,28 +609,50 @@ public class WindowPanel extends JPanel {
 
 		endDatePanel = new JDatePanelImpl(endModel, endProperties);
 		endDatePicker = new JDatePickerImpl(endDatePanel, new DateLabelFormatter());
-		//endDatePicker.setPreferredSize(new Dimension(200, 30));
+		// endDatePicker.setPreferredSize(new Dimension(200, 30));
 
-		gbc.gridx = 0;
-		gbc.gridy = 7;
-		gbc.insets = new Insets(0, 0, 10, 0);
-		gbc.anchor = GridBagConstraints.WEST;
-		
-		centerLeft.add(endDatePicker, gbc);
-		
+		gbcLeft.gridx = 0;
+		gbcLeft.gridy = 8;
+		gbcLeft.insets = new Insets(0, 0, 10, 0);
+		gbcLeft.anchor = GridBagConstraints.WEST;
+
+		centerLeft.add(endDatePicker, gbcLeft);
+
 		endTimeSpinner = new JSpinner(new SpinnerDateModel());
 		endTimeEditor = new JSpinner.DateEditor(endTimeSpinner, "HH:mm");
 		endTimeSpinner.setEditor(endTimeEditor);
 		endTimeEditor.setPreferredSize(new Dimension(50, 23));
 
-		gbc.gridx = 1;
-		gbc.gridy = 7;
-		gbc.insets = new Insets(0, 10, 10, 0);
-		gbc.anchor = GridBagConstraints.WEST;
-		
-		centerLeft.add(endTimeSpinner, gbc);
+		gbcLeft.gridx = 0;
+		gbcLeft.gridy = 8;
+		gbcLeft.insets = new Insets(0, 225, 10, 0);
+		gbcLeft.anchor = GridBagConstraints.WEST;
+
+		centerLeft.add(endTimeSpinner, gbcLeft);
+
+		eventDescLabel = new JLabel("Beskriv eventet här!");
+		eventDescLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+
+		gbc.gridx = 0;
+		gbc.gridy = 9;
+		gbc.insets = new Insets(0, 0, 10, 0);
+
+		centerLeft.add(eventDescLabel, gbc);
+
+		eventDescArea = new JTextArea();
+		eventDescArea.setPreferredSize(new Dimension(300, 100));
+		eventDescArea.setLineWrap(true);
+		eventDescArea.setWrapStyleWord(true);
+
+		gbc.gridx = 0;
+		gbc.gridy = 10;
+		gbc.insets = new Insets(0, 0, 10, 0);
+
+		centerLeft.add(eventDescArea, gbc);
 
 		rightPanel.updateUI();
+
+		fullDayActivity.addActionListener(lForButton);
 	}
 
 	public void getAddCalendarPage() {
@@ -630,7 +665,7 @@ public class WindowPanel extends JPanel {
 		addCalMain = new JPanel();
 		addCalMain.setPreferredSize(new Dimension(1175, 725));
 		addCalMain.setLayout(new GridBagLayout());
-		//addCalMain.setBackground(new Color(0, 255, 255));
+		// addCalMain.setBackground(new Color(0, 255, 255));
 		addCalMain.setVisible(true);
 
 		rightPanel.add(addCalMain);
@@ -656,7 +691,7 @@ public class WindowPanel extends JPanel {
 		gbc.gridy = 0;
 
 		addCalCenter.add(addCalCenterLeft, gbc);
-		
+
 		addCalCenterRight = new JPanel();
 		addCalCenterRight.setPreferredSize(new Dimension(475, 725));
 		addCalCenterRight.setLayout(new GridBagLayout());
@@ -667,7 +702,7 @@ public class WindowPanel extends JPanel {
 		gbc.gridy = 0;
 
 		addCalCenter.add(addCalCenterRight, gbc);
-		
+
 		calenderNameLabel = new JLabel("kalendernamn");
 
 		calenderNameLabel = new JLabel("Event namn");
@@ -680,12 +715,12 @@ public class WindowPanel extends JPanel {
 
 		calenderNameField = new JTextField();
 		calenderNameField.setPreferredSize(new Dimension(300, 30));
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		
+
 		addCalCenterRight.add(calenderNameField, gbc);
-		
+
 		calendarDescLabel = new JLabel("kalenderbeskrivning");
 		calendarDescLabel.setFont(new Font("Serif", Font.PLAIN, 20));
 
@@ -699,10 +734,10 @@ public class WindowPanel extends JPanel {
 		calendarDescTextArea.setColumns(28);
 		calendarDescTextArea.setLineWrap(true);
 		calendarDescTextArea.setWrapStyleWord(true);
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 3;
-		
+
 		addCalCenterRight.add(calendarDescTextArea, gbc);
 
 		rightPanel.updateUI();
@@ -729,6 +764,30 @@ public class WindowPanel extends JPanel {
 			}
 			if (e.getSource() == loginPageButton) {
 				getLoginPage();
+			}
+
+			if (e.getSource() == fullDayActivity) {
+
+				if (fullDayActivity.isSelected()) {
+					// centerLeft.remove(startTimeSpinner);
+					// centerLeft.remove(endTimeSpinner);
+					startDatePicker.setPreferredSize(new Dimension(300, 30));
+					endDatePicker.setPreferredSize(new Dimension(300, 30));
+					centerLeft.updateUI();
+					startTimeSpinner.setVisible(false);
+					endTimeSpinner.setVisible(false);
+					centerLeft.updateUI();
+				} else {
+
+					startDatePicker.setPreferredSize(new Dimension(202, 30));
+					endDatePicker.setPreferredSize(new Dimension(202, 30));
+
+					startTimeSpinner.setVisible(true);
+					endTimeSpinner.setVisible(true);
+
+					centerLeft.updateUI();
+
+				}
 			}
 
 		}
