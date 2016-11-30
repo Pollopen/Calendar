@@ -1,6 +1,8 @@
 package views;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -25,10 +27,11 @@ import object.User;
 
 public class WindowPanel extends JPanel {
 
-	private JPanel form, main, center, centerEvent, mainPanel, leftPanel, addEventButtonPanel, overviewPanel, CalendarChoicePanel,
-			placeholderPanel, rightPanel, upperLeftPanel, upperRightPanel, top, centerLeft, centerRight;
-	private JLabel loginLabel, emailLabel, passLabel, regLabel, regHere, passConfLabel, fnameLabel, snameLabel,
-			nameLabel, locationLabel, startTimeLabel, endTimeLabel, descriptionLabel;
+	private JPanel form, main, addCalTop, addCalMain, center, centerEvent, mainPanel, leftPanel, addEventButtonPanel, overviewPanel, CalendarChoicePanel,
+			placeholderPanel, rightPanel, upperLeftPanel, upperRightPanel, top, centerLeft, centerRight, addCalCenterRight, addCalCenterLeft, addCalCenter,
+			calenderNameField;
+	private JLabel loginLabel, emailLabel, passLabel, regLabel, regHere, passConfLabel, fnameLabel, snameLabel, calenderNameLabel, 
+			nameLabel, locationLabel, startTimeLabel, endTimeLabel, descriptionLabel, calendarNameLabel;
 	private JTextField emailField, fnameField, snameField, nameField, locationField;
 	private JPasswordField passField, passConfField;
 	private JButton loginButton, registerPageButton, registerButton, loginPageButton, regButton;
@@ -39,7 +42,7 @@ public class WindowPanel extends JPanel {
 	private GridBagConstraints gbc;
 	private Window window;
 	private User user;
-
+	
 	public WindowPanel(Window window) {
 		this.window = window;
 		gbc = new GridBagConstraints();
@@ -546,6 +549,79 @@ public class WindowPanel extends JPanel {
 		gbc.gridy = 6;
 
 		centerLeft.add(startDateSpinner, gbc);
+
+		rightPanel.updateUI();
+	}
+	public void getAddCalendarPage() {
+		rightPanel.removeAll();
+
+		gbc = new GridBagConstraints();
+
+		// Panel management
+
+		addCalMain = new JPanel();
+		addCalMain.setPreferredSize(new Dimension(1175, 725));
+		addCalMain.setLayout(new GridBagLayout());
+		// main.setBackground(new Color(0, 255, 255));
+		addCalMain.setVisible(true);
+
+		rightPanel.add(addCalMain);
+
+		addCalTop = new JPanel();
+		addCalTop.setPreferredSize(new Dimension(1175, 20));
+		addCalTop.setLayout(new GridBagLayout());
+		addCalTop.setBackground(new Color(255, 0, 0));
+		addCalTop.setVisible(true);
+
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+
+		addCalMain.add(addCalTop, gbc);
+
+		addCalCenter = new JPanel();
+		addCalCenter.setPreferredSize(new Dimension(1175, 705));
+		addCalCenter.setLayout(new GridBagLayout());
+		//addCalCenter.setBackground(new Color(0, 255, 0));
+		addCalCenter.setVisible(true);
+
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+
+		addCalMain.add(addCalCenter, gbc);
+
+		addCalCenterLeft = new JPanel();
+		addCalCenterLeft.setPreferredSize(new Dimension(700, 705));
+		addCalCenterLeft.setLayout(new GridBagLayout());
+		addCalCenterLeft.setBackground(new Color(0, 255, 0));
+		addCalCenterLeft.setVisible(true);
+
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+
+		addCalCenter.add(addCalCenterLeft, gbc);
+		
+		calenderNameLabel = new JLabel("Event namn");
+		calenderNameLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+
+		addCalCenterLeft.add(calenderNameLabel, gbc);
+
+		calenderNameField = new JTextField();
+		calenderNameField.setPreferredSize(new Dimension(300, 30));
+		addCalCenterLeft.add(calenderNameField, gbc);
+
+		addCalCenterRight = new JPanel();
+		addCalCenterRight.setPreferredSize(new Dimension(475, 705));
+		addCalCenterRight.setLayout(new GridBagLayout());
+		addCalCenterRight.setBackground(new Color(0, 0, 255));
+		addCalCenterRight.setVisible(true);
+
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+
+		addCalCenter.add(addCalCenterRight, gbc);
 
 		rightPanel.updateUI();
 	}
