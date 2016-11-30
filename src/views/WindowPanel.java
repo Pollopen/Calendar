@@ -9,32 +9,39 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SpinnerDateModel;
 
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
+
+import controller.DateLabelFormatter;
 import database.SQLManager;
 import object.User;
 
 public class WindowPanel extends JPanel {
 
-	private JPanel form, main, center, centerEvent, mainPanel, leftPanel, addEventButtonPanel, overviewPanel, CalendarChoicePanel,
-			placeholderPanel, rightPanel, upperLeftPanel, upperRightPanel, top, centerLeft, centerRight;
+	private JPanel form, main, center, centerEvent, mainPanel, leftPanel, addEventButtonPanel, overviewPanel,
+			CalendarChoicePanel, placeholderPanel, rightPanel, upperLeftPanel, upperRightPanel, top, centerLeft,
+			centerRight;
 	private JLabel loginLabel, emailLabel, passLabel, regLabel, regHere, passConfLabel, fnameLabel, snameLabel,
 			nameLabel, locationLabel, startTimeLabel, endTimeLabel, descriptionLabel;
 	private JTextField emailField, fnameField, snameField, nameField, locationField;
 	private JPasswordField passField, passConfField;
 	private JButton loginButton, registerPageButton, registerButton, loginPageButton, regButton;
-	private JSpinner.DateEditor startDateSpinner, endDateSpinner;
-	private JSpinner startTimeSpinner, endTimeSpinner;
 	private JTextArea descriptionArea;
+	private JDatePanelImpl startDatePanel, endDatePanel;
+	private JDatePickerImpl startDatePicker, endDatePicker;
+	private UtilDateModel startModel, endModel;
+	private Properties startProperties, endProperties;
 	private ListenForButton lForButton;
 	private GridBagConstraints gbc;
 	private Window window;
@@ -51,13 +58,11 @@ public class WindowPanel extends JPanel {
 		// center.add(new Login(this));
 		center.setVisible(true);
 		add(center);
-		
-		
+
 		/*
 		 * TODO move all building of panels here?
 		 */
-		
-		
+
 		getLoginPage();
 	}
 
@@ -327,7 +332,7 @@ public class WindowPanel extends JPanel {
 		 * this.setJMenuBar(null); center.removeAll(); center.add(new
 		 * Login(this)); center.updateUI();
 		 */
-		user= null;
+		user = null;
 		SQLManager.setUser(user);
 		center.removeAll();
 		main = new JPanel();
@@ -491,6 +496,7 @@ public class WindowPanel extends JPanel {
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
+		gbc.insets = new Insets(0, 0, 10, 0);
 
 		centerLeft.add(nameLabel, gbc);
 
@@ -499,6 +505,7 @@ public class WindowPanel extends JPanel {
 
 		gbc.gridx = 0;
 		gbc.gridy = 1;
+		gbc.insets = new Insets(0, 0, 10, 0);
 
 		centerLeft.add(nameField, gbc);
 
@@ -509,6 +516,7 @@ public class WindowPanel extends JPanel {
 
 		gbc.gridx = 0;
 		gbc.gridy = 2;
+		gbc.insets = new Insets(0, 0, 10, 0);
 
 		centerLeft.add(locationLabel, gbc);
 
@@ -517,6 +525,7 @@ public class WindowPanel extends JPanel {
 
 		gbc.gridx = 0;
 		gbc.gridy = 3;
+		gbc.insets = new Insets(0, 0, 10, 0);
 
 		centerLeft.add(locationField, gbc);
 
@@ -527,25 +536,54 @@ public class WindowPanel extends JPanel {
 
 		gbc.gridx = 0;
 		gbc.gridy = 4;
+		gbc.insets = new Insets(0, 0, 10, 0);
 
 		centerLeft.add(startTimeLabel, gbc);
+
+		startModel = new UtilDateModel();
+		// model.setDate(20,04,2014);
+		// Need this...
+		startProperties = new Properties();
+		startProperties.put("text.today", "Today");
+		startProperties.put("text.month", "Month");
+		startProperties.put("text.year", "Year");
+
+		startDatePanel = new JDatePanelImpl(startModel, startProperties);
+		startDatePicker = new JDatePickerImpl(startDatePanel, new DateLabelFormatter());
+		startDatePicker.setPreferredSize(new Dimension(300, 30));
+
+		gbc.gridx = 0;
+		gbc.gridy = 5;
+		gbc.insets = new Insets(0, 0, 10, 0);
+
+		centerLeft.add(startDatePicker, gbc);
 
 		endTimeLabel = new JLabel("Slut på event");
 		endTimeLabel.setFont(new Font("Serif", Font.PLAIN, 20));
 
 		gbc.gridx = 0;
-		gbc.gridy = 5;
+		gbc.gridy = 6;
+		gbc.insets = new Insets(0, 0, 10, 0);
 
 		centerLeft.add(endTimeLabel, gbc);
 
-		startTimeSpinner = new JSpinner(new SpinnerDateModel());
-		startDateSpinner = new JSpinner.DateEditor(startTimeSpinner, "HH:mm:ss");
-		startDateSpinner.setPreferredSize(new Dimension(300, 30));
+		endModel = new UtilDateModel();
+		// model.setDate(20,04,2014);
+		// Need this...
+		endProperties = new Properties();
+		endProperties.put("text.today", "Today");
+		endProperties.put("text.month", "Month");
+		endProperties.put("text.year", "Year");
+
+		endDatePanel = new JDatePanelImpl(endModel, endProperties);
+		endDatePicker = new JDatePickerImpl(endDatePanel, new DateLabelFormatter());
+		endDatePicker.setPreferredSize(new Dimension(300, 30));
 
 		gbc.gridx = 0;
-		gbc.gridy = 6;
+		gbc.gridy = 7;
+		gbc.insets = new Insets(0, 0, 10, 0);
 
-		centerLeft.add(startDateSpinner, gbc);
+		centerLeft.add(endDatePicker, gbc);
 
 		rightPanel.updateUI();
 	}
