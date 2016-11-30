@@ -13,13 +13,14 @@ import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
 import javax.swing.SpinnerDateModel;
 
 import org.jdatepicker.impl.JDatePanelImpl;
@@ -32,11 +33,11 @@ import object.User;
 
 public class WindowPanel extends JPanel {
 
-	private JPanel form, main, addCalTop, addCalMain, center, centerEvent, mainPanel, leftPanel, addEventButtonPanel, overviewPanel, CalendarChoicePanel,
-			placeholderPanel, rightPanel, upperLeftPanel, upperRightPanel, top, centerLeft, centerRight, addCalCenterRight, addCalCenterLeft, addCalCenter;
+	private JPanel form, main, addCalMain, center, centerEvent, mainPanel, leftPanel, addEventButtonPanel, overviewPanel, CalendarChoicePanel,
+			placeholderPanel, rightPanel, upperLeftPanel, upperRightPanel, top, centerLeft, centerRight, addCalCenterRight, addCalCenterRight1, addCalCenterRight2, addCalCenterRight3, addCalCenterLeft, addCalCenter;
 	private JLabel loginLabel, emailLabel, passLabel, regLabel, regHere, passConfLabel, fnameLabel, snameLabel, calenderNameLabel, 
-			nameLabel, locationLabel, startTimeLabel, endTimeLabel, descriptionLabel, calendarDescLabel;
-	private JTextField emailField, fnameField, snameField, nameField, locationField, calenderNameField, calendarDescField;
+			nameLabel, locationLabel, startTimeLabel, endTimeLabel, descriptionLabel, calendarDescLabel, regEmailLabel, regPassLabel, regPassConfLabel, regFNameLabel, regSNameLabel, loginPageLabel;
+	private JTextField emailField, fnameField, snameField, nameField, locationField, calenderNameField, calendarDescField, regEmailField, regPassField, regPassConfField, regSNameField, regFNameField;
 	private JTextArea calendarDescTextArea;
 	private JPasswordField passField, passConfField;
 	private JButton loginButton, registerPageButton, registerButton, loginPageButton, regButton;
@@ -211,90 +212,90 @@ public class WindowPanel extends JPanel {
 		form.add(regHere, gbc);
 
 		// Email
-		emailLabel = new JLabel("Email: ");
-		emailLabel.setFont(new Font("Serif", Font.PLAIN, 20));
-		emailField = new JTextField();
-		emailField.setPreferredSize(new Dimension(300, 30));
+		regEmailLabel = new JLabel("Email: ");
+		regEmailLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+		regEmailField = new JTextField();
+		regEmailField.setPreferredSize(new Dimension(300, 30));
 
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.insets = new Insets(0, 0, 10, 0);
 
-		form.add(emailLabel, gbc);
+		form.add(regEmailLabel, gbc);
 
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		gbc.insets = new Insets(0, 0, 10, 0);
 
-		form.add(emailField, gbc);
+		form.add(regEmailField, gbc);
 
 		// Password + password confirmation
-		passLabel = new JLabel("Lösenord: ");
-		passLabel.setFont(new Font("Serif", Font.PLAIN, 20));
-		passField = new JPasswordField();
-		passField.setPreferredSize(new Dimension(300, 30));
-		passConfLabel = new JLabel("Lösenord igen: ");
-		passConfLabel.setFont(new Font("Serif", Font.PLAIN, 20));
-		passConfField = new JPasswordField();
-		passConfField.setPreferredSize(new Dimension(300, 30));
+		regPassLabel = new JLabel("Lösenord: ");
+		regPassLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+		regPassField = new JPasswordField();
+		regPassField.setPreferredSize(new Dimension(300, 30));
+		regPassConfLabel = new JLabel("Lösenord igen: ");
+		regPassConfLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+		regPassConfField = new JPasswordField();
+		regPassConfField.setPreferredSize(new Dimension(300, 30));
 
 		gbc.gridx = 0;
 		gbc.gridy = 3;
 		gbc.insets = new Insets(0, 0, 10, 0);
 
-		form.add(passLabel, gbc);
+		form.add(regPassLabel, gbc);
 
 		gbc.gridx = 0;
 		gbc.gridy = 4;
 		gbc.insets = new Insets(0, 0, 10, 0);
 
-		form.add(passField, gbc);
+		form.add(regPassField, gbc);
 
 		gbc.gridx = 0;
 		gbc.gridy = 5;
 		gbc.insets = new Insets(0, 0, 10, 0);
 
-		form.add(passConfLabel, gbc);
+		form.add(regPassConfLabel, gbc);
 
 		gbc.gridx = 0;
 		gbc.gridy = 6;
 		gbc.insets = new Insets(0, 0, 10, 0);
 
-		form.add(passConfField, gbc);
+		form.add(regPassConfField, gbc);
 
 		// First name + last name
-		fnameLabel = new JLabel("Förnamn: ");
-		fnameLabel.setFont(new Font("Serif", Font.PLAIN, 20));
-		fnameField = new JTextField();
-		fnameField.setPreferredSize(new Dimension(300, 30));
-		snameLabel = new JLabel("Efternamn: ");
-		snameLabel.setFont(new Font("Serif", Font.PLAIN, 20));
-		snameField = new JTextField();
-		snameField.setPreferredSize(new Dimension(300, 30));
+		regFNameLabel = new JLabel("Förnamn: ");
+		regFNameLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+		regFNameField = new JTextField();
+		regFNameField.setPreferredSize(new Dimension(300, 30));
+		regSNameLabel = new JLabel("Efternamn: ");
+		regSNameLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+		regSNameField = new JTextField();
+		regSNameField.setPreferredSize(new Dimension(300, 30));
 
 		gbc.gridx = 0;
 		gbc.gridy = 7;
 		gbc.insets = new Insets(0, 0, 10, 0);
 
-		form.add(fnameLabel, gbc);
+		form.add(regFNameLabel, gbc);
 
 		gbc.gridx = 0;
 		gbc.gridy = 8;
 		gbc.insets = new Insets(0, 0, 10, 0);
 
-		form.add(fnameField, gbc);
+		form.add(regFNameField, gbc);
 
 		gbc.gridx = 0;
 		gbc.gridy = 9;
 		gbc.insets = new Insets(0, 0, 10, 0);
 
-		form.add(snameLabel, gbc);
+		form.add(regSNameLabel, gbc);
 
 		gbc.gridx = 0;
 		gbc.gridy = 10;
 		gbc.insets = new Insets(0, 0, 10, 0);
 
-		form.add(snameField, gbc);
+		form.add(regSNameField, gbc);
 
 		// Reg button
 		regButton = new JButton("Registrera");
@@ -306,13 +307,13 @@ public class WindowPanel extends JPanel {
 		form.add(regButton, gbc);
 
 		// Login label + button
-		loginLabel = new JLabel("Har du redan ett konto?");
+		loginPageLabel = new JLabel("Har du redan ett konto?");
 
 		gbc.gridx = 0;
 		gbc.gridy = 12;
 		gbc.insets = new Insets(0, 0, 10, 0);
 
-		form.add(loginLabel, gbc);
+		form.add(loginPageLabel, gbc);
 
 		loginPageButton = new JButton("Klicka här för att logga in");
 
@@ -668,15 +669,46 @@ public class WindowPanel extends JPanel {
 
 		addCalCenter.add(addCalCenterRight, gbc);
 		
-		calenderNameLabel = new JLabel("kalendernamn");
+		addCalCenterRight1 = new JPanel();
+		addCalCenterRight1.setPreferredSize(new Dimension(475, 125));
+		addCalCenterRight1.setLayout(new GridBagLayout());
+		addCalCenterRight1.setBackground(new Color(255, 0, 0));
+		addCalCenterRight1.setVisible(true);
 
-		calenderNameLabel = new JLabel("Event namn");
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+
+		addCalCenterRight.add(addCalCenterRight1, gbc);
+		
+		addCalCenterRight2 = new JPanel();
+		addCalCenterRight2.setPreferredSize(new Dimension(475, 300));
+		addCalCenterRight2.setLayout(new GridBagLayout());
+		addCalCenterRight2.setBackground(new Color(100, 255, 100));
+		addCalCenterRight2.setVisible(true);
+
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+
+		addCalCenterRight.add(addCalCenterRight2, gbc);
+		
+		addCalCenterRight3 = new JPanel();
+		addCalCenterRight3.setPreferredSize(new Dimension(475, 300));
+		addCalCenterRight3.setLayout(new GridBagLayout());
+		addCalCenterRight3.setBackground(new Color(0, 0, 255));
+		addCalCenterRight3.setVisible(true);
+
+		gbc.gridx = 0;
+		gbc.gridy = 3;
+
+		addCalCenterRight.add(addCalCenterRight3, gbc);
+		
+		calenderNameLabel = new JLabel("kalendernamn");
 		calenderNameLabel.setFont(new Font("Serif", Font.PLAIN, 20));
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 
-		addCalCenterRight.add(calenderNameLabel, gbc);
+		addCalCenterRight2.add(calenderNameLabel, gbc);
 
 		calenderNameField = new JTextField();
 		calenderNameField.setPreferredSize(new Dimension(300, 30));
@@ -684,7 +716,7 @@ public class WindowPanel extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		
-		addCalCenterRight.add(calenderNameField, gbc);
+		addCalCenterRight2.add(calenderNameField, gbc);
 		
 		calendarDescLabel = new JLabel("kalenderbeskrivning");
 		calendarDescLabel.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -692,18 +724,19 @@ public class WindowPanel extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 
-		addCalCenterRight.add(calendarDescLabel, gbc);
+		addCalCenterRight2.add(calendarDescLabel, gbc);
 
 		calendarDescTextArea = new JTextArea();
+		calendarDescTextArea.setPreferredSize(new Dimension(300, 100));
 		calendarDescTextArea.setRows(5);
-		calendarDescTextArea.setColumns(28);
+		calendarDescTextArea.setColumns(27);
 		calendarDescTextArea.setLineWrap(true);
 		calendarDescTextArea.setWrapStyleWord(true);
 		
 		gbc.gridx = 0;
 		gbc.gridy = 3;
 		
-		addCalCenterRight.add(calendarDescTextArea, gbc);
+		addCalCenterRight2.add(calendarDescTextArea, gbc);
 
 		rightPanel.updateUI();
 	}
@@ -722,6 +755,12 @@ public class WindowPanel extends JPanel {
 				if (SQLManager.checkLogin(loginEmail, loginPassCandidate, window)) {
 					getIndexPage();
 				}
+			}
+			if (e.getSource() == registerButton) {
+				
+				//if(SQLManager.register(window, String fname, String sname, String email, char[] pass1, char[] pass2)){
+				//	getLoginPage();
+				//}
 			}
 
 			if (e.getSource() == registerPageButton) {

@@ -88,6 +88,12 @@ public class SQLManager {
 		}
 		return false;
 	}
+	public static boolean addCalender(String calName, String calDesc){
+		return false;
+	}
+	public static boolean manageCalender(int calId, String calName, String calDesc){
+		return false;
+	}
 
 	public static JavaDB getDb() {
 		return db;
