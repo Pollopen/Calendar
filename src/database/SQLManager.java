@@ -91,9 +91,9 @@ public class SQLManager {
 		return false;
 	}
 
-	public static boolean addCalender(String calName, String calDesc){
-		String SQL = "INSERT INTO calendar(creator_id, name, description) VALUES('" + user.getId() + "','" + calName + "','"
-				+ calDesc + "');";
+	public static boolean addCalender(String calName, String calDesc) {
+		String SQL = "INSERT INTO calendar(creator_id, name, description) VALUES('" + user.getId() + "','" + calName
+				+ "','" + calDesc + "');";
 		db.execute(SQL);
 		return true;
 	}
@@ -103,13 +103,16 @@ public class SQLManager {
 	}
 
 	public static boolean addEvent(String inputEventName, String inputEventLocation, String inputEventTextArea,
-			int inputFullDayEvent, String formatStartDate, String formatEndDate) {
+			int inputFullDayEvent, int inputCreateEventForCalendarId, String formatStartDate, String formatEndDate) {
 
-		user.getId();
+		String SQL = "INSERT INTO event(cal_id, creator_id, name, location, description, start_time, end_time, notification, full_day) VALUES('"
+				+ inputCreateEventForCalendarId + "','" + user.getId() + "','" + inputEventName + "','"
+				+ inputEventLocation + "','" + inputEventTextArea + "','" + formatStartDate + "','" + formatEndDate
+				+ "','1','" + inputFullDayEvent + "' )";
 
-		String SQL = "INSERT INTO event(cal_id, creator_id, name, location, description, start_time, length, notification) VALUES()";
+		db.execute(SQL);
 
-		return false;
+		return true;
 	}
 
 	public static JavaDB getDb() {
