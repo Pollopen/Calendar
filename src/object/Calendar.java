@@ -39,4 +39,12 @@ public class Calendar extends JPanel {
 		this.cal_id = cal_id;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public int getNotification() {
+		return notification;
+	}
+
 }

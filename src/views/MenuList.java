@@ -41,6 +41,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+
+import object.User;
 /*
  * This class exists solely to show you what menus look like.
  * It has no menu-related event handling.
@@ -50,15 +52,17 @@ public class MenuList {
     JScrollPane scrollPane;
     JMenuBar menuBar;
     JMenu menu, submenu;
-    JMenuItem menuItem, menuLogout, menuAddEvent, menuAddCalendar;
+    JMenuItem menuItem, menuReload, menuLogout, menuAddEvent, menuAddCalendar;
     JRadioButtonMenuItem rbMenuItem;
     JCheckBoxMenuItem cbMenuItem;
     Window window;
     WindowPanel windowpanel;
+    User user;
 
-    public JMenuBar createMenuBar(Window window, WindowPanel windowpanel) {
+    public JMenuBar createMenuBar(Window window, WindowPanel windowpanel, User user) {
     	this.window = window;
     	this.windowpanel = windowpanel;
+    	this.user = user;
 
         ListenForButton lForButton = new ListenForButton();
 
@@ -71,8 +75,9 @@ public class MenuList {
         menuBar.add(menu);
 
         //a group of JMenuItems
-        menuItem = new JMenuItem("Ladda om");
-        menu.add(menuItem);
+        menuReload = new JMenuItem("Ladda om");
+        menu.add(menuReload);
+        menuReload.addActionListener(lForButton);
         
         menu.addSeparator();
         
@@ -114,6 +119,10 @@ public class MenuList {
 
 			if (e.getSource() == menuLogout) {
 				windowpanel.getLoginPage();
+			}
+			if (e.getSource() == menuReload) {
+				user.reloadarrays();
+				user.getAll();
 			}
 			if (e.getSource() == menuAddEvent) {
 				windowpanel.getAddEventPage();

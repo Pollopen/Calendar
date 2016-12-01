@@ -95,4 +95,12 @@ public class User {
 	 * public void setCreated(int created) { this.created = created; }
 	 * 
 	 */
+
+	public Calendar[] getCalArray() {
+		return calArray;
+	}
+
+	public Event[] getEventArray() {
+		return eventArray;
+	}
 }

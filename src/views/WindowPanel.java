@@ -30,19 +30,20 @@ import org.jdatepicker.impl.UtilDateModel;
 
 import controller.DateLabelFormatter;
 import database.SQLManager;
+import object.Calendar;
 import object.User;
 
 public class WindowPanel extends JPanel {
 
 	private JPanel form, main, addCalMain, center, centerEvent, mainPanel, leftPanel, addEventButtonPanel, overviewPanel, CalendarChoicePanel,
 			placeholderPanel, rightPanel, upperLeftPanel, upperRightPanel, top, centerLeft, centerRight, addCalCenterRight, addCalCenterRight1, addCalCenterRight2, addCalCenterRight3, addCalCenterLeft, addCalCenter;
-	private JLabel loginLabel, emailLabel, passLabel, regLabel, regHere, passConfLabel, fnameLabel, snameLabel, calenderNameLabel, 
-			nameLabel, locationLabel, startTimeLabel, endTimeLabel, eventDescLabel, descriptionLabel, calendarDescLabel, regEmailLabel, regPassLabel, regPassConfLabel, regFNameLabel, regSNameLabel, loginPageLabel;
-	private JTextField emailField, fnameField, snameField, nameField, locationField, calenderNameField, calendarDescField, regEmailField, regPassField, regPassConfField, regSNameField, regFNameField;
-	
-	private JTextArea calendarDescTextArea;
+	private JLabel calAddLabel, calAddNotLabel, calAddNameLabel, loginLabel, emailLabel, passLabel, regLabel, regHere, passConfLabel, fnameLabel, snameLabel, calendarNameLabel, 
+			nameLabel, locationLabel, calListLabel, startTimeLabel, endTimeLabel, eventDescLabel, descriptionLabel, calendarDescLabel, regEmailLabel, regPassLabel, regPassConfLabel, regFNameLabel, regSNameLabel, loginPageLabel;
+	private JTextField calAddNameField, calAddNotField, emailField, fnameField, snameField, nameField, locationField, calendarNameField, calendarDescField, regEmailField, regPassField, regPassConfField, regSNameField, regFNameField;
+	private Calendar[] calArray;
+	private JTextArea calendarDescTextArea, calAddDescTextArea;
 	private JPasswordField passField, passConfField;
-	private JButton loginButton, registerPageButton, registerButton, loginPageButton, regButton;
+	private JButton calAddButton, loginButton, registerPageButton, registerButton, loginPageButton, regButton, calSaveButton, calRemoveButton;
 	private JTextArea eventDescArea;
 	private JCheckBox fullDayActivity;
 	private JSpinner startTimeSpinner, endTimeSpinner;
@@ -53,10 +54,12 @@ public class WindowPanel extends JPanel {
 	private Properties startProperties, endProperties;
 	private ListenForButton lForButton;
 	private GridBagConstraints gbc, gbcLeft;
+	private WindowPanel windowpanel;
 	private Window window;
 	private User user;
 
 	public WindowPanel(Window window) {
+		windowpanel=this;
 		this.window = window;
 		gbc = new GridBagConstraints();
 		lForButton = new ListenForButton();
@@ -81,7 +84,7 @@ public class WindowPanel extends JPanel {
 		// center.updateUI();
 		gbc = new GridBagConstraints();
 		MenuList menu = new MenuList();
-		window.setJMenuBar(menu.createMenuBar(window, this));
+		window.setJMenuBar(menu.createMenuBar(window, this, user));
 		center.removeAll();
 
 		// Main panel
@@ -691,6 +694,8 @@ public class WindowPanel extends JPanel {
 		gbc.gridy = 0;
 
 		addCalCenter.add(addCalCenterLeft, gbc);
+		
+		calenderList();
 
 		addCalCenterRight = new JPanel();
 		addCalCenterRight.setPreferredSize(new Dimension(475, 725));
@@ -704,7 +709,7 @@ public class WindowPanel extends JPanel {
 		addCalCenter.add(addCalCenterRight, gbc);
 		
 		addCalCenterRight1 = new JPanel();
-		addCalCenterRight1.setPreferredSize(new Dimension(475, 125));
+		addCalCenterRight1.setPreferredSize(new Dimension(475, 75));
 		addCalCenterRight1.setLayout(new GridBagLayout());
 		addCalCenterRight1.setBackground(new Color(255, 0, 0));
 		addCalCenterRight1.setVisible(true);
@@ -714,48 +719,48 @@ public class WindowPanel extends JPanel {
 
 		addCalCenterRight.add(addCalCenterRight1, gbc);
 		
+		calSaveButton = new JButton("Spara");
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		addCalCenterRight1.add(calSaveButton, gbc);
+		
+		calSaveButton.addActionListener(lForButton);
+		
+		calRemoveButton = new JButton("Ta bort");
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		addCalCenterRight1.add(calRemoveButton, gbc);
+		
+		calRemoveButton.addActionListener(lForButton);
+		
+		
 		addCalCenterRight2 = new JPanel();
-		addCalCenterRight2.setPreferredSize(new Dimension(475, 300));
+		addCalCenterRight2.setPreferredSize(new Dimension(475, 450));
 		addCalCenterRight2.setLayout(new GridBagLayout());
 		addCalCenterRight2.setBackground(new Color(100, 255, 100));
 		addCalCenterRight2.setVisible(true);
-
-		calenderNameLabel = new JLabel("kalendernamn");
 
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 
 		addCalCenterRight.add(addCalCenterRight2, gbc);
 		
-		addCalCenterRight3 = new JPanel();
-		addCalCenterRight3.setPreferredSize(new Dimension(475, 300));
-		addCalCenterRight3.setLayout(new GridBagLayout());
-		addCalCenterRight3.setBackground(new Color(0, 0, 255));
-		addCalCenterRight3.setVisible(true);
-
-		gbc.gridx = 0;
-		gbc.gridy = 3;
-
-		addCalCenterRight.add(addCalCenterRight3, gbc);
-		
-		calenderNameLabel = new JLabel("kalendernamn");
-		calenderNameLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+		calendarNameLabel = new JLabel("kalendernamn");
+		calendarNameLabel.setFont(new Font("Serif", Font.PLAIN, 20));
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 
-		addCalCenterRight2.add(calenderNameLabel, gbc);
+		addCalCenterRight2.add(calendarNameLabel, gbc);
 
-		calenderNameField = new JTextField();
-		calenderNameField.setPreferredSize(new Dimension(300, 30));
+		calendarNameField = new JTextField();
+		calendarNameField.setPreferredSize(new Dimension(300, 30));
 
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		
-		addCalCenterRight2.add(calenderNameField, gbc);
+		addCalCenterRight2.add(calendarNameField, gbc);
 		
-
-		addCalCenterRight.add(calenderNameField, gbc);
 		calendarDescLabel = new JLabel("kalenderbeskrivning");
 		calendarDescLabel.setFont(new Font("Serif", Font.PLAIN, 20));
 
@@ -775,10 +780,69 @@ public class WindowPanel extends JPanel {
 		gbc.gridy = 3;
 		
 		addCalCenterRight2.add(calendarDescTextArea, gbc);
+		
+		addCalCenterRight3 = new JPanel();
+		addCalCenterRight3.setPreferredSize(new Dimension(475, 200));
+		addCalCenterRight3.setLayout(new GridBagLayout());
+		addCalCenterRight3.setBackground(new Color(0, 0, 255));
+		addCalCenterRight3.setVisible(true);
 
-		addCalCenterRight.add(calendarDescTextArea, gbc);
+		gbc.gridx = 0;
+		gbc.gridy = 3;
+
+		addCalCenterRight.add(addCalCenterRight3, gbc);
+		
+		
 
 		rightPanel.updateUI();
+	}
+	private void calenderList(){
+		//*name**people in calender**notification*
+		//add new
+		calArray=user.getCalArray();
+		calAddLabel = new JLabel("Lägg till kalender:");
+		calAddNameLabel = new JLabel("Kalendernamn");
+		calAddNameField = new JTextField();
+		calAddNameField.setPreferredSize(new Dimension(300, 30));
+		calAddNotLabel = new JLabel("Beskrivning:");
+		calAddDescTextArea = new JTextArea();
+		calAddDescTextArea.setPreferredSize(new Dimension(300, 100));
+		calAddDescTextArea.setRows(5);
+		calAddDescTextArea.setColumns(27);
+		calAddDescTextArea.setLineWrap(true);
+		calAddDescTextArea.setWrapStyleWord(true);
+		calAddButton = new JButton("Lägg till kalender");
+		calAddButton.addActionListener(lForButton);
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		addCalCenterLeft.add(calAddLabel, gbc);
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		addCalCenterLeft.add(calAddNameLabel, gbc);
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		addCalCenterLeft.add(calAddNameField, gbc);
+		gbc.gridx = 0;
+		gbc.gridy = 3;
+		addCalCenterLeft.add(calAddNotLabel, gbc);
+		gbc.gridx = 0;
+		gbc.gridy = 4;
+		addCalCenterLeft.add(calAddDescTextArea, gbc);
+		gbc.gridx = 0;
+		gbc.gridy = 5;
+		addCalCenterLeft.add(calAddButton, gbc);
+		
+		for(int i=0;i<calArray.length;i++){
+			calListLabel = new JLabel(calArray[i].getName()+" "+calArray[i].getNotification());
+			gbc.gridx = 0;
+			gbc.gridy = i+6;
+
+			addCalCenterLeft.add(calListLabel, gbc);
+		}
+		
+	}
+	public void sendUser(User user){
+		this.user=user;
 	}
 
 	private class ListenForButton implements ActionListener {
@@ -792,7 +856,7 @@ public class WindowPanel extends JPanel {
 			if (e.getSource() == loginButton) {
 				String loginEmail = emailField.getText();
 				char[] loginPassCandidate = passField.getPassword();
-				if (SQLManager.checkLogin(loginEmail, loginPassCandidate, window)) {
+				if (SQLManager.checkLogin(loginEmail, loginPassCandidate, window, windowpanel)) {
 					getIndexPage();
 				}
 			}
@@ -808,6 +872,16 @@ public class WindowPanel extends JPanel {
 			}
 			if (e.getSource() == loginPageButton) {
 				getLoginPage();
+			}
+			if (e.getSource() == calAddButton) {
+				String temp1 = calAddNameField.getText();
+				String temp2 = calAddDescTextArea.getText();
+				if(SQLManager.addCalender(temp1, temp2)){
+					addCalCenterLeft.removeAll();
+					user.reloadarrays();
+					getAddCalendarPage();
+				}
+				
 			}
 
 			if (e.getSource() == fullDayActivity) {

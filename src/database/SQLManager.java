@@ -6,12 +6,13 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import object.User;
 import views.Window;
+import views.WindowPanel;
 
 public class SQLManager {
 	private static JavaDB db = new JavaDB();
 	private static User user;
 
-	public static boolean checkLogin(String emailfield, char[] passfield, Window window) {
+	public static boolean checkLogin(String emailfield, char[] passfield, Window window, WindowPanel windowpanel) {
 		String loginPassHashed = "";
 		Object[][] data = db.getData("select * from user where email = '" + emailfield + "'");
 		int accfound = 0;
@@ -34,6 +35,7 @@ public class SQLManager {
 				// user = new user (int,string,string,string);
 				user.getAll();
 				user.reloadarrays();
+				windowpanel.sendUser(user);
 				return true;
 			} else {
 				// System.out.println("It does not match");
@@ -89,7 +91,10 @@ public class SQLManager {
 		return false;
 	}
 	public static boolean addCalender(String calName, String calDesc){
-		return false;
+		String SQL = "INSERT INTO calendar(creator_id, name, description) VALUES('" + user.getId() + "','" + calName + "','"
+				+ calDesc + "');";
+		db.execute(SQL);
+		return true;
 	}
 	public static boolean manageCalender(int calId, String calName, String calDesc){
 		return false;
