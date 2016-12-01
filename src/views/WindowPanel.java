@@ -14,6 +14,7 @@ import java.util.Properties;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -34,18 +35,23 @@ import object.User;
 
 public class WindowPanel extends JPanel {
 
-	private JPanel editCalendar1, editCalendar2, editCalendar3, form, main, addCalMain, center, centerEvent, mainPanel, leftPanel, addEventButtonPanel, overviewPanel,
-		CalendarChoicePanel, placeholderPanel, rightPanel, upperLeftPanel, upperRightPanel, top, centerLeft, centerRight, addCalCenterRight, addCalCenterRight1,
-		addCalCenterRight2, addCalCenterRight3, addCalCenterLeft, addCalCenter;
-	private JLabel calAddLabel, calAddNotLabel, calAddNameLabel, loginLabel, emailLabel, passLabel, regLabel, regHere, passConfLabel, fnameLabel, snameLabel,
-		calendarNameLabel, nameLabel, locationLabel, calListLabel, startTimeLabel, endTimeLabel, eventDescLabel, descriptionLabel, calendarDescLabel, regEmailLabel,
-		regPassLabel, regPassConfLabel, regFNameLabel, regSNameLabel, loginPageLabel;
-	private JTextField calAddNameField, calAddNotField, emailField, fnameField, snameField, nameField, locationField, calendarNameField, calendarDescField, regEmailField,
-		regPassField, regPassConfField, regSNameField, regFNameField;
-	private Calendar[] calArray;
+
+	private JPanel editCalendar1, editCalendar2, editCalendar3, form, main, addCalMain, center, centerEvent, mainPanel, leftPanel, addEventButtonPanel,
+			overviewPanel, CalendarChoicePanel, placeholderPanel, rightPanel, upperLeftPanel, upperRightPanel, top,
+			centerLeft, centerRight, addCalCenterRight, addCalCenterRight1, addCalCenterRight2, addCalCenterRight3,
+			addCalCenterLeft, addCalCenter;
+	private JLabel calAddLabel, calAddNotLabel, calAddNameLabel, loginLabel, emailLabel, passLabel, regLabel, regHere,
+			passConfLabel, fnameLabel, snameLabel, calendarNameLabel, nameLabel, locationLabel, calListLabel,
+			startTimeLabel, endTimeLabel, eventDescLabel, descriptionLabel, calendarDescLabel, regEmailLabel,
+			regPassLabel, regPassConfLabel, regFNameLabel, regSNameLabel, loginPageLabel;
+	private JTextField calAddNameField, calAddNotField, emailField, fnameField, snameField, nameField, locationField,
+			calendarNameField, calendarDescField, regEmailField, regPassField, regPassConfField, regSNameField,
+			regFNameField;
+	private Calendar[] calArray, eventCalArray;
 	private JTextArea calendarDescTextArea, calAddDescTextArea;
 	private JPasswordField passField, passConfField;
-	private JButton calAddButton, loginButton, registerPageButton, registerButton, loginPageButton, regButton, calSaveButton, calRemoveButton, eventCreate;
+	private JButton calAddButton, loginButton, registerPageButton, registerButton, loginPageButton, regButton,
+			calSaveButton, calRemoveButton, eventCreate;
 	private JTextArea eventDescArea;
 	private JCheckBox fullDayActivity;
 	private JSpinner startTimeSpinner, endTimeSpinner;
@@ -56,13 +62,15 @@ public class WindowPanel extends JPanel {
 	private Properties startProperties, endProperties;
 	private ListenForButton lForButton;
 	private GridBagConstraints gbc, gbcLeft;
+	private JComboBox<String> calDropDown;
+	private String eventCreateCalArray;
 	private WindowPanel windowpanel;
 	private Window window;
 	private User user;
 	private StateMachine SM;
 
 	public WindowPanel(Window window) {
-		windowpanel=this;
+		windowpanel = this;
 		this.window = window;
 		gbc = new GridBagConstraints();
 		lForButton = new ListenForButton();
@@ -470,14 +478,20 @@ public class WindowPanel extends JPanel {
 
 		main.add(top, gbc);
 
-		eventCreate = new JButton("Skapa event");
-		// eventCreate.setPreferredSize(new Dimension(70, 20));
+		eventCalArray = user.getCalArray();
+		calDropDown = new JComboBox<String>();
+
+		for (int i = 0; i < eventCalArray.length; i++) {
+			eventCreateCalArray = eventCalArray[i].getName() + " " + eventCalArray[i].getCal_id();
+			calDropDown.addItem(eventCreateCalArray);
+		}
 
 		gbcLeft.gridx = 0;
 		gbcLeft.gridy = 0;
+		gbcLeft.insets = new Insets(0, -385, 0, 10);
 		gbcLeft.anchor = GridBagConstraints.WEST;
 
-		top.add(eventCreate, gbcLeft);
+		top.add(calDropDown, gbcLeft);
 
 		centerEvent = new JPanel();
 		centerEvent.setPreferredSize(new Dimension(1175, 655));
@@ -489,7 +503,18 @@ public class WindowPanel extends JPanel {
 		gbc.gridy = 1;
 
 		main.add(centerEvent, gbc);
+		
+		eventCreate = new JButton("Skapa event");
+		// eventCreate.setPreferredSize(new Dimension(70, 20));
 
+		gbcLeft.gridx = 1;
+		gbcLeft.gridy = 0;
+		gbcLeft.insets = new Insets(0, -190, 0, 0);
+		gbcLeft.anchor = GridBagConstraints.WEST;
+
+		top.add(eventCreate, gbcLeft);
+		
+		
 		centerLeft = new JPanel();
 		centerLeft.setPreferredSize(new Dimension(700, 655));
 		centerLeft.setLayout(new GridBagLayout());
@@ -709,7 +734,7 @@ public class WindowPanel extends JPanel {
 		gbc.gridy = 0;
 
 		addCalCenter.add(addCalCenterLeft, gbc);
-		
+
 		calenderList();
 
 		addCalCenterRight = new JPanel();
@@ -737,9 +762,13 @@ public class WindowPanel extends JPanel {
 		editCalendar1.setVisible(true);
 
 		calSaveButton = new JButton("Spara");
+
+		calSaveButton = new JButton("Spara");
+
 		calSaveButton.addActionListener(lForButton);
-		
+
 		calRemoveButton = new JButton("Ta bort");
+		
 		calRemoveButton.addActionListener(lForButton);
 		
 		editCalendar2 = new JPanel();
@@ -753,13 +782,13 @@ public class WindowPanel extends JPanel {
 		editCalendar3.setLayout(new GridBagLayout());
 		editCalendar3.setBackground(new Color(0, 0, 255));
 		editCalendar3.setVisible(true);
-		
+
 		calendarNameLabel = new JLabel("kalendernamn");
 		calendarNameLabel.setFont(new Font("Serif", Font.PLAIN, 20));
 		
 		calendarNameField = new JTextField(calArray[calID].getName());
 		calendarNameField.setPreferredSize(new Dimension(300, 30));
-		
+
 		calendarDescLabel = new JLabel("kalenderbeskrivning");
 		calendarDescLabel.setFont(new Font("Serif", Font.PLAIN, 20));
 		
@@ -790,6 +819,7 @@ public class WindowPanel extends JPanel {
 		gbc.gridy = 0;
 		editCalendar2.add(calendarNameLabel, gbc);
 
+
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		editCalendar2.add(calendarNameField, gbc);
@@ -808,12 +838,14 @@ public class WindowPanel extends JPanel {
 		addCalCenterRight.add(editCalendar3, gbc);
 		
 		addCalCenterRight.updateUI();
-		
+
+		rightPanel.updateUI();
 	}
-	private void calenderList(){
-		//*name**people in calender**notification*
-		//add new
-		calArray=user.getCalArray();
+
+	private void calenderList() {
+		// *name**people in calender**notification*
+		// add new
+		calArray = user.getCalArray();
 		calAddLabel = new JLabel("Lägg till kalender:");
 		calAddNameLabel = new JLabel("Kalendernamn");
 		calAddNameField = new JTextField();
@@ -845,18 +877,19 @@ public class WindowPanel extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 5;
 		addCalCenterLeft.add(calAddButton, gbc);
-		
-		for(int i=0;i<calArray.length;i++){
-			calListLabel = new JLabel(calArray[i].getName()+" "+calArray[i].getNotification());
+
+		for (int i = 0; i < calArray.length; i++) {
+			calListLabel = new JLabel(calArray[i].getName() + " " + calArray[i].getNotification());
 			gbc.gridx = 0;
-			gbc.gridy = i+6;
+			gbc.gridy = i + 6;
 
 			addCalCenterLeft.add(calListLabel, gbc);
 		}
-		
+
 	}
-	public void sendUser(User user){
-		this.user=user;
+
+	public void sendUser(User user) {
+		this.user = user;
 	}
 
 	private class ListenForButton implements ActionListener {
@@ -900,12 +933,12 @@ public class WindowPanel extends JPanel {
 			if (e.getSource() == calAddButton) {
 				String temp1 = calAddNameField.getText();
 				String temp2 = calAddDescTextArea.getText();
-				if(SQLManager.addCalender(temp1, temp2)){
+				if (SQLManager.addCalender(temp1, temp2)) {
 					addCalCenterLeft.removeAll();
 					user.reloadarrays();
 					getAddCalendarPage();
 				}
-				
+
 			}
 
 			if (e.getSource() == fullDayActivity) {
@@ -934,7 +967,7 @@ public class WindowPanel extends JPanel {
 
 			if (e.getSource() == eventCreate) {
 				String inputEventName = nameField.getText();
-				String inputEventLocation = locationLabel.getText();
+				String inputEventLocation = locationField.getText();
 				String inputEventTextArea = eventDescArea.getText();
 				int inputFullDayEvent;
 				int inputEventStartDay = 0;
@@ -943,7 +976,7 @@ public class WindowPanel extends JPanel {
 				int inputEventEndDay = 0;
 				int inputEventEndMonth = 0;
 				int inputEventEndYear = 0;
-
+				int inputCreateEventForCalendarId = user.getCalArray()[calDropDown.getSelectedIndex()].getCal_id();
 				String inputEventStartTime = "";
 				String inputEventEndTime = "";
 
@@ -963,8 +996,8 @@ public class WindowPanel extends JPanel {
 					inputEventEndDay = endDatePicker.getModel().getDay();
 
 					formatStartDate = inputEventStartYear + "-" + inputEventStartMonth + "-" + inputEventStartDay
-							+ " 00:00:00";
-					formatEndDate = inputEventEndYear + "-" + inputEventEndMonth + "-" + inputEventEndDay + " 00:00:00";
+							+ " 01:01:01";
+					formatEndDate = inputEventEndYear + "-" + inputEventEndMonth + "-" + inputEventEndDay + " 01:01:01";
 				} else {
 
 					inputFullDayEvent = 0;
@@ -981,20 +1014,24 @@ public class WindowPanel extends JPanel {
 					inputEventEndTime = endTimeEditor.getFormat().format(endTimeSpinner.getValue());
 
 					formatStartDate = inputEventStartYear + "-" + inputEventStartMonth + "-" + inputEventStartDay + " "
-							+ inputEventStartTime + ":00";
+							+ inputEventStartTime + ":01";
 					formatEndDate = inputEventEndYear + "-" + inputEventEndMonth + "-" + inputEventEndDay + " "
-							+ inputEventEndTime + ":00";
+							+ inputEventEndTime + ":01";
 				}
 
 				// System.out.println(inputEventStartDay);
 				// System.out.println(inputEventStartMonth);
 				// System.out.println(inputEventStartYear);
 
-				System.out.println("Start date: " + formatStartDate);
-				System.out.println("End date: " + formatEndDate);
+//				System.out.println("Start date: " + formatStartDate);
+//				System.out.println("End date: " + formatEndDate);
+//
+//				System.out.println(inputCreateEventForCalendarId);
 
 				SQLManager.addEvent(inputEventName, inputEventLocation, inputEventTextArea, inputFullDayEvent,
-						formatStartDate, formatEndDate);
+						inputCreateEventForCalendarId, formatStartDate, formatEndDate);
+				
+				getAddEventPage();
 
 			}
 
