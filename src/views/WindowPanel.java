@@ -9,6 +9,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.util.Properties;
 
 import javax.swing.BorderFactory;
@@ -34,15 +35,21 @@ import object.User;
 
 public class WindowPanel extends JPanel {
 
-	private JPanel form, main, addCalMain, center, centerEvent, mainPanel, leftPanel, addEventButtonPanel, overviewPanel, CalendarChoicePanel,
-			placeholderPanel, rightPanel, upperLeftPanel, upperRightPanel, top, centerLeft, centerRight, addCalCenterRight, addCalCenterRight1, addCalCenterRight2, addCalCenterRight3, addCalCenterLeft, addCalCenter;
-	private JLabel loginLabel, emailLabel, passLabel, regLabel, regHere, passConfLabel, fnameLabel, snameLabel, calenderNameLabel, 
-			nameLabel, locationLabel, startTimeLabel, endTimeLabel, eventDescLabel, descriptionLabel, calendarDescLabel, regEmailLabel, regPassLabel, regPassConfLabel, regFNameLabel, regSNameLabel, loginPageLabel;
-	private JTextField emailField, fnameField, snameField, nameField, locationField, calenderNameField, calendarDescField, regEmailField, regPassField, regPassConfField, regSNameField, regFNameField;
-	
+	private JPanel form, main, addCalMain, center, centerEvent, mainPanel, leftPanel, addEventButtonPanel,
+			overviewPanel, CalendarChoicePanel, placeholderPanel, rightPanel, upperLeftPanel, upperRightPanel, top,
+			centerLeft, centerRight, addCalCenterRight, addCalCenterRight1, addCalCenterRight2, addCalCenterRight3,
+			addCalCenterLeft, addCalCenter;
+	private JLabel loginLabel, emailLabel, passLabel, regLabel, regHere, passConfLabel, fnameLabel, snameLabel,
+			calenderNameLabel, nameLabel, locationLabel, startTimeLabel, endTimeLabel, eventDescLabel, descriptionLabel,
+			calendarDescLabel, regEmailLabel, regPassLabel, regPassConfLabel, regFNameLabel, regSNameLabel,
+			loginPageLabel;
+	private JTextField emailField, fnameField, snameField, nameField, locationField, calenderNameField,
+			calendarDescField, regEmailField, regPassField, regPassConfField, regSNameField, regFNameField;
+
 	private JTextArea calendarDescTextArea;
 	private JPasswordField passField, passConfField;
-	private JButton loginButton, registerPageButton, registerButton, loginPageButton, regButton;
+	private JButton loginButton, registerPageButton, registerButton, loginPageButton, regButton, eventAbortButton,
+			eventCreate;
 	private JTextArea eventDescArea;
 	private JCheckBox fullDayActivity;
 	private JSpinner startTimeSpinner, endTimeSpinner;
@@ -454,7 +461,7 @@ public class WindowPanel extends JPanel {
 		rightPanel.add(main);
 
 		top = new JPanel();
-		top.setPreferredSize(new Dimension(1175, 20));
+		top.setPreferredSize(new Dimension(1175, 50));
 		top.setLayout(new GridBagLayout());
 		// top.setBackground(new Color(255, 0, 0));
 		top.setVisible(true);
@@ -464,8 +471,17 @@ public class WindowPanel extends JPanel {
 
 		main.add(top, gbc);
 
+		eventCreate = new JButton("Skapa event");
+		// eventCreate.setPreferredSize(new Dimension(70, 20));
+
+		gbcLeft.gridx = 0;
+		gbcLeft.gridy = 0;
+		gbcLeft.anchor = GridBagConstraints.WEST;
+
+		top.add(eventCreate, gbcLeft);
+
 		centerEvent = new JPanel();
-		centerEvent.setPreferredSize(new Dimension(1175, 705));
+		centerEvent.setPreferredSize(new Dimension(1175, 655));
 		centerEvent.setLayout(new GridBagLayout());
 		// center.setBackground(new Color(0, 255, 0));
 		centerEvent.setVisible(true);
@@ -476,7 +492,7 @@ public class WindowPanel extends JPanel {
 		main.add(centerEvent, gbc);
 
 		centerLeft = new JPanel();
-		centerLeft.setPreferredSize(new Dimension(700, 705));
+		centerLeft.setPreferredSize(new Dimension(700, 655));
 		centerLeft.setLayout(new GridBagLayout());
 		// centerLeft.setBackground(new Color(0, 255, 0));
 		centerLeft.setVisible(true);
@@ -487,7 +503,7 @@ public class WindowPanel extends JPanel {
 		centerEvent.add(centerLeft, gbc);
 
 		centerRight = new JPanel();
-		centerRight.setPreferredSize(new Dimension(475, 705));
+		centerRight.setPreferredSize(new Dimension(475, 655));
 		centerRight.setLayout(new GridBagLayout());
 		// centerRight.setBackground(new Color(0, 0, 255));
 		centerRight.setVisible(true);
@@ -569,6 +585,7 @@ public class WindowPanel extends JPanel {
 
 		startDatePanel = new JDatePanelImpl(startModel, startProperties);
 		startDatePicker = new JDatePickerImpl(startDatePanel, new DateLabelFormatter());
+		startDatePicker.setTextEditable(false);
 		// startDatePicker.setPreferredSize(new Dimension(300, 30));
 
 		gbcLeft.gridx = 0;
@@ -609,6 +626,7 @@ public class WindowPanel extends JPanel {
 
 		endDatePanel = new JDatePanelImpl(endModel, endProperties);
 		endDatePicker = new JDatePickerImpl(endDatePanel, new DateLabelFormatter());
+		endDatePicker.setTextEditable(false);
 		// endDatePicker.setPreferredSize(new Dimension(200, 30));
 
 		gbcLeft.gridx = 0;
@@ -653,6 +671,7 @@ public class WindowPanel extends JPanel {
 		rightPanel.updateUI();
 
 		fullDayActivity.addActionListener(lForButton);
+		eventCreate.addActionListener(lForButton);
 	}
 
 	public void getAddCalendarPage() {
@@ -702,7 +721,7 @@ public class WindowPanel extends JPanel {
 		gbc.gridy = 0;
 
 		addCalCenter.add(addCalCenterRight, gbc);
-		
+
 		addCalCenterRight1 = new JPanel();
 		addCalCenterRight1.setPreferredSize(new Dimension(475, 125));
 		addCalCenterRight1.setLayout(new GridBagLayout());
@@ -713,7 +732,7 @@ public class WindowPanel extends JPanel {
 		gbc.gridy = 1;
 
 		addCalCenterRight.add(addCalCenterRight1, gbc);
-		
+
 		addCalCenterRight2 = new JPanel();
 		addCalCenterRight2.setPreferredSize(new Dimension(475, 300));
 		addCalCenterRight2.setLayout(new GridBagLayout());
@@ -726,7 +745,7 @@ public class WindowPanel extends JPanel {
 		gbc.gridy = 2;
 
 		addCalCenterRight.add(addCalCenterRight2, gbc);
-		
+
 		addCalCenterRight3 = new JPanel();
 		addCalCenterRight3.setPreferredSize(new Dimension(475, 300));
 		addCalCenterRight3.setLayout(new GridBagLayout());
@@ -737,7 +756,7 @@ public class WindowPanel extends JPanel {
 		gbc.gridy = 3;
 
 		addCalCenterRight.add(addCalCenterRight3, gbc);
-		
+
 		calenderNameLabel = new JLabel("kalendernamn");
 		calenderNameLabel.setFont(new Font("Serif", Font.PLAIN, 20));
 
@@ -751,9 +770,8 @@ public class WindowPanel extends JPanel {
 
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		
+
 		addCalCenterRight2.add(calenderNameField, gbc);
-		
 
 		addCalCenterRight.add(calenderNameField, gbc);
 		calendarDescLabel = new JLabel("kalenderbeskrivning");
@@ -773,7 +791,7 @@ public class WindowPanel extends JPanel {
 
 		gbc.gridx = 0;
 		gbc.gridy = 3;
-		
+
 		addCalCenterRight2.add(calendarDescTextArea, gbc);
 
 		addCalCenterRight.add(calendarDescTextArea, gbc);
@@ -797,10 +815,11 @@ public class WindowPanel extends JPanel {
 				}
 			}
 			if (e.getSource() == registerButton) {
-				
-				//if(SQLManager.register(window, String fname, String sname, String email, char[] pass1, char[] pass2)){
-				//	getLoginPage();
-				//}
+
+				// if(SQLManager.register(window, String fname, String sname,
+				// String email, char[] pass1, char[] pass2)){
+				// getLoginPage();
+				// }
 			}
 
 			if (e.getSource() == registerPageButton) {
@@ -832,6 +851,72 @@ public class WindowPanel extends JPanel {
 					centerLeft.updateUI();
 
 				}
+			}
+
+			if (e.getSource() == eventCreate) {
+				String inputEventName = nameField.getText();
+				String inputEventLocation = locationLabel.getText();
+				String inputEventTextArea = eventDescArea.getText();
+				int inputFullDayEvent;
+				int inputEventStartDay = 0;
+				int inputEventStartMonth = 0;
+				int inputEventStartYear = 0;
+				int inputEventEndDay = 0;
+				int inputEventEndMonth = 0;
+				int inputEventEndYear = 0;
+
+				String inputEventStartTime = "";
+				String inputEventEndTime = "";
+
+				String formatStartDate = "";
+				String formatEndDate = "";
+
+				if (fullDayActivity.isSelected()) {
+
+					inputFullDayEvent = 1;
+
+					inputEventStartYear = startDatePicker.getModel().getYear();
+					inputEventStartMonth = startDatePicker.getModel().getMonth();
+					inputEventStartDay = startDatePicker.getModel().getDay();
+
+					inputEventEndYear = endDatePicker.getModel().getYear();
+					inputEventEndMonth = endDatePicker.getModel().getMonth();
+					inputEventEndDay = endDatePicker.getModel().getDay();
+
+					formatStartDate = inputEventStartYear + "-" + inputEventStartMonth + "-" + inputEventStartDay
+							+ " 00:00:00";
+					formatEndDate = inputEventEndYear + "-" + inputEventEndMonth + "-" + inputEventEndDay + " 00:00:00";
+				} else {
+
+					inputFullDayEvent = 0;
+
+					inputEventStartYear = startDatePicker.getModel().getYear();
+					inputEventStartMonth = startDatePicker.getModel().getMonth();
+					inputEventStartDay = startDatePicker.getModel().getDay();
+
+					inputEventEndYear = endDatePicker.getModel().getYear();
+					inputEventEndMonth = endDatePicker.getModel().getMonth();
+					inputEventEndDay = endDatePicker.getModel().getDay();
+
+					inputEventStartTime = startTimeEditor.getFormat().format(startTimeSpinner.getValue());
+					inputEventEndTime = endTimeEditor.getFormat().format(endTimeSpinner.getValue());
+
+					formatStartDate = inputEventStartYear + "-" + inputEventStartMonth + "-" + inputEventStartDay + " "
+							+ inputEventStartTime + ":00";
+					formatEndDate = inputEventEndYear + "-" + inputEventEndMonth + "-" + inputEventEndDay + " "
+							+ inputEventEndTime + ":00";
+				}
+
+				// System.out.println(inputEventStartDay);
+				// System.out.println(inputEventStartMonth);
+				// System.out.println(inputEventStartYear);
+
+				System.out.println("Start date: " + formatStartDate);
+				System.out.println("End date: " + formatEndDate);
+
+				SQLManager.addEvent(inputEventName, inputEventLocation, inputEventTextArea, inputFullDayEvent,
+						formatStartDate, formatEndDate);
+
 			}
 
 		}
