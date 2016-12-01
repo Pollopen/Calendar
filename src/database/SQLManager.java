@@ -90,13 +90,25 @@ public class SQLManager {
 		}
 		return false;
 	}
+
 	public static boolean addCalender(String calName, String calDesc){
 		String SQL = "INSERT INTO calendar(creator_id, name, description) VALUES('" + user.getId() + "','" + calName + "','"
 				+ calDesc + "');";
 		db.execute(SQL);
 		return true;
 	}
-	public static boolean manageCalender(int calId, String calName, String calDesc){
+
+	public static boolean manageCalender(int calId, String calName, String calDesc) {
+		return false;
+	}
+
+	public static boolean addEvent(String inputEventName, String inputEventLocation, String inputEventTextArea,
+			int inputFullDayEvent, String formatStartDate, String formatEndDate) {
+
+		user.getId();
+
+		String SQL = "INSERT INTO event(cal_id, creator_id, name, location, description, start_time, length, notification) VALUES()";
+
 		return false;
 	}
 
