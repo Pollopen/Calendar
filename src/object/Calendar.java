@@ -31,6 +31,7 @@ public class Calendar extends JPanel {
 		System.out.println("Notifikation: " + notification + " ");
 	}
 
+
 	public int getCal_id() {
 		return cal_id;
 	}
@@ -45,6 +46,10 @@ public class Calendar extends JPanel {
 
 	public int getNotification() {
 		return notification;
+	}
+
+	public String getDescription() {
+		return description;
 	}
 
 }

@@ -57,6 +57,10 @@ public class User {
 		System.out.println(sname);
 		System.out.println(created);
 	}
+	
+	public int getStandardCal(){
+		return calArray[0].getCal_id();
+	}
 
 	public int getId() {
 		return id;

@@ -99,7 +99,15 @@ public class SQLManager {
 	}
 
 	public static boolean manageCalender(int calId, String calName, String calDesc) {
-		return false;
+		String SQL = "INSERT INTO calendar(creator_id, name, description) VALUES('" + user.getId() + "','" + calName + "','"
+				+ calDesc + "');";
+		db.execute(SQL);
+		return true;
+	}
+	public static boolean removeCalender(int calID) {
+		String SQL = "DELETE FROM calendar WHERE cal_id = "+calID;
+		db.execute(SQL);
+		return true;
 	}
 
 	public static boolean addEvent(String inputEventName, String inputEventLocation, String inputEventTextArea,
