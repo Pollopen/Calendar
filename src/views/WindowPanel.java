@@ -53,7 +53,7 @@ public class WindowPanel extends JPanel {
 			editEventDescLabel;
 	private JTextField calEditNameField, calAddNameField, calAddNotField, emailField, fnameField, snameField, nameField,
 			locationField, calendarNameField, calendarDescField, regEmailField, regSNameField, regFNameField,
-			editEventNameField, editEventLocationField;
+			editEventNameField, editEventLocationField, userSearchField;
 	private JPasswordField regPassField, regPassConfField;
 
 	private Calendar[] calArray, eventCalArray;
@@ -61,7 +61,7 @@ public class WindowPanel extends JPanel {
 	private JTextArea calendarDescTextArea, calAddDescTextArea;
 	private JPasswordField passField, passConfField;
 	private JButton calAddButton, loginButton, registerPageButton, registerButton, loginPageButton, regButton,
-			calSaveButton, calRemoveButton, eventCreate, editEventButton, deleteEventButton;
+			calSaveButton, calRemoveButton, eventCreate, editEventButton, deleteEventButton, userSearchButton;
 	private JTextArea calEditDescTextArea, eventDescArea, editEventDescArea;
 	private JCheckBox fullDayActivity, editFullDayActivity;
 	private JSpinner startTimeSpinner, endTimeSpinner, editStartTimeSpinner, editEndTimeSpinner;
@@ -555,7 +555,27 @@ public class WindowPanel extends JPanel {
 		gbc.gridy = 0;
 
 		centerEvent.add(centerRight, gbc);
-
+		
+		userSearchField = new JTextField();
+		userSearchField.setPreferredSize(new Dimension(300,30));
+		
+		gbcLeft.gridx = 0;
+		gbcLeft.gridy = 0;
+		gbcLeft.insets = new Insets(0, 0, 0, 10);
+		gbcLeft.anchor = GridBagConstraints.WEST;
+		
+		centerRight.add(userSearchField, gbcLeft);
+		
+		userSearchButton = new JButton("Sök!");
+		userSearchButton.setPreferredSize(new Dimension(60, 29));
+		
+		gbcLeft.gridx = 1;
+		gbcLeft.gridy = 0;
+		gbcLeft.insets = new Insets(0, 0, 0, 0);
+		gbcLeft.anchor = GridBagConstraints.WEST;
+		
+		centerRight.add(userSearchButton, gbcLeft);
+		
 		// Everything on panels
 
 		// Event label + event field
