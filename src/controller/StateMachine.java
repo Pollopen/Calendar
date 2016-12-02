@@ -6,14 +6,14 @@ public class StateMachine {
 	private int calEditStatus;
 	private int eventEditStatus;
 	User user;
-	
-	public StateMachine(User user){
-		this.user=user;
-		calEditStatus=0;
-	
+
+	public StateMachine(User user) {
+		this.user = user;
+		calEditStatus = 0;
+
 	}
-	
-	public int getCalEditStatus(){
+
+	public int getCalEditStatus() {
 		return calEditStatus;
 	}
 

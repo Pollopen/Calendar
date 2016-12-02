@@ -28,8 +28,7 @@ package views;
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */ 
-
+ */
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,79 +42,78 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import object.User;
+
 /*
  * This class exists solely to show you what menus look like.
  * It has no menu-related event handling.
  */
 public class MenuList {
-    JTextArea output;
-    JScrollPane scrollPane;
-    JMenuBar menuBar;
-    JMenu menu, submenu;
-    JMenuItem menuItem, menuReload, menuLogout, menuAddEvent, menuAddCalendar, menuEditEvent;
-    JRadioButtonMenuItem rbMenuItem;
-    JCheckBoxMenuItem cbMenuItem;
-    Window window;
-    WindowPanel windowpanel;
-    User user;
+	JTextArea output;
+	JScrollPane scrollPane;
+	JMenuBar menuBar;
+	JMenu menu, submenu;
+	JMenuItem menuItem, menuReload, menuLogout, menuAddEvent, menuAddCalendar, menuEditEvent;
+	JRadioButtonMenuItem rbMenuItem;
+	JCheckBoxMenuItem cbMenuItem;
+	Window window;
+	WindowPanel windowpanel;
+	User user;
 
-    public JMenuBar createMenuBar(Window window, WindowPanel windowpanel, User user) {
-    	this.window = window;
-    	this.windowpanel = windowpanel;
-    	this.user = user;
+	public JMenuBar createMenuBar(Window window, WindowPanel windowpanel, User user) {
+		this.window = window;
+		this.windowpanel = windowpanel;
+		this.user = user;
 
-        ListenForButton lForButton = new ListenForButton();
+		ListenForButton lForButton = new ListenForButton();
 
-        
-        //Create the menu bar.
-        menuBar = new JMenuBar();
+		// Create the menu bar.
+		menuBar = new JMenuBar();
 
-        //Build the first menu.
-        menu = new JMenu("Arkiv");
-        menuBar.add(menu);
+		// Build the first menu.
+		menu = new JMenu("Arkiv");
+		menuBar.add(menu);
 
-        //a group of JMenuItems
-        menuReload = new JMenuItem("Ladda om");
-        menu.add(menuReload);
-        menuReload.addActionListener(lForButton);
-        
-        menu.addSeparator();
-        
-        menuAddEvent = new JMenuItem("Lägg till händelse");
-        menu.add(menuAddEvent);
-        menuAddEvent.addActionListener(lForButton);
-        
-        menuEditEvent = new JMenuItem("Redigera ett event");
-        menu.add(menuEditEvent);
-        menuEditEvent.addActionListener(lForButton);
-        
-        menuAddCalendar = new JMenuItem("Lägg till Kalender");
-        menu.add(menuAddCalendar);
-        menuAddCalendar.addActionListener(lForButton);
-        
-        menu.addSeparator();
-        
-        menuLogout = new JMenuItem("Logga ut");
-        menu.add(menuLogout);
-        menuLogout.addActionListener(lForButton);
+		// a group of JMenuItems
+		menuReload = new JMenuItem("Ladda om");
+		menu.add(menuReload);
+		menuReload.addActionListener(lForButton);
 
-        //a submenu
-        menu.addSeparator();
-        submenu = new JMenu("Extra");
+		menu.addSeparator();
 
-        menuItem = new JMenuItem("*Kommer snart*");
-        submenu.add(menuItem);
+		menuAddEvent = new JMenuItem("Lägg till händelse");
+		menu.add(menuAddEvent);
+		menuAddEvent.addActionListener(lForButton);
 
-        menuItem = new JMenuItem("*Kommer snart*");
-        submenu.add(menuItem);
-        
-        
-        
-        menu.add(submenu);
+		menuEditEvent = new JMenuItem("Redigera ett event");
+		menu.add(menuEditEvent);
+		menuEditEvent.addActionListener(lForButton);
 
-        return menuBar;
-    }
-    private class ListenForButton implements ActionListener {
+		menuAddCalendar = new JMenuItem("Lägg till Kalender");
+		menu.add(menuAddCalendar);
+		menuAddCalendar.addActionListener(lForButton);
+
+		menu.addSeparator();
+
+		menuLogout = new JMenuItem("Logga ut");
+		menu.add(menuLogout);
+		menuLogout.addActionListener(lForButton);
+
+		// a submenu
+		menu.addSeparator();
+		submenu = new JMenu("Extra");
+
+		menuItem = new JMenuItem("*Kommer snart*");
+		submenu.add(menuItem);
+
+		menuItem = new JMenuItem("*Kommer snart*");
+		submenu.add(menuItem);
+
+		menu.add(submenu);
+
+		return menuBar;
+	}
+
+	private class ListenForButton implements ActionListener {
 
 		// This method is called when an event occurs
 

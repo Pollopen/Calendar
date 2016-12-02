@@ -99,13 +99,14 @@ public class SQLManager {
 	}
 
 	public static boolean manageCalender(int calId, String calName, String calDesc) {
-		String SQL = "INSERT INTO calendar(creator_id, name, description) VALUES('" + user.getId() + "','" + calName + "','"
-				+ calDesc + "');";
+		String SQL = "INSERT INTO calendar(creator_id, name, description) VALUES('" + user.getId() + "','" + calName
+				+ "','" + calDesc + "');";
 		db.execute(SQL);
 		return true;
 	}
+
 	public static boolean removeCalender(int calID) {
-		String SQL = "DELETE FROM calendar WHERE cal_id = "+calID;
+		String SQL = "DELETE FROM calendar WHERE cal_id = " + calID;
 		db.execute(SQL);
 		return true;
 	}
@@ -119,6 +120,26 @@ public class SQLManager {
 				+ "','1','" + inputFullDayEvent + "' )";
 
 		db.execute(SQL);
+		return true;
+	}
+
+	public static boolean editEvent(String inputEventName, String inputEventLocation, String inputEventTextArea,
+			int inputFullDayEvent, int inputEventId, String formatStartDate, String formatEndDate) {
+
+		String SQL = "UPDATE event SET name = '" + inputEventName + "', location = '" + inputEventLocation
+				+ "', description = '" + inputEventTextArea + "', start_time = '" + formatStartDate + "', end_time = '"
+				+ formatEndDate + "' WHERE event_id = " + inputEventId;
+
+		db.execute(SQL);
+		return true;
+	}
+	
+	public static boolean deleteEvent(int eventId) {
+		
+		String SQL = "DELETE FROM event WHERE event_id = "+eventId;
+		
+		db.execute(SQL);
+		
 		return true;
 	}
 
