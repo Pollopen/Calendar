@@ -8,6 +8,7 @@ public class StateMachine {
 	
 	public StateMachine(User user){
 		this.user=user;
+		calEditStatus=0;
 	}
 	
 	public int getCalEditStatus(){
