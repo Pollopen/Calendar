@@ -31,39 +31,42 @@ import controller.DateLabelFormatter;
 import controller.StateMachine;
 import database.SQLManager;
 import object.Calendar;
+import object.Event;
 import object.User;
 
 public class WindowPanel extends JPanel {
 
-
-	private JPanel editCalendar1, editCalendar2, editCalendar3, form, main, addCalMain, center, centerEvent, mainPanel, leftPanel, addEventButtonPanel,
-			overviewPanel, CalendarChoicePanel, placeholderPanel, rightPanel, upperLeftPanel, upperRightPanel, top,
-			centerLeft, centerRight, addCalCenterRight, addCalCenterRight1, addCalCenterRight2, addCalCenterRight3,
-			addCalCenterLeft, addCalCenter;
+	private JPanel editCalendar1, editCalendar2, editCalendar3, form, main, addCalMain, center, centerEvent, mainPanel,
+			leftPanel, addEventButtonPanel, overviewPanel, CalendarChoicePanel, placeholderPanel, rightPanel,
+			upperLeftPanel, upperRightPanel, top, centerLeft, centerRight, addCalCenterRight, addCalCenterRight1,
+			addCalCenterRight2, addCalCenterRight3, addCalCenterLeft, addCalCenter, editEventMain, editEventTop,
+			editEventCenter, editEventLeft, editEventRight;
 	private JLabel calAddLabel, calAddNotLabel, calAddNameLabel, loginLabel, emailLabel, passLabel, regLabel, regHere,
 			passConfLabel, fnameLabel, snameLabel, calendarNameLabel, nameLabel, locationLabel, calListLabel,
 			startTimeLabel, endTimeLabel, eventDescLabel, descriptionLabel, calendarDescLabel, regEmailLabel,
-			regPassLabel, regPassConfLabel, regFNameLabel, regSNameLabel, loginPageLabel;
+			regPassLabel, regPassConfLabel, regFNameLabel, regSNameLabel, loginPageLabel, editEventNameLabel,
+			editEventLocationLabel, editEventStartLabel, editEventEndLabel, editEventDescLabel;
 	private JTextField calAddNameField, calAddNotField, emailField, fnameField, snameField, nameField, locationField,
 			calendarNameField, calendarDescField, regEmailField, regPassField, regPassConfField, regSNameField,
-			regFNameField;
+			regFNameField, editEventNameField, editEventLocationField;
 	private Calendar[] calArray, eventCalArray;
+	private Event[] editEventArray;
 	private JTextArea calendarDescTextArea, calAddDescTextArea;
 	private JPasswordField passField, passConfField;
 	private JButton calAddButton, loginButton, registerPageButton, registerButton, loginPageButton, regButton,
-			calSaveButton, calRemoveButton, eventCreate;
-	private JTextArea eventDescArea;
-	private JCheckBox fullDayActivity;
-	private JSpinner startTimeSpinner, endTimeSpinner;
-	private JSpinner.DateEditor startTimeEditor, endTimeEditor;
-	private JDatePanelImpl startDatePanel, endDatePanel;
-	private JDatePickerImpl startDatePicker, endDatePicker;
-	private UtilDateModel startModel, endModel;
-	private Properties startProperties, endProperties;
+			calSaveButton, calRemoveButton, eventCreate, editEvent, deleteEvent;
+	private JTextArea eventDescArea, editEventDescArea;
+	private JCheckBox fullDayActivity, editFullDayActivity;
+	private JSpinner startTimeSpinner, endTimeSpinner, editStartTimeSpinner, editEndTimeSpinner;
+	private JSpinner.DateEditor startTimeEditor, endTimeEditor, editStartTimeEditor, editEndTimeEditor;
+	private JDatePanelImpl startDatePanel, endDatePanel, editStartDatePanel, editEndDatePanel;
+	private JDatePickerImpl startDatePicker, endDatePicker, editStartDatePicker, editEndDatePicker;
+	private UtilDateModel startModel, endModel, editStartModel, editEndModel;
+	private Properties startProperties, endProperties, editStartProperties, editEndProperties;
 	private ListenForButton lForButton;
 	private GridBagConstraints gbc, gbcLeft;
-	private JComboBox<String> calDropDown;
-	private String eventCreateCalArray;
+	private JComboBox<String> calDropDown, editEventDropDown;
+	private String eventCreateCalArray, editEventObjectArray;
 	private WindowPanel windowpanel;
 	private Window window;
 	private User user;
@@ -453,6 +456,7 @@ public class WindowPanel extends JPanel {
 	}
 
 	public void getAddEventPage() {
+
 		rightPanel.removeAll();
 
 		gbc = new GridBagConstraints();
@@ -503,7 +507,7 @@ public class WindowPanel extends JPanel {
 		gbc.gridy = 1;
 
 		main.add(centerEvent, gbc);
-		
+
 		eventCreate = new JButton("Skapa event");
 		// eventCreate.setPreferredSize(new Dimension(70, 20));
 
@@ -513,8 +517,7 @@ public class WindowPanel extends JPanel {
 		gbcLeft.anchor = GridBagConstraints.WEST;
 
 		top.add(eventCreate, gbcLeft);
-		
-		
+
 		centerLeft = new JPanel();
 		centerLeft.setPreferredSize(new Dimension(700, 655));
 		centerLeft.setLayout(new GridBagLayout());
@@ -698,7 +701,242 @@ public class WindowPanel extends JPanel {
 		eventCreate.addActionListener(lForButton);
 	}
 
+	public void getDeleteAndEditEventPage() {
+
+		rightPanel.removeAll();
+
+		editEventMain = new JPanel();
+		editEventMain.setPreferredSize(new Dimension(1175, 725));
+		editEventMain.setLayout(new GridBagLayout());
+		editEventMain.setVisible(true);
+
+		rightPanel.add(editEventMain);
+
+		editEventTop = new JPanel();
+		editEventTop.setPreferredSize(new Dimension(1175, 50));
+		editEventTop.setLayout(new GridBagLayout());
+		editEventTop.setBackground(new Color(255, 0, 0));
+		editEventTop.setVisible(true);
+
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.insets = new Insets(0, 0, 0, 0);
+
+		editEventMain.add(editEventTop, gbc);
+
+		editEventCenter = new JPanel();
+		editEventCenter.setPreferredSize(new Dimension(1175, 675));
+		editEventCenter.setLayout(new GridBagLayout());
+		// center.setBackground(new Color(0, 255, 0));
+		editEventCenter.setVisible(true);
+
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.insets = new Insets(0, 0, 0, 0);
+
+		editEventMain.add(editEventCenter, gbc);
+
+		editEventLeft = new JPanel();
+		editEventLeft.setPreferredSize(new Dimension(700, 675));
+		editEventLeft.setLayout(new GridBagLayout());
+		// editEventLeft.setBackground(new Color(0, 255, 0));
+		editEventLeft.setVisible(true);
+
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.insets = new Insets(0, 0, 0, 0);
+
+		editEventCenter.add(editEventLeft, gbc);
+
+		editEventRight = new JPanel();
+		editEventRight.setPreferredSize(new Dimension(475, 675));
+		editEventRight.setLayout(new GridBagLayout());
+		// editEventRight.setBackground(new Color(0, 0, 255));
+		editEventRight.setVisible(true);
+
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		gbc.insets = new Insets(0, 0, 0, 0);
+
+		editEventCenter.add(editEventRight, gbc);
+
+		editEventArray = user.getEventArray();
+		editEventDropDown = new JComboBox<String>();
+
+		for (int i = 0; i < editEventArray.length; i++) {
+			editEventObjectArray = editEventArray[i].getName() + " " + editEventArray[i].getCal_id();
+			editEventDropDown.addItem(editEventObjectArray);
+		}
+
+		gbcLeft.gridx = 0;
+		gbcLeft.gridy = 0;
+		gbcLeft.insets = new Insets(0, -385, 0, 10);
+		gbcLeft.anchor = GridBagConstraints.WEST;
+
+		editEventTop.add(editEventDropDown);
+
+		// Event label + event field
+		editEventNameLabel = new JLabel("Event namn");
+		editEventNameLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.insets = new Insets(0, 0, 10, 0);
+
+		editEventLeft.add(editEventNameLabel, gbc);
+
+		editEventNameField = new JTextField();
+		editEventNameField.setPreferredSize(new Dimension(300, 30));
+
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.insets = new Insets(0, 0, 10, 0);
+
+		editEventLeft.add(editEventNameField, gbc);
+
+		// Event location label + location field
+
+		editEventLocationLabel = new JLabel("Plats");
+		editEventLocationLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		gbc.insets = new Insets(0, 0, 10, 0);
+
+		editEventLeft.add(editEventLocationLabel, gbc);
+
+		editEventLocationField = new JTextField();
+		editEventLocationField.setPreferredSize(new Dimension(300, 30));
+
+		gbc.gridx = 0;
+		gbc.gridy = 3;
+		gbc.insets = new Insets(0, 0, 10, 0);
+
+		editEventLeft.add(editEventLocationField, gbc);
+
+		// Event start time + end time
+
+		editEventStartLabel = new JLabel("Start på event");
+		editEventStartLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+
+		gbc.gridx = 0;
+		gbc.gridy = 4;
+		gbc.insets = new Insets(0, 0, 10, 0);
+
+		editEventLeft.add(editEventStartLabel, gbc);
+
+		editFullDayActivity = new JCheckBox();
+		editFullDayActivity.setText("Heldags aktivitet?");
+
+		gbcLeft.gridx = 0;
+		gbcLeft.gridy = 5;
+		gbcLeft.insets = new Insets(0, 0, 10, 0);
+		gbcLeft.anchor = GridBagConstraints.WEST;
+
+		editEventLeft.add(editFullDayActivity, gbcLeft);
+
+		editStartModel = new UtilDateModel();
+		// model.setDate(20,04,2014);
+		// Need this...
+		editStartProperties = new Properties();
+		editStartProperties.put("text.today", "Today");
+		editStartProperties.put("text.month", "Month");
+		editStartProperties.put("text.year", "Year");
+
+		editStartDatePanel = new JDatePanelImpl(startModel, startProperties);
+		editStartDatePicker = new JDatePickerImpl(startDatePanel, new DateLabelFormatter());
+		editStartDatePicker.setTextEditable(false);
+		// startDatePicker.setPreferredSize(new Dimension(300, 30));
+
+		gbcLeft.gridx = 0;
+		gbcLeft.gridy = 6;
+		gbcLeft.insets = new Insets(0, 0, 10, 0);
+		gbcLeft.anchor = GridBagConstraints.WEST;
+
+		editEventLeft.add(editStartDatePicker, gbcLeft);
+
+		editStartTimeSpinner = new JSpinner(new SpinnerDateModel());
+		editStartTimeEditor = new JSpinner.DateEditor(startTimeSpinner, "HH:mm");
+		editStartTimeSpinner.setEditor(startTimeEditor);
+		editStartTimeEditor.setPreferredSize(new Dimension(50, 23));
+
+		gbcLeft.gridx = 0;
+		gbcLeft.gridy = 6;
+		gbcLeft.insets = new Insets(0, 225, 10, 0);
+		gbcLeft.anchor = GridBagConstraints.WEST;
+
+		editEventLeft.add(editStartTimeSpinner, gbcLeft);
+
+		editEventEndLabel = new JLabel("Slut på event");
+		editEventEndLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+
+		gbc.gridx = 0;
+		gbc.gridy = 7;
+		gbc.insets = new Insets(0, 0, 10, 0);
+
+		editEventLeft.add(editEventEndLabel, gbc);
+
+		editEndModel = new UtilDateModel();
+		// model.setDate(20,04,2014);
+		// Need this...
+		editEndProperties = new Properties();
+		editEndProperties.put("text.today", "Today");
+		editEndProperties.put("text.month", "Month");
+		editEndProperties.put("text.year", "Year");
+
+		editEndDatePanel = new JDatePanelImpl(endModel, endProperties);
+		editEndDatePicker = new JDatePickerImpl(endDatePanel, new DateLabelFormatter());
+		editEndDatePicker.setTextEditable(false);
+		// endDatePicker.setPreferredSize(new Dimension(200, 30));
+
+		gbcLeft.gridx = 0;
+		gbcLeft.gridy = 8;
+		gbcLeft.insets = new Insets(0, 0, 10, 0);
+		gbcLeft.anchor = GridBagConstraints.WEST;
+
+		editEventLeft.add(editEndDatePicker, gbcLeft);
+
+		editEndTimeSpinner = new JSpinner(new SpinnerDateModel());
+		editEndTimeEditor = new JSpinner.DateEditor(endTimeSpinner, "HH:mm");
+		editEndTimeSpinner.setEditor(endTimeEditor);
+		editEndTimeEditor.setPreferredSize(new Dimension(50, 23));
+
+		gbcLeft.gridx = 0;
+		gbcLeft.gridy = 8;
+		gbcLeft.insets = new Insets(0, 225, 10, 0);
+		gbcLeft.anchor = GridBagConstraints.WEST;
+
+		editEventLeft.add(editEndTimeSpinner, gbcLeft);
+
+		editEventDescLabel = new JLabel("Beskriv eventet här!");
+		editEventDescLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+
+		gbc.gridx = 0;
+		gbc.gridy = 9;
+		gbc.insets = new Insets(0, 0, 10, 0);
+
+		editEventLeft.add(editEventDescLabel, gbc);
+
+		editEventDescArea = new JTextArea();
+		editEventDescArea.setPreferredSize(new Dimension(300, 100));
+		editEventDescArea.setLineWrap(true);
+		editEventDescArea.setWrapStyleWord(true);
+
+		gbc.gridx = 0;
+		gbc.gridy = 10;
+		gbc.insets = new Insets(0, 0, 10, 0);
+
+		editEventLeft.add(editEventDescArea, gbc);
+
+		rightPanel.updateUI();
+
+		editFullDayActivity.addActionListener(lForButton);
+		editEventDropDown.addActionListener(lForButton);
+
+	}
+
 	public void getAddCalendarPage() {
+
 		rightPanel.removeAll();
 
 		gbc = new GridBagConstraints();
@@ -745,16 +983,17 @@ public class WindowPanel extends JPanel {
 
 		gbc.gridx = 1;
 		gbc.gridy = 0;
-		
+
 		addCalCenter.add(addCalCenterRight, gbc);
 		calenderEdit(3);
 		SM.setCalEditStatus(3);
-		
+
 		rightPanel.updateUI();
 	}
-	private void calenderEdit(int calID){
+
+	private void calenderEdit(int calID) {
 		addCalCenterRight.removeAll();
-		
+
 		editCalendar1 = new JPanel();
 		editCalendar1.setPreferredSize(new Dimension(475, 75));
 		editCalendar1.setLayout(new GridBagLayout());
@@ -768,15 +1007,15 @@ public class WindowPanel extends JPanel {
 		calSaveButton.addActionListener(lForButton);
 
 		calRemoveButton = new JButton("Ta bort");
-		
+
 		calRemoveButton.addActionListener(lForButton);
-		
+
 		editCalendar2 = new JPanel();
 		editCalendar2.setPreferredSize(new Dimension(475, 350));
 		editCalendar2.setLayout(new GridBagLayout());
 		editCalendar2.setBackground(new Color(100, 255, 100));
 		editCalendar2.setVisible(true);
-		
+
 		editCalendar3 = new JPanel();
 		editCalendar3.setPreferredSize(new Dimension(475, 300));
 		editCalendar3.setLayout(new GridBagLayout());
@@ -785,32 +1024,32 @@ public class WindowPanel extends JPanel {
 
 		calendarNameLabel = new JLabel("kalendernamn");
 		calendarNameLabel.setFont(new Font("Serif", Font.PLAIN, 20));
-		
+
 		calendarNameField = new JTextField(calArray[calID].getName());
 		calendarNameField.setPreferredSize(new Dimension(300, 30));
 
 		calendarDescLabel = new JLabel("kalenderbeskrivning");
 		calendarDescLabel.setFont(new Font("Serif", Font.PLAIN, 20));
-		
+
 		calendarDescTextArea = new JTextArea(calArray[calID].getDescription());
 		calendarDescTextArea.setPreferredSize(new Dimension(300, 100));
 		calendarDescTextArea.setRows(5);
 		calendarDescTextArea.setColumns(27);
 		calendarDescTextArea.setLineWrap(true);
 		calendarDescTextArea.setWrapStyleWord(true);
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		addCalCenterRight.add(editCalendar1, gbc);
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		editCalendar1.add(calSaveButton, gbc);
-		
+
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		editCalendar1.add(calRemoveButton, gbc);
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		addCalCenterRight.add(editCalendar2, gbc);
@@ -818,7 +1057,6 @@ public class WindowPanel extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		editCalendar2.add(calendarNameLabel, gbc);
-
 
 		gbc.gridx = 0;
 		gbc.gridy = 1;
@@ -836,7 +1074,7 @@ public class WindowPanel extends JPanel {
 		gbc.gridy = 2;
 
 		addCalCenterRight.add(editCalendar3, gbc);
-		
+
 		addCalCenterRight.updateUI();
 
 		rightPanel.updateUI();
@@ -922,10 +1160,10 @@ public class WindowPanel extends JPanel {
 				getLoginPage();
 			}
 			if (e.getSource() == calSaveButton) {
-				
+
 			}
 			if (e.getSource() == calRemoveButton) {
-				
+
 				SQLManager.removeCalender(calArray[SM.getCalEditStatus()].getCal_id());
 				user.reloadarrays();
 				getAddCalendarPage();
@@ -965,7 +1203,80 @@ public class WindowPanel extends JPanel {
 				}
 			}
 
+			if (e.getSource() == editFullDayActivity) {
+
+				if (editFullDayActivity.isSelected()) {
+					// centerLeft.remove(startTimeSpinner);
+					// centerLeft.remove(endTimeSpinner);
+					editStartDatePicker.setPreferredSize(new Dimension(300, 30));
+					editEndDatePicker.setPreferredSize(new Dimension(300, 30));
+					editEventLeft.updateUI();
+
+					editStartTimeSpinner.setVisible(false);
+					editEndTimeSpinner.setVisible(false);
+
+					editEventLeft.updateUI();
+				} else {
+
+					editStartDatePicker.setPreferredSize(new Dimension(202, 30));
+					editEndDatePicker.setPreferredSize(new Dimension(202, 30));
+
+					editStartTimeSpinner.setVisible(true);
+					editEndTimeSpinner.setVisible(true);
+
+					editEventLeft.updateUI();
+
+				}
+			}
+
+			if (e.getSource() == editEventDropDown) {
+				int inputEventId = user.getEventArray()[editEventDropDown.getSelectedIndex()].getEvent_id();
+				String inputEditEventName = user.getEventArray()[editEventDropDown.getSelectedIndex()].getName();
+				String inputEditEventLocation = user.getEventArray()[editEventDropDown.getSelectedIndex()].getLoc();
+				String inputEditEventTextArea = user.getEventArray()[editEventDropDown.getSelectedIndex()].getDescription();
+				String inputEditEventStartTime = user.getEventArray()[editEventDropDown.getSelectedIndex()].getStart_time();
+				String inputEditEventEndTime = user.getEventArray()[editEventDropDown.getSelectedIndex()].getEnd_time();
+				int inputEditEventFullDay = user.getEventArray()[editEventDropDown.getSelectedIndex()].getEvent_full_day();
+				boolean inputTempBool = false;
+
+				if (inputEditEventFullDay == 0) {
+					inputTempBool = false;
+				} else {
+					inputTempBool = true;
+				}
+
+				editEventNameField.setText(inputEditEventName);
+				editEventLocationField.setText(inputEditEventLocation);
+				editEventDescArea.setText(inputEditEventTextArea);
+				editFullDayActivity.setSelected(inputTempBool);
+				
+				if (editFullDayActivity.isSelected()) {
+					// centerLeft.remove(startTimeSpinner);
+					// centerLeft.remove(endTimeSpinner);
+					editStartDatePicker.setPreferredSize(new Dimension(300, 30));
+					editEndDatePicker.setPreferredSize(new Dimension(300, 30));
+					editEventLeft.updateUI();
+
+					editStartTimeSpinner.setVisible(false);
+					editEndTimeSpinner.setVisible(false);
+
+					editEventLeft.updateUI();
+				} else {
+
+					editStartDatePicker.setPreferredSize(new Dimension(202, 30));
+					editEndDatePicker.setPreferredSize(new Dimension(202, 30));
+
+					editStartTimeSpinner.setVisible(true);
+					editEndTimeSpinner.setVisible(true);
+
+					editEventLeft.updateUI();
+
+				}
+
+			}
+
 			if (e.getSource() == eventCreate) {
+
 				String inputEventName = nameField.getText();
 				String inputEventLocation = locationField.getText();
 				String inputEventTextArea = eventDescArea.getText();
@@ -1023,14 +1334,16 @@ public class WindowPanel extends JPanel {
 				// System.out.println(inputEventStartMonth);
 				// System.out.println(inputEventStartYear);
 
-//				System.out.println("Start date: " + formatStartDate);
-//				System.out.println("End date: " + formatEndDate);
-//
-//				System.out.println(inputCreateEventForCalendarId);
+				// System.out.println("Start date: " + formatStartDate);
+				// System.out.println("End date: " + formatEndDate);
+				//
+				// System.out.println(inputCreateEventForCalendarId);
 
 				SQLManager.addEvent(inputEventName, inputEventLocation, inputEventTextArea, inputFullDayEvent,
 						inputCreateEventForCalendarId, formatStartDate, formatEndDate);
 				
+				user.reloadarrays();
+
 				getAddEventPage();
 
 			}
