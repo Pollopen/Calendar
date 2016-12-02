@@ -20,7 +20,8 @@ public class Event extends JPanel {
 	private int fullDay;
 
 	public Event(int e_id, int cal_id, int create_id, String event_name, String event_location, String event_desc,
-			String event_created, String event_start, String event_end, String event_edited, int event_notice, int event_full_day) {
+			String event_created, String event_start, String event_end, String event_edited, int event_notice,
+			int event_full_day) {
 		event_id = e_id;
 		calendar_id = cal_id;
 		creator_id = create_id;

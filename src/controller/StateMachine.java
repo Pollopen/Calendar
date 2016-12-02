@@ -15,8 +15,8 @@ public class StateMachine {
 		activeCalendars=null;
 		activeview=1;
 	}
-	
-	public int getCalEditStatus(){
+
+	public int getCalEditStatus() {
 		return calEditStatus;
 	}
 

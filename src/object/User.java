@@ -40,7 +40,8 @@ public class User {
 			eventArray[j] = new Event(Integer.parseInt((String) data3[j][7]), Integer.parseInt((String) data3[j][8]),
 					Integer.parseInt((String) data3[j][9]), (String) data3[j][10], (String) data3[j][11],
 					(String) data3[j][12], (String) data3[j][13], (String) data3[j][14], (String) data3[j][15],
-					(String) data3[j][16], Integer.parseInt((String) data3[j][17]), Integer.parseInt((String) data3[j][18]));
+					(String) data3[j][16], Integer.parseInt((String) data3[j][17]),
+					Integer.parseInt((String) data3[j][18]));
 		}
 		for (int i = 0; i < calArray.length; i++) {
 			calArray[i].getAll();
@@ -57,8 +58,8 @@ public class User {
 		System.out.println(sname);
 		System.out.println(created);
 	}
-	
-	public int getStandardCal(){
+
+	public int getStandardCal() {
 		return calArray[0].getCal_id();
 	}
 

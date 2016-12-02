@@ -28,8 +28,7 @@ package views;
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */ 
-
+ */
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,6 +42,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import object.User;
+
 /*
  * This class exists solely to show you what menus look like.
  * It has no menu-related event handling.
@@ -119,7 +119,9 @@ public class MenuList {
 
         return menuBar;
     }
-    private class ListenForButton implements ActionListener {
+    
+
+	private class ListenForButton implements ActionListener {
 
 		// This method is called when an event occurs
 
