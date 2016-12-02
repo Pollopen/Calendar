@@ -48,8 +48,7 @@ public class SQLManager {
 		return false;
 	}
 
-	public static boolean register(Window window, String fname, String sname, String email, char[] pass1,
-			char[] pass2) {
+	public static boolean register(Window window, String fname, String sname, String email, char[] pass1, char[] pass2) {
 		int pass1Length = pass1.length;
 		int pass2Length = pass2.length;
 		boolean passwordMatch = true;
@@ -61,12 +60,18 @@ public class SQLManager {
 				if (pass1[i - 1] == pass2[i - 1]) {
 				} else {
 					passwordMatch = false;
+					JOptionPane.showMessageDialog(window,
+							"Lösenorden stämmer inte överens!",
+							"Registrering misslyckades!", JOptionPane.INFORMATION_MESSAGE);
 					return false;
 				}
 			}
 
 		} else {
 			passwordMatch = false;
+			JOptionPane.showMessageDialog(window,
+					"Lösenorden är inte lika långa!",
+					"Registrering misslyckades!", JOptionPane.INFORMATION_MESSAGE);
 			return false;
 		}
 
@@ -91,21 +96,20 @@ public class SQLManager {
 		return false;
 	}
 
-	public static boolean addCalender(String calName, String calDesc) {
+	public static boolean addCalendar(String calName, String calDesc) {
 		String SQL = "INSERT INTO calendar(creator_id, name, description) VALUES('" + user.getId() + "','" + calName
 				+ "','" + calDesc + "');";
 		db.execute(SQL);
 		return true;
 	}
 
-	public static boolean manageCalender(int calId, String calName, String calDesc) {
-		String SQL = "INSERT INTO calendar(creator_id, name, description) VALUES('" + user.getId() + "','" + calName + "','"
-				+ calDesc + "');";
+	public static boolean editCalendar(int calId, String calName, String calDesc) {
+		String SQL = "UPDATE calendar SET name='"+calName+"', description='"+calDesc+"' WHERE cal_id= '"+calId+"'";
 		db.execute(SQL);
 		return true;
 	}
-	public static boolean removeCalender(int calID) {
-		String SQL = "DELETE FROM calendar WHERE cal_id = "+calID;
+	public static boolean removeCalendar(int calId) {
+		String SQL = "DELETE FROM calendar WHERE cal_id = "+calId;
 		db.execute(SQL);
 		return true;
 	}

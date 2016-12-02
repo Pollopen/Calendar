@@ -52,7 +52,7 @@ public class MenuList {
     JScrollPane scrollPane;
     JMenuBar menuBar;
     JMenu menu, submenu;
-    JMenuItem menuItem, menuReload, menuLogout, menuAddEvent, menuAddCalendar, menuEditEvent;
+    JMenuItem menuItem, menuView, menuReload, menuLogout, menuAddEvent, menuAddCalendar, menuEditEvent;
     JRadioButtonMenuItem rbMenuItem;
     JCheckBoxMenuItem cbMenuItem;
     Window window;
@@ -88,6 +88,10 @@ public class MenuList {
         menuEditEvent = new JMenuItem("Redigera ett event");
         menu.add(menuEditEvent);
         menuEditEvent.addActionListener(lForButton);
+        
+        menuView = new JMenuItem("Visa vyer");
+        menu.add(menuView);
+        menuView.addActionListener(lForButton);
         
         menuAddCalendar = new JMenuItem("Lägg till Kalender");
         menu.add(menuAddCalendar);
@@ -129,6 +133,10 @@ public class MenuList {
 			if (e.getSource() == menuReload) {
 				user.reloadarrays();
 				user.getAll();
+				windowpanel.getIndexPage();
+			}
+			if (e.getSource() == menuView) {
+				windowpanel.getViewViewer();
 			}
 			if (e.getSource() == menuAddEvent) {
 				windowpanel.getAddEventPage();

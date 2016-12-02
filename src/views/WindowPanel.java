@@ -1,7 +1,6 @@
 package views;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -23,8 +22,6 @@ import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -36,6 +33,7 @@ import database.SQLManager;
 import object.Calendar;
 import object.Event;
 import object.User;
+import views.calendar.CalChooseList;
 import views.calendar.CalEditList;
 
 public class WindowPanel extends JPanel {
@@ -51,8 +49,9 @@ public class WindowPanel extends JPanel {
 			regPassLabel, regPassConfLabel, regFNameLabel, regSNameLabel, loginPageLabel, editEventNameLabel,
 			editEventLocationLabel, editEventStartLabel, editEventEndLabel, editEventDescLabel;
 	private JTextField calEditNameField, calAddNameField, calAddNotField, emailField, fnameField, snameField, nameField, locationField,
-			calendarNameField, calendarDescField, regEmailField, regPassField, regPassConfField, regSNameField,
+			calendarNameField, calendarDescField, regEmailField, regSNameField,
 			regFNameField, editEventNameField, editEventLocationField;
+	private JPasswordField regPassField, regPassConfField;
 	private Calendar[] calArray, eventCalArray;
 	private Event[] editEventArray;
 	private JTextArea calendarDescTextArea, calAddDescTextArea;
@@ -76,6 +75,8 @@ public class WindowPanel extends JPanel {
 	private User user;
 	private StateMachine SM;
 	private CalEditList calEditList;
+	private CalChooseList calChooseList;
+	private ViewChoice viewChoice;
 
 	public WindowPanel(Window window) {
 		windowpanel = this;
@@ -137,6 +138,7 @@ public class WindowPanel extends JPanel {
 		gbc.gridy = 0;
 
 		mainPanel.add(upperRightPanel, gbc);
+		getViewChoice();
 
 		// Left panel
 		leftPanel = new JPanel();
@@ -153,7 +155,7 @@ public class WindowPanel extends JPanel {
 		addEventButtonPanel = new JPanel();
 		addEventButtonPanel.setPreferredSize(new Dimension(200, 100));
 		addEventButtonPanel.setVisible(true);
-		addEventButtonPanel.setBackground(new Color(0, 0, 255));
+		addEventButtonPanel.setBackground(new Color(0, 255, 0));
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -171,7 +173,7 @@ public class WindowPanel extends JPanel {
 		leftPanel.add(overviewPanel, gbc);
 
 		CalendarChoicePanel = new JPanel();
-		CalendarChoicePanel.setPreferredSize(new Dimension(200, 200));
+		CalendarChoicePanel.setPreferredSize(new Dimension(200, 300));
 		CalendarChoicePanel.setVisible(true);
 		CalendarChoicePanel.setBackground(new Color(255, 0, 255));
 
@@ -179,6 +181,10 @@ public class WindowPanel extends JPanel {
 		gbc.gridy = 2;
 
 		leftPanel.add(CalendarChoicePanel, gbc);
+		
+		calArray=user.getCalArray();
+		
+		calChoiceList();
 
 		// Right panel
 		rightPanel = new JPanel();
@@ -997,7 +1003,7 @@ public class WindowPanel extends JPanel {
 	}
 
 
-	private void calendarEdit(int calID) {
+	public void calendarEdit(int calID) {
 		addCalCenterRight.removeAll();
 
 		editCalendar1 = new JPanel();
@@ -1163,6 +1169,37 @@ public class WindowPanel extends JPanel {
 		addCalCenterLeft.add(calEditList,gbc);
 		
 	}
+	public void calChoiceList(){
+		if(calChooseList!=null){
+			remove(calChooseList);
+		}
+		gbc.gridx = 0;
+		gbc.gridy = 6;
+		calChooseList = new CalChooseList(calArray,SM,this);
+		CalendarChoicePanel.add(calChooseList,gbc);
+		
+	}
+	public void getViewViewer(){
+		rightPanel.removeAll();
+		main = new JPanel();
+		main.setPreferredSize(new Dimension(1175, 725));
+		main.setLayout(new GridBagLayout());
+		// main.setBackground(new Color(0, 255, 255));
+		main.setVisible(true);
+
+		rightPanel.add(main);
+		rightPanel.updateUI();
+	}
+	public void getViewChoice(){
+		upperRightPanel.removeAll();
+		if(viewChoice!=null){
+			remove(viewChoice);
+		}
+		viewChoice = new ViewChoice(SM,this);
+		upperRightPanel.add(viewChoice);
+		
+	}
+	
 
 	public void sendUser(User user) {
 		this.user = user;
@@ -1182,12 +1219,16 @@ public class WindowPanel extends JPanel {
 					getIndexPage();
 				}
 			}
-			if (e.getSource() == registerButton) {
-
-				// if(SQLManager.register(window, String fname, String sname,
-				// String email, char[] pass1, char[] pass2)){
-				// getLoginPage();
-				// }
+			if (e.getSource() == regButton) {
+				String email=regEmailField.getText();
+				String fname=regFNameField.getText();
+				String sname=regSNameField.getText();
+				char[] pass1 = regPassField.getPassword();
+				char[] pass2 = regPassConfField.getPassword();
+				
+				if(SQLManager.register(window, fname, sname,email,pass1,pass2)){
+					getLoginPage();
+				}
 			}
 
 			if (e.getSource() == registerPageButton) {
@@ -1197,31 +1238,35 @@ public class WindowPanel extends JPanel {
 				getLoginPage();
 			}
 			if (e.getSource() == calSaveButton) {
-				/*
-				String temp1 = calAddNameField.getText();
-				String temp2 = calAddDescTextArea.getText();
-				if (SQLManager.addCalender(temp1, temp2)) {
+				String temp1 = calEditNameField.getText();
+				String temp2 = calEditDescTextArea.getText();
+				if (SQLManager.editCalendar(calArray[SM.getCalEditStatus()].getCal_id() ,temp1, temp2)) {
 					addCalCenterLeft.removeAll();
 					user.reloadarrays();
 					getAddCalendarPage();
-					
+					CalendarChoicePanel.removeAll();
+					calChoiceList();
 				}
-				*/
+				
 			}
 			if (e.getSource() == calRemoveButton) {
 
-				SQLManager.removeCalender(calArray[SM.getCalEditStatus()].getCal_id());
+				SQLManager.removeCalendar(calArray[SM.getCalEditStatus()].getCal_id());
 				user.reloadarrays();
 				getAddCalendarPage();
+				CalendarChoicePanel.removeAll();
+				calChoiceList();
 				
 			}
 			if (e.getSource() == calAddButton) {
 				String temp1 = calAddNameField.getText();
 				String temp2 = calAddDescTextArea.getText();
-				if (SQLManager.addCalender(temp1, temp2)) {
+				if (SQLManager.addCalendar(temp1, temp2)) {
 					addCalCenterLeft.removeAll();
 					user.reloadarrays();
 					getAddCalendarPage();
+					CalendarChoicePanel.removeAll();
+					calChoiceList();
 					
 				}
 

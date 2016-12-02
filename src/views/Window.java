@@ -24,6 +24,7 @@ public class Window extends JFrame {
 		setLocation(newLocation);
 		setLayout(new GridLayout(1, 3));
 		setResizable(false);
+		
 		this.add(new WindowPanel(this));
 
 		pack();
