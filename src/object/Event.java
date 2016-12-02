@@ -14,12 +14,13 @@ public class Event extends JPanel {
 	private String description;
 	private String created;
 	private String start_time;
-	private String length;
+	private String end_time;
 	private String edited;
 	private int notification;
+	private int fullDay;
 
 	public Event(int e_id, int cal_id, int create_id, String event_name, String event_location, String event_desc,
-			String event_created, String event_start, String event_length, String event_edited, int event_notice) {
+			String event_created, String event_start, String event_end, String event_edited, int event_notice, int event_full_day) {
 		event_id = e_id;
 		calendar_id = cal_id;
 		creator_id = create_id;
@@ -28,9 +29,10 @@ public class Event extends JPanel {
 		description = event_desc;
 		created = event_created;
 		start_time = event_start;
-		length = event_length;
+		end_time = event_end;
 		edited = event_edited;
 		notification = event_notice;
+		fullDay = event_full_day;
 	}
 
 	public void getAll() {
@@ -42,7 +44,7 @@ public class Event extends JPanel {
 		System.out.print(description);
 		System.out.print(created);
 		System.out.print(start_time);
-		System.out.print(length);
+		System.out.print(end_time);
 		System.out.print(edited);
 		System.out.println(notification);
 	}
@@ -103,12 +105,12 @@ public class Event extends JPanel {
 		this.start_time = start_time;
 	}
 
-	public String getLength() {
-		return length;
+	public String getEnd_time() {
+		return end_time;
 	}
 
-	public void setLength(String length) {
-		this.length = length;
+	public void setEnd_time(String length) {
+		this.end_time = length;
 	}
 
 	public int isNotification() {
@@ -133,6 +135,14 @@ public class Event extends JPanel {
 
 	public void setEdited(String edited) {
 		this.edited = edited;
+	}
+
+	public int getEvent_full_day() {
+		return fullDay;
+	}
+
+	public void setEvent_full_day(int event_full_day) {
+		this.fullDay = event_full_day;
 	}
 
 }

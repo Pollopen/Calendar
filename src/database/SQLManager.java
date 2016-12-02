@@ -119,7 +119,6 @@ public class SQLManager {
 				+ "','1','" + inputFullDayEvent + "' )";
 
 		db.execute(SQL);
-
 		return true;
 	}
 
