@@ -45,14 +45,15 @@ public class WindowPanel extends JPanel {
 			addCalCenterRight2, addCalCenterRight3, addCalCenterLeft, addCalCenter, editEventMain, editEventTop,
 			editEventCenter, editEventLeft, editEventRight;
 
-	private JLabel calEditDescLabel, calEditNameLabel, calAddLabel, calAddNotLabel, calAddNameLabel, loginLabel, emailLabel, passLabel, regLabel, regHere,
-			passConfLabel, fnameLabel, snameLabel, calendarNameLabel, nameLabel, locationLabel, calListLabel,
-			startTimeLabel, endTimeLabel, eventDescLabel, descriptionLabel, calendarDescLabel, regEmailLabel,
-			regPassLabel, regPassConfLabel, regFNameLabel, regSNameLabel, loginPageLabel, editEventNameLabel,
-			editEventLocationLabel, editEventStartLabel, editEventEndLabel, editEventDescLabel;
-	private JTextField calEditNameField, calAddNameField, calAddNotField, emailField, fnameField, snameField, nameField, locationField,
-			calendarNameField, calendarDescField, regEmailField, regSNameField,
-			regFNameField, editEventNameField, editEventLocationField;
+	private JLabel calEditDescLabel, calEditNameLabel, calAddLabel, calAddNotLabel, calAddNameLabel, loginLabel,
+			emailLabel, passLabel, regLabel, regHere, passConfLabel, fnameLabel, snameLabel, calendarNameLabel,
+			nameLabel, locationLabel, calListLabel, startTimeLabel, endTimeLabel, eventDescLabel, descriptionLabel,
+			calendarDescLabel, regEmailLabel, regPassLabel, regPassConfLabel, regFNameLabel, regSNameLabel,
+			loginPageLabel, editEventNameLabel, editEventLocationLabel, editEventStartLabel, editEventEndLabel,
+			editEventDescLabel;
+	private JTextField calEditNameField, calAddNameField, calAddNotField, emailField, fnameField, snameField, nameField,
+			locationField, calendarNameField, calendarDescField, regEmailField, regSNameField, regFNameField,
+			editEventNameField, editEventLocationField;
 	private JPasswordField regPassField, regPassConfField;
 
 	private Calendar[] calArray, eventCalArray;
@@ -185,9 +186,9 @@ public class WindowPanel extends JPanel {
 		gbc.gridy = 2;
 
 		leftPanel.add(CalendarChoicePanel, gbc);
-		
-		calArray=user.getCalArray();
-		
+
+		calArray = user.getCalArray();
+
 		calChoiceList();
 
 		// Right panel
@@ -798,14 +799,14 @@ public class WindowPanel extends JPanel {
 		editEventButton = new JButton("Spara");
 
 		editEventTop.add(editEventButton, gbcLeft);
-		
+
 		deleteEventButton = new JButton("Ta bort!");
-		
+
 		gbcLeft.gridx = 2;
 		gbcLeft.gridy = 0;
 		gbcLeft.insets = new Insets(0, 0, 0, 10);
 		gbcLeft.anchor = GridBagConstraints.WEST;
-		
+
 		editEventTop.add(deleteEventButton, gbcLeft);
 
 		// Event label + event field
@@ -1026,7 +1027,6 @@ public class WindowPanel extends JPanel {
 		rightPanel.updateUI();
 	}
 
-
 	private void calendarEdit(int calID) {
 		addCalCenterRight.removeAll();
 
@@ -1194,17 +1194,19 @@ public class WindowPanel extends JPanel {
 		addCalCenterLeft.add(calEditList, gbc);
 
 	}
-	public void calChoiceList(){
-		if(calChooseList!=null){
+
+	public void calChoiceList() {
+		if (calChooseList != null) {
 			remove(calChooseList);
 		}
 		gbc.gridx = 0;
 		gbc.gridy = 6;
-		calChooseList = new CalChooseList(calArray,SM,this);
-		CalendarChoicePanel.add(calChooseList,gbc);
-		
+		calChooseList = new CalChooseList(calArray, SM, this);
+		CalendarChoicePanel.add(calChooseList, gbc);
+
 	}
-	public void getViewViewer(){
+
+	public void getViewViewer() {
 		rightPanel.removeAll();
 		main = new JPanel();
 		main.setPreferredSize(new Dimension(1175, 725));
@@ -1215,16 +1217,16 @@ public class WindowPanel extends JPanel {
 		rightPanel.add(main);
 		rightPanel.updateUI();
 	}
-	public void getViewChoice(){
+
+	public void getViewChoice() {
 		upperRightPanel.removeAll();
-		if(viewChoice!=null){
+		if (viewChoice != null) {
 			remove(viewChoice);
 		}
-		viewChoice = new ViewChoice(SM,this);
+		viewChoice = new ViewChoice(SM, this);
 		upperRightPanel.add(viewChoice);
-		
+
 	}
-	
 
 	public void sendUser(User user) {
 		this.user = user;
@@ -1246,13 +1248,13 @@ public class WindowPanel extends JPanel {
 				}
 			}
 			if (e.getSource() == regButton) {
-				String email=regEmailField.getText();
-				String fname=regFNameField.getText();
-				String sname=regSNameField.getText();
+				String email = regEmailField.getText();
+				String fname = regFNameField.getText();
+				String sname = regSNameField.getText();
 				char[] pass1 = regPassField.getPassword();
 				char[] pass2 = regPassConfField.getPassword();
-				
-				if(SQLManager.register(window, fname, sname,email,pass1,pass2)){
+
+				if (SQLManager.register(window, fname, sname, email, pass1, pass2)) {
 					getLoginPage();
 				}
 			}
@@ -1266,7 +1268,7 @@ public class WindowPanel extends JPanel {
 			if (e.getSource() == calSaveButton) {
 				String temp1 = calEditNameField.getText();
 				String temp2 = calEditDescTextArea.getText();
-				if (SQLManager.editCalendar(calArray[SM.getCalEditStatus()].getCal_id() ,temp1, temp2)) {
+				if (SQLManager.editCalendar(calArray[SM.getCalEditStatus()].getCal_id(), temp1, temp2)) {
 					addCalCenterLeft.removeAll();
 					user.reloadarrays();
 					getAddCalendarPage();
@@ -1282,7 +1284,7 @@ public class WindowPanel extends JPanel {
 				getAddCalendarPage();
 				CalendarChoicePanel.removeAll();
 				calChoiceList();
-				
+
 			}
 			if (e.getSource() == calAddButton) {
 				String temp1 = calAddNameField.getText();
@@ -1483,10 +1485,9 @@ public class WindowPanel extends JPanel {
 					inputEventEndMonth = editEndDatePicker.getModel().getMonth();
 					inputEventEndDay = editEndDatePicker.getModel().getDay();
 
-					formatStartDate = inputEventStartYear + "-" + inputEventStartMonth + 1 + "-" + inputEventStartDay
+					formatStartDate = inputEventStartYear + "-" + inputEventStartMonth + "-" + inputEventStartDay
 							+ " 01:01:01";
-					formatEndDate = inputEventEndYear + "-" + inputEventEndMonth + 1 + "-" + inputEventEndDay
-							+ " 01:01:01";
+					formatEndDate = inputEventEndYear + "-" + inputEventEndMonth + "-" + inputEventEndDay + " 01:01:01";
 				} else {
 
 					inputFullDayEvent = 0;
@@ -1502,9 +1503,9 @@ public class WindowPanel extends JPanel {
 					inputEventStartTime = editStartTimeEditor.getFormat().format(editStartTimeSpinner.getValue());
 					inputEventEndTime = editEndTimeEditor.getFormat().format(editEndTimeSpinner.getValue());
 
-					formatStartDate = inputEventStartYear + "-" + (inputEventStartMonth + 1) + "-" + inputEventStartDay
-							+ " " + inputEventStartTime + ":01";
-					formatEndDate = inputEventEndYear + "-" + (inputEventEndMonth + 1) + "-" + inputEventEndDay + " "
+					formatStartDate = inputEventStartYear + "-" + inputEventStartMonth + "-" + inputEventStartDay + " "
+							+ inputEventStartTime + ":01";
+					formatEndDate = inputEventEndYear + "-" + inputEventEndMonth + "-" + inputEventEndDay + " "
 							+ inputEventEndTime + ":01";
 				}
 
@@ -1527,15 +1528,15 @@ public class WindowPanel extends JPanel {
 			}
 
 			if (e.getSource() == deleteEventButton) {
-				
+
 				int eventId = user.getEventArray()[editEventDropDown.getSelectedIndex()].getEvent_id();
-				
+
 				SQLManager.deleteEvent(eventId);
-				
+
 				user.reloadarrays();
-				
+
 				getDeleteAndEditEventPage();
-				
+
 			}
 
 			if (e.getSource() == eventCreate) {
@@ -1569,10 +1570,9 @@ public class WindowPanel extends JPanel {
 					inputEventEndMonth = endDatePicker.getModel().getMonth();
 					inputEventEndDay = endDatePicker.getModel().getDay();
 
-					formatStartDate = inputEventStartYear + "-" + inputEventStartMonth + 1 + "-" + inputEventStartDay
+					formatStartDate = inputEventStartYear + "-" + inputEventStartMonth + "-" + inputEventStartDay
 							+ " 01:01:01";
-					formatEndDate = inputEventEndYear + "-" + inputEventEndMonth + 1 + "-" + inputEventEndDay
-							+ " 01:01:01";
+					formatEndDate = inputEventEndYear + "-" + inputEventEndMonth + "-" + inputEventEndDay + " 01:01:01";
 				} else {
 
 					inputFullDayEvent = 0;
@@ -1588,9 +1588,9 @@ public class WindowPanel extends JPanel {
 					inputEventStartTime = startTimeEditor.getFormat().format(startTimeSpinner.getValue());
 					inputEventEndTime = endTimeEditor.getFormat().format(endTimeSpinner.getValue());
 
-					formatStartDate = inputEventStartYear + "-" + (inputEventStartMonth + 1) + "-" + inputEventStartDay
-							+ " " + inputEventStartTime + ":01";
-					formatEndDate = inputEventEndYear + "-" + (inputEventEndMonth + 1) + "-" + inputEventEndDay + " "
+					formatStartDate = inputEventStartYear + "-" + inputEventStartMonth + "-" + inputEventStartDay + " "
+							+ inputEventStartTime + ":01";
+					formatEndDate = inputEventEndYear + "-" + inputEventEndMonth + "-" + inputEventEndDay + " "
 							+ inputEventEndTime + ":01";
 				}
 
