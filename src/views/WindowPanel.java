@@ -555,27 +555,27 @@ public class WindowPanel extends JPanel {
 		gbc.gridy = 0;
 
 		centerEvent.add(centerRight, gbc);
-		
+
 		userSearchField = new JTextField();
-		userSearchField.setPreferredSize(new Dimension(300,30));
-		
+		userSearchField.setPreferredSize(new Dimension(300, 30));
+
 		gbcLeft.gridx = 0;
 		gbcLeft.gridy = 0;
 		gbcLeft.insets = new Insets(0, 0, 0, 10);
 		gbcLeft.anchor = GridBagConstraints.WEST;
-		
+
 		centerRight.add(userSearchField, gbcLeft);
-		
+
 		userSearchButton = new JButton("Sök!");
 		userSearchButton.setPreferredSize(new Dimension(60, 29));
-		
+
 		gbcLeft.gridx = 1;
 		gbcLeft.gridy = 0;
 		gbcLeft.insets = new Insets(0, 0, 0, 0);
 		gbcLeft.anchor = GridBagConstraints.WEST;
-		
+
 		centerRight.add(userSearchButton, gbcLeft);
-		
+
 		// Everything on panels
 
 		// Event label + event field
@@ -1319,18 +1319,21 @@ public class WindowPanel extends JPanel {
 				}
 
 			}
-			
-			if (e.getSource() == userSearchButton) {
-				
-				String inputSearch = userSearchField.getText();
-				
-				Object inputResult[][] = SQLManager.searchForUser(inputSearch);
 
-				
-				
-					System.out.println(inputResult[1][0] + "Heeeeeeeeeeeeeeej");
-				
-			
+			if (e.getSource() == userSearchButton) {
+
+				String inputSearch = userSearchField.getText();
+
+				Object[][] inputResult = SQLManager.searchForUser(inputSearch);
+
+				for (int i = 0; i > inputResult.length; i++) {
+						
+					System.out.println(inputResult[1][0]);
+					
+				}
+
+				//System.out.println(inputResult[1][0] + "Heeeeeeeeeeeeeeej");
+
 			}
 
 			if (e.getSource() == fullDayActivity) {
