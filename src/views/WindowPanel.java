@@ -1037,8 +1037,6 @@ public class WindowPanel extends JPanel {
 			rightPanel.add(new DayView(), gbc);
 			break;
 		}
-
-		rightPanel.add(main);
 		rightPanel.updateUI();
 	}
 
