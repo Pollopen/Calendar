@@ -1,4 +1,4 @@
-package views.calendar;
+package views.calendar.addedit;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -12,16 +12,18 @@ import controller.StateMachine;
 import object.Calendar;
 import views.WindowPanel;
 
+
 public class CalEditList extends JPanel implements ListSelectionListener {
 
 	private JList calEditList;
 	private DefaultListModel listModel;
 	private StateMachine SM;
 	private WindowPanel wp;
-
-	public CalEditList(Calendar[] calarray, StateMachine SM, WindowPanel wp) {
+	private CalAddEdit cae;
+	public CalEditList(Calendar[] calarray, StateMachine SM, WindowPanel wp, CalAddEdit cae) {
 		this.SM = SM;
 		this.wp = wp;
+		this.cae=cae;
 		listModel = new DefaultListModel();
 
 		for (int i = 0; i < calarray.length; i++) {
@@ -30,7 +32,7 @@ public class CalEditList extends JPanel implements ListSelectionListener {
 		// Create the list and put it in a scroll pane.
 		calEditList = new JList(listModel);
 		calEditList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		calEditList.setSelectedIndex(SM.getCalEditStatus());
+		calEditList.setSelectedIndex(this.SM.getCalEditStatus());
 		calEditList.addListSelectionListener(this);
 		calEditList.setVisibleRowCount(10);
 		JScrollPane listScrollPane = new JScrollPane(calEditList);
@@ -44,7 +46,8 @@ public class CalEditList extends JPanel implements ListSelectionListener {
 		int index = calEditList.getSelectedIndex();
 		SM.setCalEditStatus(index);
 		// wp.calendarEdit(index);
-		wp.calList();
+		cae.calList();												
+		cae.calendarEdit(SM.getCalEditStatus());
 	}
 
 }
