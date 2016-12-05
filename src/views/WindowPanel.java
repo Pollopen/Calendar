@@ -735,6 +735,7 @@ public class WindowPanel extends JPanel {
 
 		fullDayActivity.addActionListener(lForButton);
 		eventCreate.addActionListener(lForButton);
+		userSearchButton.addActionListener(lForButton);
 	}
 
 	public void getDeleteAndEditEventPage() {
@@ -1317,6 +1318,19 @@ public class WindowPanel extends JPanel {
 					calChoiceList();
 				}
 
+			}
+			
+			if (e.getSource() == userSearchButton) {
+				
+				String inputSearch = userSearchField.getText();
+				
+				Object inputResult[][] = SQLManager.searchForUser(inputSearch);
+
+				
+				
+					System.out.println(inputResult[1][0] + "Heeeeeeeeeeeeeeej");
+				
+			
 			}
 
 			if (e.getSource() == fullDayActivity) {

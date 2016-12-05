@@ -48,7 +48,8 @@ public class SQLManager {
 		return false;
 	}
 
-	public static boolean register(Window window, String fname, String sname, String email, char[] pass1, char[] pass2) {
+	public static boolean register(Window window, String fname, String sname, String email, char[] pass1,
+			char[] pass2) {
 		int pass1Length = pass1.length;
 		int pass2Length = pass2.length;
 		boolean passwordMatch = true;
@@ -60,8 +61,7 @@ public class SQLManager {
 				if (pass1[i - 1] == pass2[i - 1]) {
 				} else {
 					passwordMatch = false;
-					JOptionPane.showMessageDialog(window,
-							"Lösenorden stämmer inte överens!",
+					JOptionPane.showMessageDialog(window, "Lösenorden stämmer inte överens!",
 							"Registrering misslyckades!", JOptionPane.INFORMATION_MESSAGE);
 					return false;
 				}
@@ -69,9 +69,8 @@ public class SQLManager {
 
 		} else {
 			passwordMatch = false;
-			JOptionPane.showMessageDialog(window,
-					"Lösenorden är inte lika långa!",
-					"Registrering misslyckades!", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(window, "Lösenorden är inte lika långa!", "Registrering misslyckades!",
+					JOptionPane.INFORMATION_MESSAGE);
 			return false;
 		}
 
@@ -104,10 +103,12 @@ public class SQLManager {
 	}
 
 	public static boolean editCalendar(int calId, String calName, String calDesc) {
-		String SQL = "UPDATE calendar SET name='"+calName+"', description='"+calDesc+"' WHERE cal_id= '"+calId+"'";
+		String SQL = "UPDATE calendar SET name='" + calName + "', description='" + calDesc + "' WHERE cal_id= '" + calId
+				+ "'";
 		db.execute(SQL);
 		return true;
 	}
+
 	public static boolean manageCalendar(int calId, String calName, String calDesc) {
 		String SQL = "INSERT INTO calendar(creator_id, name, description) VALUES('" + user.getId() + "','" + calName
 				+ "','" + calDesc + "');";
@@ -143,14 +144,32 @@ public class SQLManager {
 		db.execute(SQL);
 		return true;
 	}
-	
+
 	public static boolean deleteEvent(int eventId) {
+
+		String SQL = "DELETE FROM event WHERE event_id = " + eventId;
+
+		db.execute(SQL);
+
+		return true;
+	}
+
+	public static Object[][] searchForUser(String inputSearch) {
+
+		String SQL = "SELECT user.user_id, CONCAT(user.fname,' ', user.sname) AS name, user.email FROM user WHERE user_id != "
+				+ user.getId() + " AND (LCASE(CONCAT(user.fname,' ', user.sname)) LIKE LCASE('%" + inputSearch
+				+ "%')  OR LCASE(email) LIKE LCASE('%" + inputSearch + "%'))";
 		
-		String SQL = "DELETE FROM event WHERE event_id = "+eventId;
-		
+		Object[][] data = db.getData(SQL);
+
 		db.execute(SQL);
 		
-		return true;
+		
+		
+		System.out.println(data);
+
+		return data;
+
 	}
 
 	public static JavaDB getDb() {
