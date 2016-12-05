@@ -1018,11 +1018,25 @@ public class WindowPanel extends JPanel {
 
 	public void getViewViewer() {
 		rightPanel.removeAll();
-		main = new JPanel();
-		main.setPreferredSize(new Dimension(1175, 725));
-		main.setLayout(new GridBagLayout());
-		//main.setBackground(new Color(0, 255, 255));
-		main.setVisible(true);
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		switch (SM.getActiveview()) {
+		case 1:
+			rightPanel.add(new DayView(), gbc);
+			break;
+		case 2:
+			rightPanel.add(new WeekView(), gbc);
+			break;
+		case 3:
+			rightPanel.add(new MonthView(SM), gbc);
+			break;
+		case 4:
+			rightPanel.add(new YearView(), gbc);
+			break;
+		default:
+			rightPanel.add(new DayView(), gbc);
+			break;
+		}
 
 		rightPanel.add(main);
 		rightPanel.updateUI();
