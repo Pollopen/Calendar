@@ -1326,9 +1326,12 @@ public class WindowPanel extends JPanel {
 
 				Object[][] inputResult = SQLManager.searchForUser(inputSearch);
 
-				for (int i = 0; i > inputResult.length; i++) {
+				for (int i = 0; i < inputResult.length; i++) {
 						
-					System.out.println(inputResult[1][0]);
+					System.out.println(inputResult[i][0]);
+					
+					int[] user_id = (int[]) inputResult[i][0];
+					
 					
 				}
 
@@ -1579,6 +1582,10 @@ public class WindowPanel extends JPanel {
 			if (e.getSource() == eventCreate) {
 
 				String inputEventName = nameField.getText();
+				if(inputEventName.isEmpty())
+				{
+						
+				}
 				String inputEventLocation = locationField.getText();
 				String inputEventTextArea = eventDescArea.getText();
 				int inputFullDayEvent;
