@@ -138,7 +138,7 @@ public class ViewChoice extends JPanel {
 				SM.setFocusedDate(temp);
 				System.out.println(temp);
 				wp.getViewViewer();
-				wp.getViewChoice();
+				//wp.getViewChoice();
 			}
 			// Check if the source of the event was the button
 			

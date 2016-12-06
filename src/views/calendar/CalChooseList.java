@@ -54,6 +54,7 @@ public class CalChooseList extends JPanel implements ListSelectionListener {
         calChoiceList = new JList(listModel);
         calChoiceList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         calChoiceList.setSelectedIndices(list);
+		SM.setActiveCalendars(list);
         calChoiceList.addListSelectionListener(this);
         calChoiceList.setVisibleRowCount(10);
         JScrollPane listScrollPane = new JScrollPane(calChoiceList);
@@ -77,8 +78,7 @@ public class CalChooseList extends JPanel implements ListSelectionListener {
 		// TODO Auto-generated method stub
 		int[] indecies = calChoiceList.getSelectedIndices();
 		SM.setActiveCalendars(indecies);
-		System.out.println(indecies.length);
-		System.out.println("-");
+		wp.getViewViewer();
 	}
 
 }

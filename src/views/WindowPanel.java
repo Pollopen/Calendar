@@ -1028,7 +1028,7 @@ public class WindowPanel extends JPanel {
 			rightPanel.add(new WeekView(), gbc);
 			break;
 		case 3:
-			rightPanel.add(new MonthView(SM), gbc);
+			rightPanel.add(new MonthView(SM, user), gbc);
 			break;
 		case 4:
 			rightPanel.add(new YearView(), gbc);

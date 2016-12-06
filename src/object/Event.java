@@ -146,4 +146,24 @@ public class Event extends JPanel {
 		this.fullDay = event_full_day;
 	}
 
+	public int getCalendar_id() {
+		return calendar_id;
+	}
+
+	public void setCalendar_id(int calendar_id) {
+		this.calendar_id = calendar_id;
+	}
+
+	public int getFullDay() {
+		return fullDay;
+	}
+
+	public void setFullDay(int fullDay) {
+		this.fullDay = fullDay;
+	}
+
+	public int getNotification() {
+		return notification;
+	}
+
 }
