@@ -2,119 +2,84 @@ package views;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import controller.StateMachine;
+
 public class WeekView extends JPanel {
 
-	private JPanel mondayPanel, tuesdayPanel, wednesdayPanel, thursdayPanel, fridayPanel, saturdayPanel, sundayPanel;
-	private JLabel mondayLabel, tuesdayLabel, wednesdayLabel, thursdayLabel, fridayLabel, saturdayLabel, sundayLabel;
+	private StateMachine SM;
+	private JPanel weekDaysPanel, weekDatePanel;
+	private JLabel weekDaysLabel, dayOfMonthLabel;
 	private Calendar cal;
-	private Date today;
-	private SimpleDateFormat sdf;
+	private String date;
+	private Date focusedDate;
+	private DateFormat getFocusDate = new SimpleDateFormat("yyyy-MM-dd");
+	private DateFormat getWeekDay = new SimpleDateFormat("u");
+	private DateFormat getMonth = new SimpleDateFormat("M");
+	private int weekDay;
 
-	public WeekView() {
+	public WeekView(StateMachine SM) {
+		this.SM = SM;
 
-		this.setLayout(new GridLayout(1, 7));
+		this.setLayout(new GridLayout(2, 7));
 		this.setPreferredSize(new Dimension(1175, 725));
 		this.setVisible(true);
 
-		today = new Date();
-		sdf = new SimpleDateFormat("MM-dd-yyy");
+		cal = new GregorianCalendar();
+		date = SM.getFocusedDate();
 
-		cal = Calendar.getInstance();
+		String tempFocusedDate = date.substring(8, 10);
+		System.out.println(tempFocusedDate);
 
-		System.out.println(sdf.format(today));
+		String[] dayName = { "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag", "Söndag" };
 
-		getMondayView();
-		getTuesdayView();
-		getWednesdayView();
-		getThursdayView();
-		getFridayView();
-		getSaturdayView();
-		getSundayView();
+		for (int i = 0; i < 7; i++) {
+			
+			weekDaysPanel = new JPanel();
+			weekDaysPanel.setPreferredSize(new Dimension(165, 700));
+			weekDaysPanel.setVisible(true);
+			weekDaysPanel.setBackground(new Color(255, 255, 255));
+			add(weekDaysPanel);
+
+			weekDaysLabel = new JLabel();
+			weekDaysLabel.setText(dayName[i]);
+			weekDaysLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+			weekDaysPanel.add(weekDaysLabel);
+
+		}
+		
+		cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), Integer.parseInt(tempFocusedDate));
+
+		cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH),
+				cal.get(Calendar.DAY_OF_MONTH) - (cal.get(Calendar.DAY_OF_WEEK) - 2));
+		
+		
+
+		for (int i = cal.get(Calendar.DAY_OF_MONTH); i < cal.get(Calendar.DAY_OF_MONTH) + 7; i++) {
+
+			dayOfMonthLabel = new JLabel();
+			dayOfMonthLabel.setText("" + i);
+			
+			weekDatePanel = new JPanel();
+			weekDatePanel.setPreferredSize(new Dimension(165, 25));
+			weekDatePanel.setVisible(true);
+			
+			add(weekDatePanel);
+			weekDatePanel.add(dayOfMonthLabel);
+			
+		}
 
 	}
-
-	public void getMondayView() {
-		mondayPanel = new JPanel();
-		mondayPanel.setPreferredSize(new Dimension(165, 725));
-		mondayPanel.setLayout(new GridLayout(2, 1));
-		mondayPanel.setVisible(true);
-		mondayPanel.setBackground(new Color(255, 0, 0));
-
-		add(mondayPanel);
-	}
-
-	public void getTuesdayView() {
-
-		tuesdayPanel = new JPanel();
-		tuesdayPanel.setPreferredSize(new Dimension(165, 725));
-		tuesdayPanel.setLayout(new GridLayout(2, 1));
-		tuesdayPanel.setVisible(true);
-		tuesdayPanel.setBackground(new Color(0, 255, 0));
-		add(tuesdayPanel);
-
-		tuesdayLabel = new JLabel();
-		tuesdayLabel.setText("Tisdag");
-
-		tuesdayPanel.add(tuesdayLabel);
-	}
-
-	public void getWednesdayView() {
-		wednesdayPanel = new JPanel();
-		wednesdayPanel.setPreferredSize(new Dimension(165, 725));
-		wednesdayPanel.setLayout(new GridLayout(2, 1));
-		wednesdayPanel.setVisible(true);
-		wednesdayPanel.setBackground(new Color(0, 0, 255));
-
-		add(wednesdayPanel);
-	}
-	
-	public void getThursdayView() {
-		thursdayPanel = new JPanel();
-		thursdayPanel.setPreferredSize(new Dimension(165, 725));
-		thursdayPanel.setLayout(new GridLayout(2, 1));
-		thursdayPanel.setVisible(true);
-		thursdayPanel.setBackground(new Color(255, 0, 0));
-
-		add(thursdayPanel);
-	}
-	
-	public void getFridayView() {
-		fridayPanel = new JPanel();
-		fridayPanel.setPreferredSize(new Dimension(165, 725));
-		fridayPanel.setLayout(new GridLayout(2, 1));
-		fridayPanel.setVisible(true);
-		fridayPanel.setBackground(new Color(0, 255, 0));
-
-		add(fridayPanel);
-	}
-	
-	public void getSaturdayView() {
-		saturdayPanel = new JPanel();
-		saturdayPanel.setPreferredSize(new Dimension(165, 725));
-		saturdayPanel.setLayout(new GridLayout(2, 1));
-		saturdayPanel.setVisible(true);
-		saturdayPanel.setBackground(new Color(0, 0, 255));
-
-		add(saturdayPanel);
-	}
-	
-	public void getSundayView() {
-		sundayPanel = new JPanel();
-		sundayPanel.setPreferredSize(new Dimension(165, 725));
-		sundayPanel.setLayout(new GridLayout(2, 1));
-		sundayPanel.setVisible(true);
-		sundayPanel.setBackground(new Color(255, 0, 0));
-
-		add(sundayPanel);
-	}
-	
 
 }
