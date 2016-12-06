@@ -62,7 +62,7 @@ public class WindowPanel extends JPanel {
 	private JTextArea calendarDescTextArea, calAddDescTextArea;
 	private JPasswordField passField, passConfField;
 	private JButton calAddButton, loginButton, registerPageButton, registerButton, loginPageButton, regButton,
-			calSaveButton, calRemoveButton, eventCreate, editEventButton, deleteEventButton, userSearchButton;
+			calSaveButton, calRemoveButton, eventCreate, editEventButton, deleteEventButton, userSearchButton, nextWeekButton, prevWeekButton;
 	private JTextArea calEditDescTextArea, eventDescArea, editEventDescArea;
 	private JCheckBox fullDayActivity, editFullDayActivity;
 	private JSpinner startTimeSpinner, endTimeSpinner, editStartTimeSpinner, editEndTimeSpinner;
@@ -145,6 +145,7 @@ public class WindowPanel extends JPanel {
 
 		mainPanel.add(upperRightPanel, gbc);
 		getViewChoice();
+		
 
 		// Left panel
 		leftPanel = new JPanel();
@@ -1025,7 +1026,7 @@ public class WindowPanel extends JPanel {
 			rightPanel.add(new DayView(), gbc);
 			break;
 		case 2:
-			rightPanel.add(new WeekView(), gbc);
+			rightPanel.add(new WeekView(SM), gbc);
 			break;
 		case 3:
 			rightPanel.add(new MonthView(SM), gbc);
@@ -1415,9 +1416,9 @@ public class WindowPanel extends JPanel {
 					inputEventEndMonth = endDatePicker.getModel().getMonth();
 					inputEventEndDay = endDatePicker.getModel().getDay();
 
-					formatStartDate = inputEventStartYear + "-" + inputEventStartMonth + "-" + inputEventStartDay
+					formatStartDate = inputEventStartYear + "-" + (inputEventStartMonth + 1) + "-" + inputEventStartDay
 							+ " 01:01:01";
-					formatEndDate = inputEventEndYear + "-" + inputEventEndMonth + "-" + inputEventEndDay + " 01:01:01";
+					formatEndDate = inputEventEndYear + "-" + (inputEventEndMonth + 1) + "-" + inputEventEndDay + " 01:01:01";
 				} else {
 
 					inputFullDayEvent = 0;
@@ -1433,9 +1434,9 @@ public class WindowPanel extends JPanel {
 					inputEventStartTime = startTimeEditor.getFormat().format(startTimeSpinner.getValue());
 					inputEventEndTime = endTimeEditor.getFormat().format(endTimeSpinner.getValue());
 
-					formatStartDate = inputEventStartYear + "-" + inputEventStartMonth + "-" + inputEventStartDay + " "
+					formatStartDate = inputEventStartYear + "-" + (inputEventStartMonth + 1) + "-" + inputEventStartDay + " "
 							+ inputEventStartTime + ":01";
-					formatEndDate = inputEventEndYear + "-" + inputEventEndMonth + "-" + inputEventEndDay + " "
+					formatEndDate = inputEventEndYear + "-" + (inputEventEndMonth + 1) + "-" + inputEventEndDay + " "
 							+ inputEventEndTime + ":01";
 				}
 

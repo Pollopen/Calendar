@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -20,31 +21,37 @@ import javax.swing.event.ChangeListener;
 import controller.StateMachine;
 
 public class ViewChoice extends JPanel {
-	private JButton dayButton,weekButton, monthButton, yearButton;
+	private JButton dayButton, weekButton, monthButton, yearButton, prevWeekButton, nextWeekButton;
 	private GridBagConstraints gbc;
+	private GregorianCalendar gc;
 	private ListenForButton lForButton;
 	private StateMachine SM;
 	private WindowPanel wp;
 	private JSpinner dateChoice;
 	private DateFormat getFocusDate = new SimpleDateFormat("yyyy/MM/dd");
 	private Date focusedDate;
-	
-	public ViewChoice(StateMachine SM, WindowPanel wp){
-		this.SM=SM;
-		this.wp=wp;
+	private int week;
+
+	public ViewChoice(StateMachine SM, WindowPanel wp) {
+		this.SM = SM;
+		this.wp = wp;
 		setOpaque(false);
-		gbc=new GridBagConstraints();
+		gbc = new GridBagConstraints();
 		setLayout(new GridBagLayout());
-		lForButton=new ListenForButton();
-		dayButton= new JButton("Dag");
+		lForButton = new ListenForButton();
+		dayButton = new JButton("Dag");
 		dayButton.addActionListener(lForButton);
-		weekButton= new JButton("Vecka");
+		weekButton = new JButton("Vecka");
 		weekButton.addActionListener(lForButton);
-		monthButton= new JButton("Månad");
+		monthButton = new JButton("Månad");
 		monthButton.addActionListener(lForButton);
-		yearButton= new JButton("År");
+		yearButton = new JButton("År");
 		yearButton.addActionListener(lForButton);
-		
+		prevWeekButton = new JButton("<<");
+		prevWeekButton.addActionListener(lForButton);
+		nextWeekButton = new JButton(">>");
+		nextWeekButton.addActionListener(lForButton);
+
 		switch (SM.getActiveview()) {
 		case 1:
 			dayButton.setEnabled(false);
@@ -58,45 +65,67 @@ public class ViewChoice extends JPanel {
 		case 4:
 			yearButton.setEnabled(false);
 			break;
+		case 5:
+			prevWeekButton.setEnabled(false);
+			break;
+		case 6:
+			nextWeekButton.setEnabled(false);
+			break;
 		default:
 			break;
 		}
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-        add(dayButton,gbc);
-        gbc.gridx = 1;
+		add(dayButton, gbc);
+		gbc.gridx = 1;
 		gbc.gridy = 0;
-        add(weekButton,gbc);
-        gbc.gridx = 2;
+		add(weekButton, gbc);
+		gbc.gridx = 2;
 		gbc.gridy = 0;
-        add(monthButton,gbc);
-        gbc.gridx = 3;
+		add(monthButton, gbc);
+		gbc.gridx = 3;
 		gbc.gridy = 0;
-        add(yearButton,gbc);
-        
-        try {
-			focusedDate=getFocusDate.parse(SM.getFocusedDate());
+		add(yearButton, gbc);
+
+		if (SM.getActiveview() == 2) {
+			gbc.gridx = 4;
+			gbc.gridy = 0;
+			add(prevWeekButton, gbc);
+			gbc.gridx = 5;
+			gbc.gridy = 0;
+			add(nextWeekButton, gbc);
+		}
+
+		try {
+			focusedDate = getFocusDate.parse(SM.getFocusedDate());
 		} catch (ParseException e) {
 			System.out.println("Date Conversion failed!");
 		}
-        
-        dateChoice = new JSpinner(new SpinnerDateModel(focusedDate, null, null,Calendar.DAY_OF_MONTH));
-        JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateChoice, "dd/MM/yy");
-        dateChoice.setEditor(dateEditor);
-        
+
+		dateChoice = new JSpinner(new SpinnerDateModel(focusedDate, null, null, Calendar.DAY_OF_MONTH));
+		JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateChoice, "dd/MM/yy");
+		dateChoice.setEditor(dateEditor);
+
 		gbc.gridx = 4;
 		gbc.gridy = 0;
-		
+
 		add(dateChoice);
-		
+
 		ListenForSpinner lForSpinner = new ListenForSpinner();
-		
 
 		dateChoice.addChangeListener(lForSpinner);
-		
+
 	}
 	
+	private void addOneWeek()
+	{
+		gc = new GregorianCalendar();
+		week = gc.get(Calendar.WEEK_OF_YEAR);
+		week++;
+		gc.set(Calendar.WEEK_OF_YEAR, week);
+	}
+
 	private class ListenForButton implements ActionListener {
 
 		// This method is called when an event occurs
@@ -104,7 +133,7 @@ public class ViewChoice extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 
 			// Check if the source of the event was the button
-			
+
 			if (e.getSource() == dayButton) {
 				SM.setActiveview(1);
 				wp.getViewViewer();
@@ -125,9 +154,22 @@ public class ViewChoice extends JPanel {
 				wp.getViewViewer();
 				wp.getViewChoice();
 			}
-			
+			if (e.getSource() == prevWeekButton) {
+				SM.setActiveview(2);
+				wp.getViewViewer();
+				wp.getViewChoice();
+			}
+			if (e.getSource() == nextWeekButton) {
+				addOneWeek();
+				SM.setActiveview(2);
+				wp.getViewViewer();
+				wp.getViewChoice();
+
+			}
+
 		}
 	}
+
 	private class ListenForSpinner implements ChangeListener {
 
 		// This method is called when an event occurs
@@ -141,7 +183,7 @@ public class ViewChoice extends JPanel {
 				wp.getViewChoice();
 			}
 			// Check if the source of the event was the button
-			
+
 		}
 	}
 }
