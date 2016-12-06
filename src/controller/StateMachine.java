@@ -15,7 +15,7 @@ public class StateMachine {
 	private int[] activeCalendars;
 	private String focusedDate;
 	private User user;
-	private DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd M d E HH:mm:ss");
+	private DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 	private Date date;
 	
 	public StateMachine(User user){
