@@ -19,7 +19,7 @@ import controller.StateMachine;
 public class WeekView extends JPanel {
 
 	private StateMachine SM;
-	private JPanel weekDaysPanel, weekDaysLabelPanel;
+	private JPanel weekDaysPanel, weekDatePanel;
 	private JLabel weekDaysLabel, dayOfMonthLabel;
 	private Calendar cal;
 	private String date;
@@ -45,37 +45,39 @@ public class WeekView extends JPanel {
 		String[] dayName = { "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag", "Söndag" };
 
 		for (int i = 0; i < 7; i++) {
-
-			weekDaysLabelPanel = new JPanel();
-			weekDaysLabelPanel.setPreferredSize(new Dimension(165, 25));
-			weekDaysLabelPanel.setVisible(true);
-			weekDaysLabelPanel.setBackground(new Color(255, 255, 255));
-			add(weekDaysLabelPanel);
-
-			weekDaysLabel = new JLabel();
-			weekDaysLabel.setText(dayName[i]);
-			weekDaysLabel.setFont(new Font("Serif", Font.PLAIN, 20));
-			weekDaysLabelPanel.add(weekDaysLabel);
-
-		}
-
-		cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), Integer.parseInt(tempFocusedDate));
-
-		cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH),
-				cal.get(Calendar.DAY_OF_MONTH) - (cal.get(Calendar.DAY_OF_WEEK) - 2));
-
-		for (int i = cal.get(Calendar.DAY_OF_MONTH); i < cal.get(Calendar.DAY_OF_MONTH) + 7; i++) {
-
+			
 			weekDaysPanel = new JPanel();
 			weekDaysPanel.setPreferredSize(new Dimension(165, 700));
 			weekDaysPanel.setVisible(true);
 			weekDaysPanel.setBackground(new Color(255, 255, 255));
 			add(weekDaysPanel);
 
+			weekDaysLabel = new JLabel();
+			weekDaysLabel.setText(dayName[i]);
+			weekDaysLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+			weekDaysPanel.add(weekDaysLabel);
+
+		}
+		
+		cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), Integer.parseInt(tempFocusedDate));
+
+		cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH),
+				cal.get(Calendar.DAY_OF_MONTH) - (cal.get(Calendar.DAY_OF_WEEK) - 2));
+		
+		
+
+		for (int i = cal.get(Calendar.DAY_OF_MONTH); i < cal.get(Calendar.DAY_OF_MONTH) + 7; i++) {
+
 			dayOfMonthLabel = new JLabel();
 			dayOfMonthLabel.setText("" + i);
-			weekDaysPanel.add(dayOfMonthLabel);
-
+			
+			weekDatePanel = new JPanel();
+			weekDatePanel.setPreferredSize(new Dimension(165, 25));
+			weekDatePanel.setVisible(true);
+			
+			add(weekDatePanel);
+			weekDatePanel.add(dayOfMonthLabel);
+			
 		}
 
 	}

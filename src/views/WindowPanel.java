@@ -1130,9 +1130,9 @@ public class WindowPanel extends JPanel {
 
 				for (int i = 0; i < inputResult.length; i++) {
 						
-					System.out.println(inputResult[i][0]);
+					System.out.println(inputResult[i][1]);
 					
-					int[] user_id = (int[]) inputResult[i][0];
+					//int[] user_id = (int[]) inputResult[i][0];
 					
 					
 				}

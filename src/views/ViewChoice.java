@@ -65,12 +65,6 @@ public class ViewChoice extends JPanel {
 		case 4:
 			yearButton.setEnabled(false);
 			break;
-		case 5:
-			prevWeekButton.setEnabled(false);
-			break;
-		case 6:
-			nextWeekButton.setEnabled(false);
-			break;
 		default:
 			break;
 		}
@@ -118,6 +112,8 @@ public class ViewChoice extends JPanel {
 
 	}
 	
+	
+	
 	private void addOneWeek()
 	{
 		gc = new GregorianCalendar();
@@ -160,7 +156,6 @@ public class ViewChoice extends JPanel {
 				wp.getViewChoice();
 			}
 			if (e.getSource() == nextWeekButton) {
-				addOneWeek();
 				SM.setActiveview(2);
 				wp.getViewViewer();
 				wp.getViewChoice();
