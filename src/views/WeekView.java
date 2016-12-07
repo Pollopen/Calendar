@@ -5,11 +5,9 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -41,16 +39,15 @@ public class WeekView extends JPanel {
 
 		tempFocusedDay = date.substring(8, 10);
 		newDayDate = Integer.parseInt(tempFocusedDay);
-		System.out.println("Day: "+tempFocusedDay);
-		
+		System.out.println("Day: " + tempFocusedDay);
+
 		tempFocusedMonth = date.substring(5, 7);
 		newMonthDate = Integer.parseInt(tempFocusedMonth);
-		System.out.println("Month: "+tempFocusedMonth);
-		
+		System.out.println("Month: " + tempFocusedMonth);
+
 		tempFocusedYear = date.substring(0, 4);
 		newYearDate = Integer.parseInt(tempFocusedYear);
-		System.out.println("Year: "+tempFocusedYear);
-		
+		System.out.println("Year: " + tempFocusedYear);
 
 		String[] dayName = { "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag", "Söndag" };
 
@@ -69,25 +66,22 @@ public class WeekView extends JPanel {
 
 		}
 
-		//cal.set(newYearDate = Integer.parseInt(tempFocusedYear), newMonthDate = Integer.parseInt(tempFocusedMonth), newDayDate = Integer.parseInt(tempFocusedDay));
-		
-		
-		
+		// cal.set(newYearDate = Integer.parseInt(tempFocusedYear), newMonthDate
+		// = Integer.parseInt(tempFocusedMonth), newDayDate =
+		// Integer.parseInt(tempFocusedDay));
+
 		System.out.println(newYearDate + " " + cal.get(Calendar.YEAR));
 		System.out.println(newMonthDate + " " + cal.get(Calendar.MONTH));
 		System.out.println(newDayDate);
-		
+
 		System.out.println(cal.get(Calendar.DAY_OF_WEEK));
-		
+
 		cal.set(newYearDate, (newMonthDate - 1), newDayDate);
-		
+
 		cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH),
 				cal.get(Calendar.DAY_OF_MONTH) - (cal.get(Calendar.DAY_OF_WEEK) - 2));
-		
-		
 
 		for (int i = cal.get(Calendar.DAY_OF_MONTH); i < cal.get(Calendar.DAY_OF_MONTH) + 7; i++) {
-			
 
 			dayOfMonthLabel = new JLabel();
 			dayOfMonthLabel.setText("" + i);
@@ -95,13 +89,9 @@ public class WeekView extends JPanel {
 			weekDatePanel = new JPanel();
 			weekDatePanel.setPreferredSize(new Dimension(165, 25));
 			weekDatePanel.setVisible(true);
-			
-			
 
 			add(weekDatePanel);
 			weekDatePanel.add(dayOfMonthLabel);
-			
-			
 
 		}
 

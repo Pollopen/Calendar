@@ -33,8 +33,7 @@ public class ViewChoice extends JPanel {
 	private DateFormat getFocusDate = new SimpleDateFormat("yyyy/MM/dd");
 	private Date focusedDate;
 	private int week;
-	private static int nextWeeksDate=7;
-
+	private static int nextWeeksDate = 7;
 
 	public ViewChoice(StateMachine SM, WindowPanel wp) {
 		this.SM = SM;
@@ -115,13 +114,12 @@ public class ViewChoice extends JPanel {
 		dateChoice.addChangeListener(lForSpinner);
 
 	}
-	
-	public String addZero(int value)
-	{
-		if(value <= 9)
-			return "0"+value;
+
+	public String addZero(int value) {
+		if (value <= 9)
+			return "0" + value;
 		else
-			return ""+value;
+			return "" + value;
 	}
 
 	public void getNextWeek() {
@@ -137,14 +135,14 @@ public class ViewChoice extends JPanel {
 		String addZeroToDay = "0";
 		String formatDate = "";
 		String forMonthJan = "01";
-//		int temp = Integer.parseInt(focusedMonth);
-//
-//		if (temp == 12) {
-//			temp -= 1;
-//		}
-//
-//		cal.set(Calendar.YEAR, Integer.parseInt(focusedYear));
-//		cal.set(Calendar.MONTH, temp);
+		// int temp = Integer.parseInt(focusedMonth);
+		//
+		// if (temp == 12) {
+		// temp -= 1;
+		// }
+		//
+		// cal.set(Calendar.YEAR, Integer.parseInt(focusedYear));
+		// cal.set(Calendar.MONTH, temp);
 
 		System.out.println(focusedYear);
 		System.out.println(focusedMonth);
@@ -156,51 +154,50 @@ public class ViewChoice extends JPanel {
 		int weekOfYear = cal.get(Calendar.WEEK_OF_YEAR);
 
 		nextWeeksDate += 7;
-		
-		cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), nextWeeksDate);
-		
-		
 
-		formatDate = cal.get(Calendar.YEAR)+"/"+addZero(cal.get(Calendar.MONTH) + 1)+"/"+addZero(cal.get(Calendar.DAY_OF_MONTH));
-		
-//		if (lastDayOfMonth < nextWeeksDate) {
-//			nextWeeksDate = nextWeeksDate - lastDayOfMonth;
-//			month++;
-//
-//			if (month > 11) {
-//				month = 0;
-//				year++;
-//
-//				if (nextWeeksDate < 10) {
-//					addZeroToDay = addZeroToDay + nextWeeksDate;
-//
-//					formatDate = year + "/01/" + addZeroToDay;
-//				} else {
-//					formatDate = year + "/01/" + nextWeeksDate;
-//				}
-//
-//			} else if (nextWeeksDate < 10) {
-//				addZeroToDay = addZeroToDay + nextWeeksDate;
-//
-//				formatDate = year + "/0" + month + "/" + addZeroToDay;
-//			} else {
-//				formatDate = year + "/" + month + "/" + nextWeeksDate;
-//			}
-//		} else if (month < 10) {
-//			
-//			formatDate = year + "/0" + month + "/" + nextWeeksDate;
-//			
-//			if (nextWeeksDate < 10) {
-//				addZeroToDay = addZeroToDay + nextWeeksDate;
-//
-//				formatDate = year + "/0"+month+"/" + addZeroToDay;
-//			} else {
-//				formatDate = year + "/0"+month+"/" + nextWeeksDate;
-//			}
-//			
-//		} else {
-//			formatDate = year + "/" + month + "/" + nextWeeksDate;
-//		}
+		cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), nextWeeksDate);
+
+		formatDate = cal.get(Calendar.YEAR) + "/" + addZero(cal.get(Calendar.MONTH) + 1) + "/"
+				+ addZero(cal.get(Calendar.DAY_OF_MONTH));
+
+		// if (lastDayOfMonth < nextWeeksDate) {
+		// nextWeeksDate = nextWeeksDate - lastDayOfMonth;
+		// month++;
+		//
+		// if (month > 11) {
+		// month = 0;
+		// year++;
+		//
+		// if (nextWeeksDate < 10) {
+		// addZeroToDay = addZeroToDay + nextWeeksDate;
+		//
+		// formatDate = year + "/01/" + addZeroToDay;
+		// } else {
+		// formatDate = year + "/01/" + nextWeeksDate;
+		// }
+		//
+		// } else if (nextWeeksDate < 10) {
+		// addZeroToDay = addZeroToDay + nextWeeksDate;
+		//
+		// formatDate = year + "/0" + month + "/" + addZeroToDay;
+		// } else {
+		// formatDate = year + "/" + month + "/" + nextWeeksDate;
+		// }
+		// } else if (month < 10) {
+		//
+		// formatDate = year + "/0" + month + "/" + nextWeeksDate;
+		//
+		// if (nextWeeksDate < 10) {
+		// addZeroToDay = addZeroToDay + nextWeeksDate;
+		//
+		// formatDate = year + "/0"+month+"/" + addZeroToDay;
+		// } else {
+		// formatDate = year + "/0"+month+"/" + nextWeeksDate;
+		// }
+		//
+		// } else {
+		// formatDate = year + "/" + month + "/" + nextWeeksDate;
+		// }
 
 		// if (lastDayOfMonth < nextWeeksDate)
 		// {
@@ -258,13 +255,13 @@ public class ViewChoice extends JPanel {
 		System.out.println("------------------------------------------------------");
 		System.out.println("Sju dagar framåt: " + nextWeeksDate);
 		System.out.println(SM.getFocusedDate());
-//		System.out.println("Månad: " + month);
-//		System.out.println("År: " + year);
-//		System.out.println("Sista veckan på året: " + lastWeekOfYear);
-//		System.out.println("Sista dagen i månaden: " + lastDayOfMonth);
+		// System.out.println("Månad: " + month);
+		// System.out.println("År: " + year);
+		// System.out.println("Sista veckan på året: " + lastWeekOfYear);
+		// System.out.println("Sista dagen i månaden: " + lastDayOfMonth);
 		System.out.println("Formaterat datum " + formatDate);
-//		System.out.println("addZeroToDay: " + addZeroToDay);
-//		System.out.println("addZeroToMonth: " + addZeroToMonth);
+		// System.out.println("addZeroToDay: " + addZeroToDay);
+		// System.out.println("addZeroToMonth: " + addZeroToMonth);
 		System.out.println("------------------------------------------------------");
 
 	}
