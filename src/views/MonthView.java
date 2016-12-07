@@ -13,17 +13,20 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.swing.JButton;
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 
+import CalViewButton.DayButton;
 import CalViewButton.EventButton;
 import controller.StateMachine;
 import object.Event;
 import object.User;
 
 public class MonthView extends JPanel{
-	private JPanel tempJP;
+	private JPanel tempJP, normalEventsPanel;
 	private StateMachine SM;
 	private String date, monthNum, firstDay;
 	private String[] weekDays={"Måndag", "Tisdag", "onsdag", "Torsdag", "Fredag", "Lördag", "Söndag"};
@@ -36,7 +39,10 @@ public class MonthView extends JPanel{
 	private User user;
 	private Event[] filteredEventArray;
 	private GridBagConstraints gbc;
+	private Border etchedBorder;
+	
 	public MonthView(StateMachine SM, User user){
+		etchedBorder = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 		this.user=user;
 		gbc= new GridBagConstraints();
 		this.SM=SM;
@@ -46,7 +52,7 @@ public class MonthView extends JPanel{
 		setVisible(true);
 		date=SM.getFocusedDate();
 		firstDay=date.substring(0, 8)+"01";
-		dayOfMonth=getDayOfMonth(firstDay);
+		dayOfMonth=getDaysOfMonth(firstDay);
 		try {
 			focusedDate=getFocusDate.parse(firstDay);
 		} catch (ParseException e) {
@@ -73,54 +79,66 @@ public class MonthView extends JPanel{
 		}
 		j=1;
 		while (true) {
+			normalEventsPanel=null;
 			tempFullDayEvents=0;
 			tempNormalEvents=0;
 			tempJP=new JPanel();
 			tempJP.setLayout(new BorderLayout());
 			tempJP.setBackground(new Color(200,200,200));
 			tempJP.setVisible(true);
+			tempJP.setBorder(etchedBorder);
 			add(tempJP);
-			JLabel dayNumber = new JLabel(Integer.toString(j));
-			tempJP.add(dayNumber, BorderLayout.PAGE_START);
+			//JLabel dayNumber = new JLabel(Integer.toString(j));
+			//tempJP.add(dayNumber, BorderLayout.PAGE_START);
 			String checkDate=getCheckDate(firstDay, Integer.toString(j));
+			tempJP.add(new DayButton(Integer.toString(j),checkDate,1), BorderLayout.PAGE_START);
 			for (int i = 0; i < filteredEventArray.length; i++) {
 				String checkEventDay=(filteredEventArray[i].getStart_time()).substring(8,10);
 				if(checkDate.substring(8).equals(checkEventDay)){
-					tempJP.setBackground(new Color(255,0,255));
-					JButton eventButton = new JButton( filteredEventArray[i].getName());
 					if(filteredEventArray[i].getFullDay()==1){
 						tempFullDayEvents++;
-						tempJP.add(eventButton, BorderLayout.PAGE_END);
 					}else{
 						tempNormalEvents++;
-						tempJP.add(eventButton, BorderLayout.LINE_START);
 					}
 				}
 			}
+			
+			if(tempFullDayEvents==0){
+				JLabel empty = new JLabel("");
+				tempJP.add(empty, BorderLayout.PAGE_END);	
+			}
+			gbc.gridx=0;
+			gbc.gridy=0;
 			for (int i = 0; i < filteredEventArray.length; i++) {
 				String checkEventDay=(filteredEventArray[i].getStart_time()).substring(8,10);
 				if(checkDate.substring(8).equals(checkEventDay)){
-					tempJP.setBackground(new Color(255,0,255));
 					if(filteredEventArray[i].getFullDay()==1){
 						if(tempFullDayEvents==1){
 							tempJP.add(new EventButton(filteredEventArray[i].getName(),filteredEventArray[i]), BorderLayout.PAGE_END);
-						}else if(tempFullDayEvents==0){
-							JLabel empty = new JLabel("");
-							tempJP.add(empty, BorderLayout.PAGE_END);	
+							System.out.println("Painted Full day: "+filteredEventArray[i].getName()+" fullday? "+filteredEventArray[i].getFullDay());
 						}else if(tempFullDayEvents>=2){
 							//tempJP.add(new JButton("..."), BorderLayout.PAGE_END);
-							tempJP.add(new JButton("..."), BorderLayout.PAGE_END);
+							tempJP.add(new DayButton("...", checkDate, 3), BorderLayout.PAGE_END);
+							System.out.println("Painted special +2 fullday on one event");
 							tempFullDayEvents=-1;
-							
 						}
 					}else{
 						//tempJP.add(eventButton, BorderLayout.LINE_START);
-						
 						//	TODO lägg till GridBagLAyout panel här och lägg sedan in vanliga events
-						
-						
-						tempJP.add(new EventButton(filteredEventArray[i].getName(),filteredEventArray[i]), BorderLayout.LINE_START);
-						
+						if(normalEventsPanel==null){
+							normalEventsPanel = new JPanel();
+							normalEventsPanel.setPreferredSize(new Dimension(150, 50));
+							normalEventsPanel.setLayout(new GridBagLayout());
+							normalEventsPanel.setOpaque(false);
+							tempJP.add(normalEventsPanel, BorderLayout.CENTER);
+						}
+						if(gbc.gridx>=2){
+							normalEventsPanel.add(new DayButton("...", checkDate, 2), gbc);
+						}else{
+						normalEventsPanel.add(new EventButton(filteredEventArray[i].getName().substring(0, 1),filteredEventArray[i]), gbc);
+						gbc.gridx++;
+						System.out.println("Painted: "+filteredEventArray[i].getName()+" fullday? "+filteredEventArray[i].getFullDay());
+						}
 					}
 				}
 			}
@@ -137,7 +155,7 @@ public class MonthView extends JPanel{
 		updateUI();
 		
 	}
-	private int getDayOfMonth(String firstDay){
+	private int getDaysOfMonth(String firstDay){
 		monthNum=firstDay.substring(5, 7);
 		switch (Integer.parseInt(monthNum)) {
 			case 1:
@@ -178,6 +196,7 @@ public class MonthView extends JPanel{
 		cal.set(Calendar.YEAR, Integer.parseInt(year));
 		return cal.getActualMaximum(Calendar.DAY_OF_YEAR) > 365;
 	}
+	//format date for later comparison
 	public String getCheckDate(String firstday, String j){
 		String checkdate;
 		if(Integer.parseInt(j)<=9){
@@ -187,6 +206,7 @@ public class MonthView extends JPanel{
 		}
 		return checkdate;
 	}
+	//Checks and filter out the events that belong to this month only looking at starttime
 	public Event[] filterEvents(){
 		Event [] filteredList = null;
 		Event[] ea=user.getEventArray();
@@ -202,6 +222,7 @@ public class MonthView extends JPanel{
 				for (int j = 0; j < aca.length; j++) {//If calendar is active
 					if(ca[aca[j]].getCal_id()==ea[i].getCal_id()){
 						matchNumber++;
+						System.out.println("Matched: "+ea[i].getName()+" fullday? "+ea[i].getFullDay());
 					}
 				}
 			}
@@ -217,6 +238,7 @@ public class MonthView extends JPanel{
 						Event tempEvent=ea[i];
 						filteredList[k]=tempEvent;
 						k++;
+						System.out.println("Added: "+ea[i].getName()+" fullday? "+ea[i].getFullDay());
 					}
 				}
 			}
