@@ -21,15 +21,16 @@ import javax.swing.border.EtchedBorder;
 
 import CalViewButton.DayButton;
 import CalViewButton.EventButton;
+import CalViewButton.OverviewDayButton;
 import controller.StateMachine;
 import object.Event;
 import object.User;
 
-public class MonthView extends JPanel{
+public class MonthOverview extends JPanel{
 	private JPanel tempJP, normalEventsPanel;
 	private StateMachine SM;
 	private String date, monthNum, firstDay;
-	private String[] weekDays={"Måndag", "Tisdag", "onsdag", "Torsdag", "Fredag", "Lördag", "Söndag"};
+	private String[] weekDays={"M", "Ti", "O", "To", "F", "L", "S"};
 	private Date focusedDate;
 	private DateFormat getFocusDate = new SimpleDateFormat("yyyy/MM/dd");
 	private DateFormat getWeekDay = new SimpleDateFormat("u");
@@ -41,16 +42,16 @@ public class MonthView extends JPanel{
 	private GridBagConstraints gbc;
 	private Border etchedBorder;
 	
-	public MonthView(StateMachine SM, User user){
+	public MonthOverview(StateMachine SM, User user, Date focusDate){
 		etchedBorder = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 		this.user=user;
 		gbc= new GridBagConstraints();
 		this.SM=SM;
-		setPreferredSize(new Dimension(1175, 725));
+		setPreferredSize(new Dimension(200, 200));
 		setLayout(new GridLayout(7,7));
 		setBackground(new Color(0, 255, 255));
 		setVisible(true);
-		date=SM.getFocusedDate();
+		date=getFocusDate.format(focusDate);
 		firstDay=date.substring(0, 8)+"01";
 		dayOfMonth=getDaysOfMonth(firstDay);
 		try {
@@ -79,70 +80,25 @@ public class MonthView extends JPanel{
 		}
 		j=1;
 		while (true) {
-			normalEventsPanel=null;
-			tempFullDayEvents=0;
-			tempNormalEvents=0;
 			tempJP=new JPanel();
-			tempJP.setLayout(new BorderLayout());
+			tempJP.setLayout(new GridLayout(1, 1));
 			tempJP.setBackground(new Color(200,200,200));
 			tempJP.setVisible(true);
 			tempJP.setBorder(etchedBorder);
 			add(tempJP);
-			//JLabel dayNumber = new JLabel(Integer.toString(j));
-			//tempJP.add(dayNumber, BorderLayout.PAGE_START);
 			String checkDate=getCheckDate(firstDay, Integer.toString(j));
-			tempJP.add(new DayButton(Integer.toString(j),checkDate,1), BorderLayout.PAGE_START);
-			for (int i = 0; i < filteredEventArray.length; i++) {
-				String checkEventDayStart=(filteredEventArray[i].getStart_time()).substring(0,4)+(filteredEventArray[i].getStart_time()).substring(5,7)+(filteredEventArray[i].getStart_time()).substring(8,10);
-				String checkEventDayEnd=(filteredEventArray[i].getEnd_time()).substring(0,4)+(filteredEventArray[i].getStart_time()).substring(5,7)+(filteredEventArray[i].getEnd_time()).substring(8,10);
-				if(checkDate.equals(checkEventDayStart)||checkDate.equals(checkEventDayEnd)||checkIfInProgress(checkDate, checkEventDayStart, checkEventDayEnd)){
-					if(filteredEventArray[i].getFullDay()==1){
-						tempFullDayEvents++;
-					}else{
-						tempNormalEvents++;
-					}
-				}
-			}
-			
-			if(tempFullDayEvents==0){
-				JLabel empty = new JLabel("");
-				tempJP.add(empty, BorderLayout.PAGE_END);	
-			}
-			gbc.gridx=0;
-			gbc.gridy=0;
+			boolean hasEvent=false;
 			for (int i = 0; i < filteredEventArray.length; i++) {
 				String checkEventDayStart=(filteredEventArray[i].getStart_time()).substring(0,4)+(filteredEventArray[i].getStart_time()).substring(5,7)+(filteredEventArray[i].getStart_time()).substring(8,10);
 				String checkEventDayEnd=(filteredEventArray[i].getEnd_time()).substring(0,4)+(filteredEventArray[i].getEnd_time()).substring(5,7)+(filteredEventArray[i].getEnd_time()).substring(8,10);
-				System.out.println(filteredEventArray[i].getName()+" start: "+checkEventDayStart+" end: "+checkEventDayEnd+ "comparing with"+checkDate);
 				if(checkDate.equals(checkEventDayStart)||checkDate.equals(checkEventDayEnd)||checkIfInProgress(checkDate, checkEventDayStart, checkEventDayEnd)){
-							if(filteredEventArray[i].getFullDay()==1){
-								if(tempFullDayEvents==1){
-									tempJP.add(new EventButton(filteredEventArray[i].getName(),filteredEventArray[i]), BorderLayout.PAGE_END);
-								}else if(tempFullDayEvents>=2){
-									//tempJP.add(new JButton("..."), BorderLayout.PAGE_END);
-									tempJP.add(new DayButton("...", checkDate, 3), BorderLayout.PAGE_END);
-									tempFullDayEvents=-1;
-								}
-							}else{
-								if(normalEventsPanel==null){
-									normalEventsPanel = new JPanel();
-									normalEventsPanel.setPreferredSize(new Dimension(150, 50));
-									normalEventsPanel.setLayout(new GridBagLayout());
-									normalEventsPanel.setOpaque(false);
-									tempJP.add(normalEventsPanel, BorderLayout.CENTER);
-								}
-								if(gbc.gridx>=2){
-									normalEventsPanel.add(new DayButton("...", checkDate, 2), gbc);
-								}else{
-									normalEventsPanel.add(new EventButton(filteredEventArray[i].getName().substring(0, 1),filteredEventArray[i]), gbc);
-									gbc.gridx++;
-								}
-							}
-						
-					
+					hasEvent=true;
 				}
 			}
 			
+			tempJP.add(new OverviewDayButton(Integer.toString(j),checkDate,hasEvent));
+			
+	
 			j++;
 			if(j>dayOfMonth){
 				break;

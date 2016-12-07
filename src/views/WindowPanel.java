@@ -9,6 +9,10 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Properties;
 
@@ -36,7 +40,6 @@ import object.Event;
 import object.User;
 import views.calendar.CalChooseList;
 import views.calendar.addedit.CalAddEdit;
-import views.calendar.addedit.CalEditList;
 
 public class WindowPanel extends JPanel {
 
@@ -80,9 +83,9 @@ public class WindowPanel extends JPanel {
 	private Window window;
 	private User user;
 	private StateMachine SM;
-	private CalEditList calEditList;
 	private CalChooseList calChooseList;
 	private ViewChoice viewChoice;
+	private MonthOverview monthOverview;
 
 	public WindowPanel(Window window) {
 		windowpanel = this;
@@ -178,7 +181,8 @@ public class WindowPanel extends JPanel {
 		gbc.gridy = 1;
 
 		leftPanel.add(overviewPanel, gbc);
-
+		
+		
 		CalendarChoicePanel = new JPanel();
 		CalendarChoicePanel.setPreferredSize(new Dimension(200, 300));
 		CalendarChoicePanel.setVisible(true);
@@ -193,6 +197,7 @@ public class WindowPanel extends JPanel {
 
 		calChoiceList();
 
+		getOverview();
 		// Right panel
 		rightPanel = new JPanel();
 		rightPanel.setPreferredSize(new Dimension(1200, 750));
@@ -218,6 +223,29 @@ public class WindowPanel extends JPanel {
 		 * rightPanel.add(calendarPanel, gbc);
 		 */
 
+	}
+
+	public void getOverview(){
+		overviewPanel.removeAll();
+		
+		if (calChooseList != null) {
+			remove(calChooseList);
+		}
+		gbc.gridx = 0;
+		gbc.gridy = 6;
+		DateFormat tempFormat = new SimpleDateFormat("yyyy/MM/dd");
+		Date tempDate = null;
+		try {
+			tempDate = tempFormat.parse(SM.getFocusedDate());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		monthOverview = new MonthOverview(SM, user, tempDate);
+		overviewPanel.add(monthOverview);
+		overviewPanel.updateUI();
+		// TODO Auto-generated method stub
+		
 	}
 
 	public void getRegisterPage() {
@@ -1032,7 +1060,7 @@ public class WindowPanel extends JPanel {
 			rightPanel.add(new MonthView(SM, user), gbc);
 			break;
 		case 4:
-			rightPanel.add(new YearView(), gbc);
+			rightPanel.add(new YearView(SM, user), gbc);
 			break;
 		default:
 			rightPanel.add(new DayView(), gbc);

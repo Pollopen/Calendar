@@ -79,6 +79,7 @@ public class CalChooseList extends JPanel implements ListSelectionListener {
 		int[] indecies = calChoiceList.getSelectedIndices();
 		SM.setActiveCalendars(indecies);
 		wp.getViewViewer();
+		wp.getOverview();
 	}
 
 }

@@ -134,31 +134,37 @@ public class ViewChoice extends JPanel {
 				SM.setActiveview(1);
 				wp.getViewViewer();
 				wp.getViewChoice();
+				wp.getOverview();
 			}
 			if (e.getSource() == weekButton) {
 				SM.setActiveview(2);
 				wp.getViewViewer();
 				wp.getViewChoice();
+				wp.getOverview();
 			}
 			if (e.getSource() == monthButton) {
 				SM.setActiveview(3);
 				wp.getViewViewer();
 				wp.getViewChoice();
+				wp.getOverview();
 			}
 			if (e.getSource() == yearButton) {
 				SM.setActiveview(4);
 				wp.getViewViewer();
 				wp.getViewChoice();
+				wp.getOverview();
 			}
 			if (e.getSource() == prevWeekButton) {
 				SM.setActiveview(2);
 				wp.getViewViewer();
 				wp.getViewChoice();
+				wp.getOverview();
 			}
 			if (e.getSource() == nextWeekButton) {
 				SM.setActiveview(2);
 				wp.getViewViewer();
 				wp.getViewChoice();
+				wp.getOverview();
 
 			}
 
@@ -175,6 +181,7 @@ public class ViewChoice extends JPanel {
 				SM.setFocusedDate(temp);
 				System.out.println(temp);
 				wp.getViewViewer();
+				wp.getOverview();
 				//wp.getViewChoice();
 			}
 			// Check if the source of the event was the button
