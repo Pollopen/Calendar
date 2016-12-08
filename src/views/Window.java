@@ -14,7 +14,7 @@ public class Window extends JFrame {
 	private JPanel center;
 
 	public Window() {
-		super("En ruta");
+		super("Min Kalender");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setPreferredSize(new Dimension(1420, 870));
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

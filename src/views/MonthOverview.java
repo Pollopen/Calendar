@@ -101,7 +101,7 @@ public class MonthOverview extends JPanel{
 				}
 			}
 			
-			tempJP.add(new OverviewDayButton(Integer.toString(j),checkDate,hasEvent));
+			tempJP.add(new OverviewDayButton(Integer.toString(j),checkDate,hasEvent,SM));
 			
 	
 			j++;

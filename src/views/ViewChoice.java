@@ -1,9 +1,12 @@
 package views;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.NetworkInterface;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,6 +15,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
@@ -21,8 +25,9 @@ import javax.swing.event.ChangeListener;
 import controller.StateMachine;
 
 public class ViewChoice extends JPanel {
-	private JButton dayButton, weekButton, monthButton, yearButton, prevWeekButton, nextWeekButton;
+	private JButton todayButton, dayButton, weekButton, monthButton, yearButton, prevWeekButton, nextWeekButton, prevMonthButton, nextDayButton, nextMonthButton, prevDayButton, prevYearButton, nextYearButton;
 	private GridBagConstraints gbc;
+	private JLabel empty;
 	private GregorianCalendar gc;
 	private ListenForButton lForButton;
 	private SimpleDateFormat sdf;
@@ -44,7 +49,14 @@ public class ViewChoice extends JPanel {
 		
 		cal = Calendar.getInstance();
 		gbc = new GridBagConstraints();
-		setLayout(new GridBagLayout());
+		setPreferredSize(new Dimension(1150, 40));
+		setLayout(new GridLayout(1,18));
+		
+		try {
+			focusedDate = getFocusDate.parse(SM.getFocusedDate());
+		} catch (ParseException e) {
+			System.out.println("Date Conversion failed!");
+		}
 		lForButton = new ListenForButton();
 		dayButton = new JButton("Dag");
 		dayButton.addActionListener(lForButton);
@@ -54,10 +66,29 @@ public class ViewChoice extends JPanel {
 		monthButton.addActionListener(lForButton);
 		yearButton = new JButton("År");
 		yearButton.addActionListener(lForButton);
-		prevWeekButton = new JButton("<<");
+		prevDayButton = new JButton("<Dag");
+		prevDayButton.addActionListener(lForButton);
+		nextDayButton = new JButton("Dag>");
+		nextDayButton.addActionListener(lForButton);
+		prevWeekButton = new JButton("<Vecka");
 		prevWeekButton.addActionListener(lForButton);
-		nextWeekButton = new JButton(">>");
+		nextWeekButton = new JButton("Vecka>");
 		nextWeekButton.addActionListener(lForButton);
+		prevMonthButton = new JButton("<Månad");
+		prevMonthButton.addActionListener(lForButton);
+		nextMonthButton = new JButton("Månad>");
+		nextMonthButton.addActionListener(lForButton);
+		prevYearButton = new JButton("<År");
+		prevYearButton.addActionListener(lForButton);
+		nextYearButton = new JButton("År>");
+		nextYearButton.addActionListener(lForButton);
+		todayButton = new JButton("Idag");
+		todayButton.addActionListener(lForButton);
+		empty = new JLabel("");
+		
+		dateChoice = new JSpinner(new SpinnerDateModel(focusedDate, null, null, Calendar.DAY_OF_MONTH));
+		JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateChoice, "dd/MM/yy");
+		dateChoice.setEditor(dateEditor);
 
 		switch (SM.getActiveview()) {
 		case 1:
@@ -75,43 +106,35 @@ public class ViewChoice extends JPanel {
 		default:
 			break;
 		}
-
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		add(dayButton, gbc);
-		gbc.gridx = 1;
-		gbc.gridy = 0;
-		add(weekButton, gbc);
-		gbc.gridx = 2;
-		gbc.gridy = 0;
-		add(monthButton, gbc);
-		gbc.gridx = 3;
-		gbc.gridy = 0;
-		add(yearButton, gbc);
-
-		if (SM.getActiveview() == 2) {
-			gbc.gridx = 4;
-			gbc.gridy = 0;
-			add(prevWeekButton, gbc);
-			gbc.gridx = 5;
-			gbc.gridy = 0;
-			add(nextWeekButton, gbc);
-		}
-
-		try {
-			focusedDate = getFocusDate.parse(SM.getFocusedDate());
-		} catch (ParseException e) {
-			System.out.println("Date Conversion failed!");
-		}
-
-		dateChoice = new JSpinner(new SpinnerDateModel(focusedDate, null, null, Calendar.DAY_OF_MONTH));
-		JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateChoice, "dd/MM/yy");
-		dateChoice.setEditor(dateEditor);
-
-		gbc.gridx = 4;
-		gbc.gridy = 0;
-
+		add(prevYearButton);
+		
+		add(prevMonthButton);
+		
+		add(prevWeekButton);
+		add(prevDayButton);
+		
 		add(dateChoice);
+		
+		add(nextDayButton);
+		
+		add(nextWeekButton);
+		
+		add(nextMonthButton);
+		
+		add(nextYearButton);
+		
+		JPanel tempJP=new JPanel();
+		tempJP.setLayout(new GridBagLayout());
+		add(tempJP);
+		tempJP.add(todayButton, gbc);
+		
+		
+		add(dayButton);
+		add(weekButton);
+		add(monthButton);
+		add(yearButton);
+
+		
 
 		ListenForSpinner lForSpinner = new ListenForSpinner();
 
@@ -201,18 +224,22 @@ public class ViewChoice extends JPanel {
 			}
 			if (e.getSource() == prevWeekButton) {
 				getPrevWeek();
-				SM.setActiveview(2);
 				wp.getViewViewer();
 				wp.getViewChoice();
 				wp.getOverview();
 			}
 			if (e.getSource() == nextWeekButton) {
 				getNextWeek();
-				SM.setActiveview(2);
 				wp.getViewViewer();
 				wp.getViewChoice();
 				wp.getOverview();
 
+			}
+			if (e.getSource() == todayButton){
+				SM.setFocusedToday();
+				wp.getViewViewer();
+				wp.getViewChoice();
+				wp.getOverview();
 			}
 
 		}

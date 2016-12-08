@@ -1,5 +1,6 @@
 package views;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -45,7 +46,7 @@ import views.calendar.addedit.CalAddEdit;
 
 public class WindowPanel extends JPanel {
 
-	private JPanel editCalendar1, editCalendar2, editCalendar3, form, main, addCalMain, center, centerEvent, mainPanel,
+	private JPanel notificationPanel, editCalendar1, editCalendar2, editCalendar3, form, main, addCalMain, center, centerEvent, mainPanel,
 			leftPanel, addEventButtonPanel, overviewPanel, CalendarChoicePanel, placeholderPanel, rightPanel,
 			upperLeftPanel, upperRightPanel, top, centerLeft, centerRight, addCalCenterRight, addCalCenterRight1,
 			addCalCenterRight2, addCalCenterRight3, addCalCenterLeft, addCalCenter, editEventMain, editEventTop,
@@ -67,7 +68,7 @@ public class WindowPanel extends JPanel {
 	private Event[] editEventArray;
 	private JTextArea calendarDescTextArea, calAddDescTextArea;
 	private JPasswordField passField, passConfField;
-	private JButton calAddButton, loginButton, registerPageButton, registerButton, loginPageButton, regButton,
+	private JButton addEventButton, calAddButton, loginButton, registerPageButton, registerButton, loginPageButton, regButton,
 			calSaveButton, calRemoveButton, eventCreate, editEventButton, deleteEventButton, userSearchButton, nextWeekButton, prevWeekButton;
 	private JTextArea calEditDescTextArea, eventDescArea, editEventDescArea;
 	private JCheckBox fullDayActivity, editFullDayActivity;
@@ -103,7 +104,7 @@ public class WindowPanel extends JPanel {
 		center.setVisible(true);
 		add(center);
 		SM = new StateMachine(user);
-
+		viewChoice=null;
 		/*
 		 * TODO FIX ORGANISATION
 		 */
@@ -142,9 +143,9 @@ public class WindowPanel extends JPanel {
 		// Upper right panel
 		upperRightPanel = new JPanel();
 		upperRightPanel.setPreferredSize(new Dimension(1200, 50));
-		upperRightPanel.setLayout(new GridLayout(2, 2));
+		upperRightPanel.setLayout(new GridBagLayout());
 		upperRightPanel.setVisible(true);
-		upperRightPanel.setBackground(new Color(0, 255, 0));
+		//upperRightPanel.setBackground(new Color(0, 255, 0));
 
 		gbc.gridx = 1;
 		gbc.gridy = 0;
@@ -158,22 +159,40 @@ public class WindowPanel extends JPanel {
 		leftPanel.setPreferredSize(new Dimension(200, 750));
 		leftPanel.setLayout(new GridBagLayout());
 		leftPanel.setVisible(true);
-		leftPanel.setBackground(new Color(0, 0, 255));
+		//leftPanel.setBackground(new Color(0, 0, 255));
 
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 
 		mainPanel.add(leftPanel, gbc);
-
-		addEventButtonPanel = new JPanel();
-		addEventButtonPanel.setPreferredSize(new Dimension(200, 100));
-		addEventButtonPanel.setVisible(true);
-		addEventButtonPanel.setBackground(new Color(0, 255, 0));
+		
+		notificationPanel = new JPanel();
+		notificationPanel.setPreferredSize(new Dimension(200, 190));
+		notificationPanel.setVisible(true);
+		notificationPanel.setBackground(new Color(255, 0, 255));
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 
+		leftPanel.add(notificationPanel, gbc);
+
+		addEventButtonPanel = new JPanel();
+		addEventButtonPanel.setPreferredSize(new Dimension(200, 60));
+		addEventButtonPanel.setLayout(new GridBagLayout());
+		addEventButtonPanel.setVisible(true);
+		//addEventButtonPanel.setBackground(new Color(0, 255, 0));
+
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+
 		leftPanel.add(addEventButtonPanel, gbc);
+		
+		addEventButton = new JButton("Skapa Event");
+		addEventButton.addActionListener(lForButton);
+		addEventButton.setFont(new Font("Serif", Font.PLAIN, 25));
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		addEventButtonPanel.add(addEventButton, gbc);
 
 		overviewPanel = new JPanel();
 		overviewPanel.setPreferredSize(new Dimension(200, 200));
@@ -181,7 +200,7 @@ public class WindowPanel extends JPanel {
 		overviewPanel.setBackground(new Color(100, 100, 100));
 
 		gbc.gridx = 0;
-		gbc.gridy = 1;
+		gbc.gridy = 2;
 
 		leftPanel.add(overviewPanel, gbc);
 		
@@ -192,7 +211,7 @@ public class WindowPanel extends JPanel {
 		CalendarChoicePanel.setBackground(new Color(255, 0, 255));
 
 		gbc.gridx = 0;
-		gbc.gridy = 2;
+		gbc.gridy = 3;
 
 		leftPanel.add(CalendarChoicePanel, gbc);
 
@@ -241,13 +260,11 @@ public class WindowPanel extends JPanel {
 		try {
 			tempDate = tempFormat.parse(SM.getFocusedDate());
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		monthOverview = new MonthOverview(SM, user, tempDate, true);
 		overviewPanel.add(monthOverview);
 		overviewPanel.updateUI();
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -400,6 +417,7 @@ public class WindowPanel extends JPanel {
 		regButton.addActionListener(lForButton);
 		loginPageButton.addActionListener(lForButton);
 		center.updateUI();
+		gbc.insets = new Insets(0, 0, 0, 0);
 	}
 
 	public void getLoginPage() {
@@ -502,6 +520,7 @@ public class WindowPanel extends JPanel {
 		loginButton.addActionListener(lForButton);
 		registerPageButton.addActionListener(lForButton);
 		center.updateUI();
+		gbc.insets = new Insets(0, 0, 0, 0);
 	}
 
 	public void getAddEventPage() {
@@ -781,6 +800,7 @@ public class WindowPanel extends JPanel {
 		fullDayActivity.addActionListener(lForButton);
 		eventCreate.addActionListener(lForButton);
 		userSearchButton.addActionListener(lForButton);
+		gbc.insets = new Insets(0, 0, 0, 0);
 	}
 
 	public void getDeleteAndEditEventPage() {
@@ -1034,6 +1054,7 @@ public class WindowPanel extends JPanel {
 		editEventDropDown.addActionListener(lForButton);
 		editEventButton.addActionListener(lForButton);
 		deleteEventButton.addActionListener(lForButton);
+		gbc.insets = new Insets(0, 0, 0, 0);
 
 	}
 
@@ -1090,8 +1111,11 @@ public class WindowPanel extends JPanel {
 			remove(viewChoice);
 		}
 		viewChoice = new ViewChoice(SM, this);
-		upperRightPanel.add(viewChoice);
-
+		gbc.gridx=0;
+		gbc.gridy=0;
+		gbc.insets = new Insets(0, 0, 0, 0);
+		upperRightPanel.add(viewChoice, gbc);
+		upperRightPanel.updateUI();
 	}
 
 	public void sendUser(User user) {
@@ -1124,7 +1148,9 @@ public class WindowPanel extends JPanel {
 					getLoginPage();
 				}
 			}
-
+			if (e.getSource() == addEventButton) {
+				getAddEventPage();
+			}
 			if (e.getSource() == registerPageButton) {
 				getRegisterPage();
 			}

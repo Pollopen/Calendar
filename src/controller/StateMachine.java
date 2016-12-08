@@ -32,6 +32,12 @@ public class StateMachine {
 	public int getCalEditStatus() {
 		return calEditStatus;
 	}
+	public String getFormattedDate(){
+		String tempDate=sdf.format(date);
+		String formatDate=tempDate.substring(0, 4)+tempDate.substring(5, 7)+tempDate.substring(8, 10);
+		System.out.println("Formatted date: "+formatDate);
+		return formatDate;
+	}
 
 	public void setCalEditStatus(int calEditStatus) {
 		this.calEditStatus = calEditStatus;
@@ -39,6 +45,10 @@ public class StateMachine {
 
 	public int getEventEditStatus() {
 		return eventEditStatus;
+	}
+	
+	public void setFocusedToday(){
+		focusedDate=sdf.format(date);
 	}
 
 	public void setEventEditStatus(int eventEditStatus) {
