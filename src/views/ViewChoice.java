@@ -2,6 +2,7 @@ package views;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
@@ -21,7 +22,7 @@ import javax.swing.event.ChangeListener;
 import controller.StateMachine;
 
 public class ViewChoice extends JPanel {
-	private JButton dayButton, weekButton, monthButton, yearButton, prevWeekButton, nextWeekButton;
+	private JButton dayButton, weekButton, monthButton, yearButton, prevWeekButton, nextWeekButton, prevMonthButton, nextDayButton, nextMonthButton, prevDayButton, prevYearButton, nextYearButton;
 	private GridBagConstraints gbc;
 	private GregorianCalendar gc;
 	private ListenForButton lForButton;
@@ -41,6 +42,12 @@ public class ViewChoice extends JPanel {
 		setOpaque(false);
 		gbc = new GridBagConstraints();
 		setLayout(new GridBagLayout());
+		
+		try {
+			focusedDate = getFocusDate.parse(SM.getFocusedDate());
+		} catch (ParseException e) {
+			System.out.println("Date Conversion failed!");
+		}
 		lForButton = new ListenForButton();
 		dayButton = new JButton("Dag");
 		dayButton.addActionListener(lForButton);
@@ -50,10 +57,26 @@ public class ViewChoice extends JPanel {
 		monthButton.addActionListener(lForButton);
 		yearButton = new JButton("År");
 		yearButton.addActionListener(lForButton);
-		prevWeekButton = new JButton("<<");
+		prevDayButton = new JButton("<Dag");
+		prevDayButton.addActionListener(lForButton);
+		nextDayButton = new JButton("Dag>");
+		nextDayButton.addActionListener(lForButton);
+		prevWeekButton = new JButton("<Vecka");
 		prevWeekButton.addActionListener(lForButton);
-		nextWeekButton = new JButton(">>");
+		nextWeekButton = new JButton("Vecka>");
 		nextWeekButton.addActionListener(lForButton);
+		prevMonthButton = new JButton("<Månad");
+		prevMonthButton.addActionListener(lForButton);
+		nextMonthButton = new JButton("Månad>");
+		nextMonthButton.addActionListener(lForButton);
+		prevYearButton = new JButton("<År");
+		prevYearButton.addActionListener(lForButton);
+		nextYearButton = new JButton("År>");
+		nextYearButton.addActionListener(lForButton);
+		
+		dateChoice = new JSpinner(new SpinnerDateModel(focusedDate, null, null, Calendar.DAY_OF_MONTH));
+		JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateChoice, "dd/MM/yy");
+		dateChoice.setEditor(dateEditor);
 
 		switch (SM.getActiveview()) {
 		case 1:
@@ -71,43 +94,59 @@ public class ViewChoice extends JPanel {
 		default:
 			break;
 		}
-
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		add(dayButton, gbc);
+		add(prevYearButton, gbc);
+		
 		gbc.gridx = 1;
 		gbc.gridy = 0;
-		add(weekButton, gbc);
+		add(prevMonthButton, gbc);
+		
 		gbc.gridx = 2;
 		gbc.gridy = 0;
-		add(monthButton, gbc);
+		add(prevWeekButton, gbc);
+		
 		gbc.gridx = 3;
+		gbc.gridy = 0;
+		add(prevDayButton, gbc);
+		
+		gbc.gridx = 4;
+		gbc.gridy = 0;
+		add(dateChoice);
+		
+		gbc.gridx = 5;
+		gbc.gridy = 0;
+		add(nextDayButton, gbc);
+		
+		gbc.gridx = 6;
+		gbc.gridy = 0;
+		add(nextWeekButton, gbc);
+		
+		gbc.gridx = 7;
+		gbc.gridy = 0;
+		add(nextMonthButton, gbc);
+		
+		gbc.gridx = 8;
+		gbc.gridy = 0;
+		add(nextYearButton, gbc);
+		
+		
+		gbc.gridx = 10;
+		gbc.gridy = 0;
+		gbc.insets = new Insets(0, 10, 0, 0);
+		add(dayButton, gbc);
+		gbc.insets = new Insets(0, 0, 0, 0);
+		gbc.gridx = 11;
+		gbc.gridy = 0;
+		add(weekButton, gbc);
+		gbc.gridx = 12;
+		gbc.gridy = 0;
+		add(monthButton, gbc);
+		gbc.gridx = 13;
 		gbc.gridy = 0;
 		add(yearButton, gbc);
 
-		if (SM.getActiveview() == 2) {
-			gbc.gridx = 4;
-			gbc.gridy = 0;
-			add(prevWeekButton, gbc);
-			gbc.gridx = 5;
-			gbc.gridy = 0;
-			add(nextWeekButton, gbc);
-		}
-
-		try {
-			focusedDate = getFocusDate.parse(SM.getFocusedDate());
-		} catch (ParseException e) {
-			System.out.println("Date Conversion failed!");
-		}
-
-		dateChoice = new JSpinner(new SpinnerDateModel(focusedDate, null, null, Calendar.DAY_OF_MONTH));
-		JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateChoice, "dd/MM/yy");
-		dateChoice.setEditor(dateEditor);
-
-		gbc.gridx = 4;
-		gbc.gridy = 0;
-
-		add(dateChoice);
+		
 
 		ListenForSpinner lForSpinner = new ListenForSpinner();
 
