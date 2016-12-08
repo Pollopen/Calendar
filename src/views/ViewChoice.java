@@ -34,16 +34,20 @@ public class ViewChoice extends JPanel {
 	private StateMachine SM;
 	private WindowPanel wp;
 	private Calendar cal;
+	private String date;
 	private JSpinner dateChoice;
 	private DateFormat getFocusDate = new SimpleDateFormat("yyyy/MM/dd");
 	private Date focusedDate;
 	private int week;
 	private static int nextWeeksDate = 7;
+	private static int prevWeeksDate = -7;
 
 	public ViewChoice(StateMachine SM, WindowPanel wp) {
 		this.SM = SM;
 		this.wp = wp;
 		setOpaque(false);
+		
+		cal = Calendar.getInstance();
 		gbc = new GridBagConstraints();
 		setPreferredSize(new Dimension(1150, 40));
 		setLayout(new GridLayout(1,18));
@@ -136,37 +140,30 @@ public class ViewChoice extends JPanel {
 		else
 			return "" + value;
 	}
+	
+	public void getPrevWeek()
+	{
+		String formatPrevDate = "";
+		
+		prevWeeksDate -= 7;
+
+		cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), prevWeeksDate);
+
+		formatPrevDate = cal.get(Calendar.YEAR) + "/" + addZero(cal.get(Calendar.MONTH) + 1) + "/"
+				+ addZero(cal.get(Calendar.DAY_OF_MONTH));
+		
+		SM.setFocusedDate(formatPrevDate);
+
+		System.out.println("------------------------------------------------------");
+		System.out.println("Sju dagar bak: " + prevWeeksDate);
+		System.out.println(SM.getFocusedDate());
+		System.out.println("Formaterat datum " + formatPrevDate);
+		System.out.println("------------------------------------------------------");
+	}
 
 	public void getNextWeek() {
-
-		cal = Calendar.getInstance();
-
-		String todaysDate = SM.getFocusedDate();
-		String focusedDay = todaysDate.substring(8, 10);
-		String focusedMonth = todaysDate.substring(5, 7);
-		String focusedYear = todaysDate.substring(0, 4);
-
-		String addZeroToMonth = "0";
-		String addZeroToDay = "0";
+		
 		String formatDate = "";
-		String forMonthJan = "01";
-		// int temp = Integer.parseInt(focusedMonth);
-		//
-		// if (temp == 12) {
-		// temp -= 1;
-		// }
-		//
-		// cal.set(Calendar.YEAR, Integer.parseInt(focusedYear));
-		// cal.set(Calendar.MONTH, temp);
-
-		System.out.println(focusedYear);
-		System.out.println(focusedMonth);
-
-		int year = cal.get(Calendar.YEAR);
-		int month = cal.get(Calendar.MONTH);
-		int lastDayOfMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-		int lastWeekOfYear = cal.getActualMaximum(Calendar.WEEK_OF_YEAR);
-		int weekOfYear = cal.get(Calendar.WEEK_OF_YEAR);
 
 		nextWeeksDate += 7;
 
@@ -175,108 +172,12 @@ public class ViewChoice extends JPanel {
 		formatDate = cal.get(Calendar.YEAR) + "/" + addZero(cal.get(Calendar.MONTH) + 1) + "/"
 				+ addZero(cal.get(Calendar.DAY_OF_MONTH));
 
-		// if (lastDayOfMonth < nextWeeksDate) {
-		// nextWeeksDate = nextWeeksDate - lastDayOfMonth;
-		// month++;
-		//
-		// if (month > 11) {
-		// month = 0;
-		// year++;
-		//
-		// if (nextWeeksDate < 10) {
-		// addZeroToDay = addZeroToDay + nextWeeksDate;
-		//
-		// formatDate = year + "/01/" + addZeroToDay;
-		// } else {
-		// formatDate = year + "/01/" + nextWeeksDate;
-		// }
-		//
-		// } else if (nextWeeksDate < 10) {
-		// addZeroToDay = addZeroToDay + nextWeeksDate;
-		//
-		// formatDate = year + "/0" + month + "/" + addZeroToDay;
-		// } else {
-		// formatDate = year + "/" + month + "/" + nextWeeksDate;
-		// }
-		// } else if (month < 10) {
-		//
-		// formatDate = year + "/0" + month + "/" + nextWeeksDate;
-		//
-		// if (nextWeeksDate < 10) {
-		// addZeroToDay = addZeroToDay + nextWeeksDate;
-		//
-		// formatDate = year + "/0"+month+"/" + addZeroToDay;
-		// } else {
-		// formatDate = year + "/0"+month+"/" + nextWeeksDate;
-		// }
-		//
-		// } else {
-		// formatDate = year + "/" + month + "/" + nextWeeksDate;
-		// }
-
-		// if (lastDayOfMonth < nextWeeksDate)
-		// {
-		//
-		// if (month == 11)
-		// {
-		// month = 0;
-		// year++;
-		// }
-		// else
-		// {
-		// month++;
-		// }
-		//
-		// weekOfYear++;
-		//
-		// if (weekOfYear > lastWeekOfYear)
-		// {
-		// weekOfYear = 0;
-		// }
-		//
-		// nextWeeksDate = nextWeeksDate - lastDayOfMonth;
-		// addZeroToDay = addZeroToDay+nextWeeksDate;
-		// formatDate = year + "/" + month + "/0"+nextWeeksDate;
-		//
-		// }
-		// else
-		// {
-		// formatDate = year + "/" + month + "/" + addZeroToDay;
-		// }
-		//
-		//
-		// if(month < 10 && month > 0)
-		// {
-		// addZeroToMonth = addZeroToMonth+month;
-		//
-		// formatDate = year + "/" + addZeroToMonth + "/" + addZeroToDay;
-		//
-		// } else {
-		// formatDate = year + "/" + month + "/" + addZeroToDay;
-		// }
-		//
-		//
-		// if(month == 0)
-		// {
-		// formatDate = year + "/" + forMonthJan + "/" + addZeroToDay;
-		// } else {
-		//
-		// formatDate = year + "/" + month + "/" + nextWeeksDate;
-		//
-		// }
-
 		SM.setFocusedDate(formatDate);
 
 		System.out.println("------------------------------------------------------");
 		System.out.println("Sju dagar framåt: " + nextWeeksDate);
 		System.out.println(SM.getFocusedDate());
-		// System.out.println("Månad: " + month);
-		// System.out.println("År: " + year);
-		// System.out.println("Sista veckan på året: " + lastWeekOfYear);
-		// System.out.println("Sista dagen i månaden: " + lastDayOfMonth);
 		System.out.println("Formaterat datum " + formatDate);
-		// System.out.println("addZeroToDay: " + addZeroToDay);
-		// System.out.println("addZeroToMonth: " + addZeroToMonth);
 		System.out.println("------------------------------------------------------");
 
 	}
@@ -314,6 +215,7 @@ public class ViewChoice extends JPanel {
 				wp.getOverview();
 			}
 			if (e.getSource() == prevWeekButton) {
+				getPrevWeek();
 				SM.setActiveview(2);
 				wp.getViewViewer();
 				wp.getViewChoice();

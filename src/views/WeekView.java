@@ -77,6 +77,7 @@ public class WeekView extends JPanel {
 		System.out.println(cal.get(Calendar.DAY_OF_WEEK));
 
 		cal.set(newYearDate, (newMonthDate - 1), newDayDate);
+		
 
 		cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH),
 				cal.get(Calendar.DAY_OF_MONTH) - (cal.get(Calendar.DAY_OF_WEEK) - 2));
@@ -84,7 +85,7 @@ public class WeekView extends JPanel {
 		for (int i = cal.get(Calendar.DAY_OF_MONTH); i < cal.get(Calendar.DAY_OF_MONTH) + 7; i++) {
 
 			dayOfMonthLabel = new JLabel();
-			dayOfMonthLabel.setText("" + i);
+			dayOfMonthLabel.setText("" + i); 
 
 			weekDatePanel = new JPanel();
 			weekDatePanel.setPreferredSize(new Dimension(165, 25));
