@@ -35,7 +35,6 @@ public class StateMachine {
 	public String getFormattedDate(){
 		String tempDate=sdf.format(date);
 		String formatDate=tempDate.substring(0, 4)+tempDate.substring(5, 7)+tempDate.substring(8, 10);
-		System.out.println("Formatted date: "+formatDate);
 		return formatDate;
 	}
 
@@ -77,6 +76,13 @@ public class StateMachine {
 
 	public void setPagesLogin(int pagesLogin) {
 		this.pagesLogin = pagesLogin;
+	}
+	public void setUnformattedDate(String date) {
+		// TODO format date and set focuseddate
+		String formattedDate;
+		formattedDate=date.substring(0,4)+"/"+date.substring(4,6)+"/"+date.substring(6,8);
+		System.out.println("Formatted date to: "+formattedDate);
+		focusedDate=formattedDate;
 	}
 
 	public Date getdate() {

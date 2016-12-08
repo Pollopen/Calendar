@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -22,13 +23,14 @@ import views.WindowPanel;
 
 
 public class CalAddEdit extends JPanel {
-	private JPanel addCalMain, addCalCenter, addCalCenterLeft, addCalCenterRight, editCalendar1, editCalendar2, editCalendar3;
+	private JPanel addCalCenterLeft, addCalCenterRight, editCalendar1, editCal2Panel, editCalendar3,editCal2RPanel,editCal2LPanel;
 	private GridBagConstraints gbc;
 	private Calendar[] calArray;
 	private JTextField calAddNameField, calEditNameField, calendarNameField;
 	private JTextArea calAddDescTextArea, calendarDescTextArea, calEditDescTextArea;
-	private JLabel calAddNotLabel, calAddNameLabel, calAddLabel, calendarDescLabel, calendarNameLabel, calEditDescLabel, calEditNameLabel;
+	private JLabel calManageLabel, calAddDescLabel, calAddNameLabel, calAddLabel, calendarDescLabel, calendarNameLabel, calEditDescLabel, calEditNameLabel;
 	private JButton calAddButton, calSaveButton, calRemoveButton;
+	private JCheckBox calAddNotBox, calEditNotBox;
 	private User user;
 	private CalEditList calEditList;
 	private StateMachine SM;
@@ -43,27 +45,13 @@ public class CalAddEdit extends JPanel {
 		gbc = new GridBagConstraints();
 		// Panel management
 
-		addCalMain = new JPanel();
-		addCalMain.setPreferredSize(new Dimension(1175, 725));
-		addCalMain.setLayout(new GridBagLayout());
+		setPreferredSize(new Dimension(1175, 725));
+		setLayout(new GridBagLayout());
 		// addCalMain.setBackground(new Color(0, 255, 255));
-		addCalMain.setVisible(true);
-
-		add(addCalMain);
-
-		addCalCenter = new JPanel();
-		addCalCenter.setPreferredSize(new Dimension(1175, 725));
-		addCalCenter.setLayout(new GridBagLayout());
-		// addCalCenter.setBackground(new Color(0, 255, 0));
-		addCalCenter.setVisible(true);
-
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-
-		addCalMain.add(addCalCenter, gbc);
+		setVisible(true);
 
 		addCalCenterLeft = new JPanel();
-		addCalCenterLeft.setPreferredSize(new Dimension(700, 725));
+		addCalCenterLeft.setPreferredSize(new Dimension(500, 725));
 		addCalCenterLeft.setLayout(new GridBagLayout());
 		addCalCenterLeft.setBackground(new Color(0, 255, 0));
 		addCalCenterLeft.setVisible(true);
@@ -71,12 +59,12 @@ public class CalAddEdit extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 
-		addCalCenter.add(addCalCenterLeft, gbc);
+		add(addCalCenterLeft, gbc);
 
 		calendarList();
 
 		addCalCenterRight = new JPanel();
-		addCalCenterRight.setPreferredSize(new Dimension(475, 725));
+		addCalCenterRight.setPreferredSize(new Dimension(675, 725));
 		addCalCenterRight.setLayout(new GridBagLayout());
 		addCalCenterRight.setBackground(new Color(0, 0, 255));
 		addCalCenterRight.setVisible(true);
@@ -84,7 +72,7 @@ public class CalAddEdit extends JPanel {
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 
-		addCalCenter.add(addCalCenterRight, gbc);
+		add(addCalCenterRight, gbc);
 
 		calendarEdit(SM.getCalEditStatus());
 	
@@ -95,16 +83,22 @@ public class CalAddEdit extends JPanel {
 		// add new
 		calArray = user.getCalArray();
 		calAddLabel = new JLabel("Lägg till kalender:");
-		calAddNameLabel = new JLabel("Kalendernamn");
+		calAddLabel.setFont(new Font("Serif", Font.PLAIN, 30));
+		calAddNameLabel = new JLabel("Kalendernamn:");
+		calAddNameLabel.setFont(new Font("Serif", Font.PLAIN, 20));
 		calAddNameField = new JTextField();
 		calAddNameField.setPreferredSize(new Dimension(300, 30));
-		calAddNotLabel = new JLabel("Beskrivning:");
+		calAddDescLabel = new JLabel("Beskrivning:");
+		calAddDescLabel.setFont(new Font("Serif", Font.PLAIN, 20));
 		calAddDescTextArea = new JTextArea();
 		calAddDescTextArea.setPreferredSize(new Dimension(300, 100));
 		calAddDescTextArea.setRows(5);
 		calAddDescTextArea.setColumns(27);
 		calAddDescTextArea.setLineWrap(true);
 		calAddDescTextArea.setWrapStyleWord(true);
+		calAddNotBox = new JCheckBox("Notifikationer?");
+		calAddNotBox.setOpaque(false);
+		calAddNotBox.setSelected(true);
 		calAddButton = new JButton("Lägg till kalender");
 		calAddButton.addActionListener(lForButton);
 		gbc.gridx = 0;
@@ -118,42 +112,54 @@ public class CalAddEdit extends JPanel {
 		addCalCenterLeft.add(calAddNameField, gbc);
 		gbc.gridx = 0;
 		gbc.gridy = 3;
-		addCalCenterLeft.add(calAddNotLabel, gbc);
+		addCalCenterLeft.add(calAddDescLabel, gbc);
 		gbc.gridx = 0;
 		gbc.gridy = 4;
 		addCalCenterLeft.add(calAddDescTextArea, gbc);
 		gbc.gridx = 0;
 		gbc.gridy = 5;
+		addCalCenterLeft.add(calAddNotBox, gbc);
+		gbc.gridx = 0;
+		gbc.gridy = 6;
 		addCalCenterLeft.add(calAddButton, gbc);
-
-		calList();
 	}
 	public void calList() {
 		if (calEditList != null) {
 			remove(calEditList);
 		}
 		gbc.gridx = 0;
-		gbc.gridy = 6;
+		gbc.gridy = 0;
+		editCal2LPanel.add(calManageLabel, gbc);
+		gbc.gridx = 0;
+		gbc.gridy = 1;
 		calEditList = new CalEditList(calArray, SM, wp, this);
-		addCalCenterLeft.add(calEditList, gbc);
+		editCal2LPanel.add(calEditList, gbc);
 
 	}
 	public void calendarEdit(int calID) {
 		addCalCenterRight.removeAll();
 
 		editCalendar1 = new JPanel();
-		editCalendar1.setPreferredSize(new Dimension(475, 75));
+		editCalendar1.setPreferredSize(new Dimension(675, 75));
 		editCalendar1.setLayout(new GridBagLayout());
-		editCalendar1.setBackground(new Color(255, 0, 0));
+		//editCalendar1.setBackground(new Color(255, 0, 0));
 		editCalendar1.setVisible(true);
+		
+		calEditNotBox = new JCheckBox("Notifikationer?");
+		calEditNotBox.setOpaque(false);
+		if(calArray[calID].getNotification()==1){
+			calEditNotBox.setSelected(true);
+		}else{
+			calEditNotBox.setSelected(false);
+		}
 
 		calSaveButton = new JButton("Spara");
-
-		calSaveButton = new JButton("Spara");
+		calSaveButton.setFont(new Font("Serif", Font.PLAIN, 20));
 
 		calSaveButton.addActionListener(lForButton);
 
 		calRemoveButton = new JButton("Ta bort");
+		calRemoveButton.setFont(new Font("Serif", Font.PLAIN, 20));
 
 		if (calID == 0) {
 			calRemoveButton.setEnabled(false);
@@ -162,14 +168,25 @@ public class CalAddEdit extends JPanel {
 		}
 		calRemoveButton.addActionListener(lForButton);
 
-		editCalendar2 = new JPanel();
-		editCalendar2.setPreferredSize(new Dimension(475, 350));
-		editCalendar2.setLayout(new GridBagLayout());
-		editCalendar2.setBackground(new Color(100, 255, 100));
-		editCalendar2.setVisible(true);
+		editCal2Panel = new JPanel();
+		editCal2Panel.setPreferredSize(new Dimension(675, 350));
+		editCal2Panel.setLayout(new GridBagLayout());
+		//editCal2Panel.setBackground(new Color(100, 255, 100));
+		editCal2Panel.setVisible(true);
+		
+		editCal2LPanel = new JPanel();
+		editCal2LPanel.setPreferredSize(new Dimension(225, 350));
+		editCal2LPanel.setLayout(new GridBagLayout());
+		//editCal2LPanel.setBackground(new Color(255, 0, 0));
+		editCal2LPanel.setVisible(true);
+		editCal2RPanel = new JPanel();
+		editCal2RPanel.setPreferredSize(new Dimension(450, 350));
+		editCal2RPanel.setLayout(new GridBagLayout());
+		//editCal2RPanel.setBackground(new Color(0, 255, 0));
+		editCal2RPanel.setVisible(true);
 
 		editCalendar3 = new JPanel();
-		editCalendar3.setPreferredSize(new Dimension(475, 300));
+		editCalendar3.setPreferredSize(new Dimension(675, 300));
 		editCalendar3.setLayout(new GridBagLayout());
 		editCalendar3.setBackground(new Color(0, 0, 255));
 		editCalendar3.setVisible(true);
@@ -195,17 +212,20 @@ public class CalAddEdit extends JPanel {
 		calEditDescTextArea.setLineWrap(true);
 		calEditDescTextArea.setWrapStyleWord(true);
 
-		calendarNameLabel = new JLabel("kalendernamn");
+		calendarNameLabel = new JLabel("Kalendernamn");
 		calendarNameLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+		
+		calManageLabel = new JLabel("Hantera Kalender:");
+		calManageLabel.setFont(new Font("Serif", Font.PLAIN, 20));
 
 		calendarNameField = new JTextField(calArray[calID].getName());
-		calendarNameField.setPreferredSize(new Dimension(300, 30));
+		calendarNameField.setPreferredSize(new Dimension(350, 30));
 
-		calendarDescLabel = new JLabel("kalenderbeskrivning");
+		calendarDescLabel = new JLabel("Kalenderbeskrivning");
 		calendarDescLabel.setFont(new Font("Serif", Font.PLAIN, 20));
 
 		calendarDescTextArea = new JTextArea(calArray[calID].getDescription());
-		calendarDescTextArea.setPreferredSize(new Dimension(300, 100));
+		calendarDescTextArea.setPreferredSize(new Dimension(350, 100));
 		calendarDescTextArea.setRows(5);
 		calendarDescTextArea.setColumns(27);
 		calendarDescTextArea.setLineWrap(true);
@@ -225,24 +245,37 @@ public class CalAddEdit extends JPanel {
 
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		addCalCenterRight.add(editCalendar2, gbc);
+		addCalCenterRight.add(editCal2Panel, gbc);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		editCal2Panel.add(editCal2LPanel);
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		editCal2Panel.add(editCal2RPanel);
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		editCalendar2.add(calEditNameLabel, gbc);
+		editCal2RPanel.add(calEditNameLabel, gbc);
 
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		editCalendar2.add(calEditNameField, gbc);
+		editCal2RPanel.add(calEditNameField, gbc);
 
 		gbc.gridx = 0;
 		gbc.gridy = 2;
-		editCalendar2.add(calEditDescLabel, gbc);
+		editCal2RPanel.add(calEditDescLabel, gbc);
 
 		gbc.gridx = 0;
 		gbc.gridy = 3;
-		editCalendar2.add(calEditDescTextArea, gbc);
+		editCal2RPanel.add(calEditDescTextArea, gbc);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 4;
+		editCal2RPanel.add(calEditNotBox, gbc);
 
+		calList();
+		
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 

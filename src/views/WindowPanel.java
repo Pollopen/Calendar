@@ -280,9 +280,12 @@ public class WindowPanel extends JPanel {
 
 	public void getLoginPage() {
 		/*
-		 * this.setJMenuBar(null); center.removeAll(); center.add(new
-		 * Login(this)); center.updateUI();
+		 * 
+		 * center.removeAll();
+		 * center.add(new Login(this));
+		 * center.updateUI();
 		 */
+		window.setJMenuBar(null);
 		user = null;
 		SQLManager.setUser(user);
 		center.removeAll();
@@ -951,7 +954,7 @@ public class WindowPanel extends JPanel {
 			rightPanel.add(new WeekView(SM), gbc);
 			break;
 		case 3:
-			rightPanel.add(new MonthView(SM, user), gbc);
+			rightPanel.add(new MonthView(SM, user,this), gbc);
 			break;
 		case 4:
 			rightPanel.add(new YearView(SM, user), gbc);
