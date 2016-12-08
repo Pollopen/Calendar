@@ -42,14 +42,19 @@ public class MonthOverview extends JPanel{
 	private GridBagConstraints gbc;
 	private Border etchedBorder;
 	
-	public MonthOverview(StateMachine SM, User user, Date focusDate){
+	public MonthOverview(StateMachine SM, User user, Date focusDate, boolean yearview){
 		etchedBorder = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 		this.user=user;
 		gbc= new GridBagConstraints();
 		this.SM=SM;
-		setPreferredSize(new Dimension(200, 200));
+		if(yearview){
+			setPreferredSize(new Dimension(300, 300));
+			setBorder(etchedBorder);
+		}else{
+			setPreferredSize(new Dimension(200, 200));
+		}
 		setLayout(new GridLayout(7,7));
-		setBackground(new Color(0, 255, 255));
+		//setBackground(new Color(0, 255, 255));
 		setVisible(true);
 		date=getFocusDate.format(focusDate);
 		firstDay=date.substring(0, 8)+"01";

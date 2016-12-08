@@ -48,7 +48,7 @@ public class MonthView extends JPanel{
 		this.SM=SM;
 		setPreferredSize(new Dimension(1175, 725));
 		setLayout(new GridLayout(7,7));
-		setBackground(new Color(0, 255, 255));
+		//setBackground(new Color(0, 255, 255));
 		setVisible(true);
 		date=SM.getFocusedDate();
 		firstDay=date.substring(0, 8)+"01";
