@@ -262,7 +262,7 @@ public class WindowPanel extends JPanel {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		monthOverview = new MonthOverview(SM, user, tempDate,false);
+		monthOverview = new MonthOverview(SM, user, tempDate, false);
 		overviewPanel.add(monthOverview);
 		overviewPanel.updateUI();
 		
@@ -951,7 +951,7 @@ public class WindowPanel extends JPanel {
 			rightPanel.add(new DayView(), gbc);
 			break;
 		case 2:
-			rightPanel.add(new WeekView(SM), gbc);
+			rightPanel.add(new WeekView(SM, user), gbc);
 			break;
 		case 3:
 			rightPanel.add(new MonthView(SM, user,this), gbc);
