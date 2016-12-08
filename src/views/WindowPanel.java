@@ -17,10 +17,12 @@ import java.util.GregorianCalendar;
 import java.util.Properties;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JSpinner;
@@ -59,8 +61,9 @@ public class WindowPanel extends JPanel {
 			locationField, calendarNameField, calendarDescField, regEmailField, regSNameField, regFNameField,
 			editEventNameField, editEventLocationField, userSearchField;
 	private JPasswordField regPassField, regPassConfField;
-
+	private DefaultListModel listModel;
 	private Calendar[] calArray, eventCalArray;
+	private JList userList;
 	private Event[] editEventArray;
 	private JTextArea calendarDescTextArea, calAddDescTextArea;
 	private JPasswordField passField, passConfField;
@@ -605,6 +608,18 @@ public class WindowPanel extends JPanel {
 		gbcLeft.anchor = GridBagConstraints.WEST;
 
 		centerRight.add(userSearchButton, gbcLeft);
+		
+		userList = new JList();
+		listModel = new DefaultListModel();
+		userList.setPreferredSize(new Dimension(300, 300));
+		userList.setModel(listModel);
+		
+		gbcLeft.gridx = 0;
+		gbcLeft.gridy = 1;
+		gbcLeft.insets = new Insets(0, 0, 10, 0);
+		gbcLeft.anchor = GridBagConstraints.WEST;
+		
+		centerRight.add(userList, gbcLeft);
 
 		// Everything on panels
 
@@ -1158,8 +1173,10 @@ public class WindowPanel extends JPanel {
 
 				for (int i = 0; i < inputResult.length; i++) {
 						
-					System.out.println(inputResult[i][1]);
+					listModel.addElement(inputResult[i][1]);
 					
+					System.out.println(inputResult[i][1]);
+					 
 					//int[] user_id = (int[]) inputResult[i][0];
 					
 					
