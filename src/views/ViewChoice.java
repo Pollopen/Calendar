@@ -25,7 +25,7 @@ import javax.swing.event.ChangeListener;
 import controller.StateMachine;
 
 public class ViewChoice extends JPanel {
-	private JButton dayButton, weekButton, monthButton, yearButton, prevWeekButton, nextWeekButton, prevMonthButton, nextDayButton, nextMonthButton, prevDayButton, prevYearButton, nextYearButton;
+	private JButton todayButton, dayButton, weekButton, monthButton, yearButton, prevWeekButton, nextWeekButton, prevMonthButton, nextDayButton, nextMonthButton, prevDayButton, prevYearButton, nextYearButton;
 	private GridBagConstraints gbc;
 	private JLabel empty;
 	private GregorianCalendar gc;
@@ -82,6 +82,8 @@ public class ViewChoice extends JPanel {
 		prevYearButton.addActionListener(lForButton);
 		nextYearButton = new JButton("År>");
 		nextYearButton.addActionListener(lForButton);
+		todayButton = new JButton("Idag");
+		todayButton.addActionListener(lForButton);
 		empty = new JLabel("");
 		
 		dateChoice = new JSpinner(new SpinnerDateModel(focusedDate, null, null, Calendar.DAY_OF_MONTH));
@@ -109,7 +111,7 @@ public class ViewChoice extends JPanel {
 		add(prevMonthButton);
 		
 		add(prevWeekButton);
-		add(prevDayButton,gbc);
+		add(prevDayButton);
 		
 		add(dateChoice);
 		
@@ -120,7 +122,13 @@ public class ViewChoice extends JPanel {
 		add(nextMonthButton);
 		
 		add(nextYearButton);
-		add(empty);
+		
+		JPanel tempJP=new JPanel();
+		tempJP.setLayout(new GridBagLayout());
+		add(tempJP);
+		tempJP.add(todayButton, gbc);
+		
+		
 		add(dayButton);
 		add(weekButton);
 		add(monthButton);
@@ -216,18 +224,22 @@ public class ViewChoice extends JPanel {
 			}
 			if (e.getSource() == prevWeekButton) {
 				getPrevWeek();
-				SM.setActiveview(2);
 				wp.getViewViewer();
 				wp.getViewChoice();
 				wp.getOverview();
 			}
 			if (e.getSource() == nextWeekButton) {
 				getNextWeek();
-				SM.setActiveview(2);
 				wp.getViewViewer();
 				wp.getViewChoice();
 				wp.getOverview();
 
+			}
+			if (e.getSource() == todayButton){
+				SM.setFocusedToday();
+				wp.getViewViewer();
+				wp.getViewChoice();
+				wp.getOverview();
 			}
 
 		}

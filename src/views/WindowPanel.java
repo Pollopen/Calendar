@@ -104,7 +104,7 @@ public class WindowPanel extends JPanel {
 		center.setVisible(true);
 		add(center);
 		SM = new StateMachine(user);
-
+		viewChoice=null;
 		/*
 		 * TODO FIX ORGANISATION
 		 */
@@ -417,6 +417,7 @@ public class WindowPanel extends JPanel {
 		regButton.addActionListener(lForButton);
 		loginPageButton.addActionListener(lForButton);
 		center.updateUI();
+		gbc.insets = new Insets(0, 0, 0, 0);
 	}
 
 	public void getLoginPage() {
@@ -519,6 +520,7 @@ public class WindowPanel extends JPanel {
 		loginButton.addActionListener(lForButton);
 		registerPageButton.addActionListener(lForButton);
 		center.updateUI();
+		gbc.insets = new Insets(0, 0, 0, 0);
 	}
 
 	public void getAddEventPage() {
@@ -798,6 +800,7 @@ public class WindowPanel extends JPanel {
 		fullDayActivity.addActionListener(lForButton);
 		eventCreate.addActionListener(lForButton);
 		userSearchButton.addActionListener(lForButton);
+		gbc.insets = new Insets(0, 0, 0, 0);
 	}
 
 	public void getDeleteAndEditEventPage() {
@@ -1051,6 +1054,7 @@ public class WindowPanel extends JPanel {
 		editEventDropDown.addActionListener(lForButton);
 		editEventButton.addActionListener(lForButton);
 		deleteEventButton.addActionListener(lForButton);
+		gbc.insets = new Insets(0, 0, 0, 0);
 
 	}
 
@@ -1108,9 +1112,10 @@ public class WindowPanel extends JPanel {
 		}
 		viewChoice = new ViewChoice(SM, this);
 		gbc.gridx=0;
-		gbc.gridy=0;		
+		gbc.gridy=0;
+		gbc.insets = new Insets(0, 0, 0, 0);
 		upperRightPanel.add(viewChoice, gbc);
-
+		upperRightPanel.updateUI();
 	}
 
 	public void sendUser(User user) {
@@ -1143,7 +1148,9 @@ public class WindowPanel extends JPanel {
 					getLoginPage();
 				}
 			}
-
+			if (e.getSource() == addEventButton) {
+				getAddEventPage();
+			}
 			if (e.getSource() == registerPageButton) {
 				getRegisterPage();
 			}
