@@ -1,10 +1,12 @@
 package views;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.NetworkInterface;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,6 +15,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
@@ -24,6 +27,7 @@ import controller.StateMachine;
 public class ViewChoice extends JPanel {
 	private JButton dayButton, weekButton, monthButton, yearButton, prevWeekButton, nextWeekButton, prevMonthButton, nextDayButton, nextMonthButton, prevDayButton, prevYearButton, nextYearButton;
 	private GridBagConstraints gbc;
+	private JLabel empty;
 	private GregorianCalendar gc;
 	private ListenForButton lForButton;
 	private SimpleDateFormat sdf;
@@ -41,7 +45,8 @@ public class ViewChoice extends JPanel {
 		this.wp = wp;
 		setOpaque(false);
 		gbc = new GridBagConstraints();
-		setLayout(new GridBagLayout());
+		setPreferredSize(new Dimension(1150, 40));
+		setLayout(new GridLayout(1,18));
 		
 		try {
 			focusedDate = getFocusDate.parse(SM.getFocusedDate());
@@ -73,6 +78,7 @@ public class ViewChoice extends JPanel {
 		prevYearButton.addActionListener(lForButton);
 		nextYearButton = new JButton("År>");
 		nextYearButton.addActionListener(lForButton);
+		empty = new JLabel("");
 		
 		dateChoice = new JSpinner(new SpinnerDateModel(focusedDate, null, null, Calendar.DAY_OF_MONTH));
 		JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateChoice, "dd/MM/yy");
@@ -94,57 +100,27 @@ public class ViewChoice extends JPanel {
 		default:
 			break;
 		}
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		add(prevYearButton, gbc);
+		add(prevYearButton);
 		
-		gbc.gridx = 1;
-		gbc.gridy = 0;
-		add(prevMonthButton, gbc);
+		add(prevMonthButton);
 		
-		gbc.gridx = 2;
-		gbc.gridy = 0;
-		add(prevWeekButton, gbc);
+		add(prevWeekButton);
+		add(prevDayButton,gbc);
 		
-		gbc.gridx = 3;
-		gbc.gridy = 0;
-		add(prevDayButton, gbc);
-		
-		gbc.gridx = 4;
-		gbc.gridy = 0;
 		add(dateChoice);
 		
-		gbc.gridx = 5;
-		gbc.gridy = 0;
-		add(nextDayButton, gbc);
+		add(nextDayButton);
 		
-		gbc.gridx = 6;
-		gbc.gridy = 0;
-		add(nextWeekButton, gbc);
+		add(nextWeekButton);
 		
-		gbc.gridx = 7;
-		gbc.gridy = 0;
-		add(nextMonthButton, gbc);
+		add(nextMonthButton);
 		
-		gbc.gridx = 8;
-		gbc.gridy = 0;
-		add(nextYearButton, gbc);
-		
-		
-		gbc.gridx = 10;
-		gbc.gridy = 0;
-		gbc.insets = new Insets(0, 10, 0, 0);
-		add(dayButton, gbc);
-		gbc.insets = new Insets(0, 0, 0, 0);
-		gbc.gridx = 11;
-		gbc.gridy = 0;
-		add(weekButton, gbc);
-		gbc.gridx = 12;
-		gbc.gridy = 0;
-		add(monthButton, gbc);
-		gbc.gridx = 13;
-		gbc.gridy = 0;
-		add(yearButton, gbc);
+		add(nextYearButton);
+		add(empty);
+		add(dayButton);
+		add(weekButton);
+		add(monthButton);
+		add(yearButton);
 
 		
 
