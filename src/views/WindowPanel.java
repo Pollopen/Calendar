@@ -270,152 +270,10 @@ public class WindowPanel extends JPanel {
 
 	public void getRegisterPage() {
 		// center.removeAll();
-		// center.add(new Register(this));
+		// 
 		// center.updateUI();
 		center.removeAll();
-		main = new JPanel();
-		main.setPreferredSize(new Dimension(1400, 800));
-		main.setLayout(new GridBagLayout());
-
-		center.add(main);
-
-		form = new JPanel();
-		form.setLayout(new GridBagLayout());
-		form.setPreferredSize(new Dimension(480, 600));
-		form.setBorder(BorderFactory.createLineBorder(Color.black));
-		form.setVisible(true);
-
-		main.add(form);
-
-		// Stor text at top
-		regHere = new JLabel("Registrera dig här!", JLabel.CENTER);
-		regHere.setFont(new Font("Serif", Font.PLAIN, 25));
-
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.insets = new Insets(0, 0, 20, 0);
-
-		form.add(regHere, gbc);
-
-		// Email
-		regEmailLabel = new JLabel("Email: ");
-		regEmailLabel.setFont(new Font("Serif", Font.PLAIN, 20));
-		regEmailField = new JTextField();
-		regEmailField.setPreferredSize(new Dimension(300, 30));
-
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		gbc.insets = new Insets(0, 0, 10, 0);
-
-		form.add(regEmailLabel, gbc);
-
-		gbc.gridx = 0;
-		gbc.gridy = 2;
-		gbc.insets = new Insets(0, 0, 10, 0);
-
-		form.add(regEmailField, gbc);
-
-		// Password + password confirmation
-		regPassLabel = new JLabel("Lösenord: ");
-		regPassLabel.setFont(new Font("Serif", Font.PLAIN, 20));
-		regPassField = new JPasswordField();
-		regPassField.setPreferredSize(new Dimension(300, 30));
-		regPassConfLabel = new JLabel("Lösenord igen: ");
-		regPassConfLabel.setFont(new Font("Serif", Font.PLAIN, 20));
-		regPassConfField = new JPasswordField();
-		regPassConfField.setPreferredSize(new Dimension(300, 30));
-
-		gbc.gridx = 0;
-		gbc.gridy = 3;
-		gbc.insets = new Insets(0, 0, 10, 0);
-
-		form.add(regPassLabel, gbc);
-
-		gbc.gridx = 0;
-		gbc.gridy = 4;
-		gbc.insets = new Insets(0, 0, 10, 0);
-
-		form.add(regPassField, gbc);
-
-		gbc.gridx = 0;
-		gbc.gridy = 5;
-		gbc.insets = new Insets(0, 0, 10, 0);
-
-		form.add(regPassConfLabel, gbc);
-
-		gbc.gridx = 0;
-		gbc.gridy = 6;
-		gbc.insets = new Insets(0, 0, 10, 0);
-
-		form.add(regPassConfField, gbc);
-
-		// First name + last name
-		regFNameLabel = new JLabel("Förnamn: ");
-		regFNameLabel.setFont(new Font("Serif", Font.PLAIN, 20));
-		regFNameField = new JTextField();
-		regFNameField.setPreferredSize(new Dimension(300, 30));
-		regSNameLabel = new JLabel("Efternamn: ");
-		regSNameLabel.setFont(new Font("Serif", Font.PLAIN, 20));
-		regSNameField = new JTextField();
-		regSNameField.setPreferredSize(new Dimension(300, 30));
-
-		gbc.gridx = 0;
-		gbc.gridy = 7;
-		gbc.insets = new Insets(0, 0, 10, 0);
-
-		form.add(regFNameLabel, gbc);
-
-		gbc.gridx = 0;
-		gbc.gridy = 8;
-		gbc.insets = new Insets(0, 0, 10, 0);
-
-		form.add(regFNameField, gbc);
-
-		gbc.gridx = 0;
-		gbc.gridy = 9;
-		gbc.insets = new Insets(0, 0, 10, 0);
-
-		form.add(regSNameLabel, gbc);
-
-		gbc.gridx = 0;
-		gbc.gridy = 10;
-		gbc.insets = new Insets(0, 0, 10, 0);
-
-		form.add(regSNameField, gbc);
-
-		// Reg button
-		regButton = new JButton("Registrera");
-
-		gbc.gridx = 0;
-		gbc.gridy = 11;
-		gbc.insets = new Insets(0, 0, 40, 0);
-
-		form.add(regButton, gbc);
-
-		// Login label + button
-		loginPageLabel = new JLabel("Har du redan ett konto?");
-
-		gbc.gridx = 0;
-		gbc.gridy = 12;
-		gbc.insets = new Insets(0, 0, 10, 0);
-
-		form.add(loginPageLabel, gbc);
-
-		loginPageButton = new JButton("Klicka här för att logga in");
-
-		gbc.gridx = 0;
-		gbc.gridy = 13;
-		gbc.insets = new Insets(0, 0, 10, 0);
-
-		form.add(loginPageButton, gbc);
-
-		ListenForButton lForButton = new ListenForButton();
-
-		// Tell Java that you want to be alerted when an event
-		// occurs on the button
-
-		regButton.addActionListener(lForButton);
-		loginPageButton.addActionListener(lForButton);
+		center.add(new Register(window, this));
 		center.updateUI();
 		gbc.insets = new Insets(0, 0, 0, 0);
 	}
@@ -1137,26 +995,14 @@ public class WindowPanel extends JPanel {
 					getIndexPage();
 				}
 			}
-			if (e.getSource() == regButton) {
-				String email = regEmailField.getText();
-				String fname = regFNameField.getText();
-				String sname = regSNameField.getText();
-				char[] pass1 = regPassField.getPassword();
-				char[] pass2 = regPassConfField.getPassword();
-
-				if (SQLManager.register(window, fname, sname, email, pass1, pass2)) {
-					getLoginPage();
-				}
-			}
+			
 			if (e.getSource() == addEventButton) {
 				getAddEventPage();
 			}
 			if (e.getSource() == registerPageButton) {
 				getRegisterPage();
 			}
-			if (e.getSource() == loginPageButton) {
-				getLoginPage();
-			}
+			
 			if (e.getSource() == calSaveButton) {
 				String temp1 = calEditNameField.getText();
 				String temp2 = calEditDescTextArea.getText();
