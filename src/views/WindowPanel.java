@@ -178,7 +178,7 @@ public class WindowPanel extends JPanel {
 		overviewPanel = new JPanel();
 		overviewPanel.setPreferredSize(new Dimension(200, 200));
 		overviewPanel.setVisible(true);
-		overviewPanel.setBackground(new Color(100, 100, 100));
+		//overviewPanel.setBackground(new Color(100, 100, 100));
 
 		gbc.gridx = 0;
 		gbc.gridy = 1;
@@ -189,7 +189,7 @@ public class WindowPanel extends JPanel {
 		CalendarChoicePanel = new JPanel();
 		CalendarChoicePanel.setPreferredSize(new Dimension(200, 300));
 		CalendarChoicePanel.setVisible(true);
-		CalendarChoicePanel.setBackground(new Color(255, 0, 255));
+		//CalendarChoicePanel.setBackground(new Color(255, 0, 255));
 
 		gbc.gridx = 0;
 		gbc.gridy = 2;
@@ -244,7 +244,7 @@ public class WindowPanel extends JPanel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		monthOverview = new MonthOverview(SM, user, tempDate);
+		monthOverview = new MonthOverview(SM, user, tempDate,false);
 		overviewPanel.add(monthOverview);
 		overviewPanel.updateUI();
 		// TODO Auto-generated method stub

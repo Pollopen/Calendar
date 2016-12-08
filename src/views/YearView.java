@@ -19,7 +19,7 @@ public class YearView extends JPanel{
 		focusDate=SM.getFocusedDate();
 		setLayout(new GridLayout(3, 4));
 		for (int i = 0; i < 12; i++) {
-			add(new MonthOverview(SM, user, changeMonth(focusDate, i)));
+			add(new MonthOverview(SM, user, changeMonth(focusDate, i),true));
 		}
 		
 	}
