@@ -253,7 +253,6 @@ public class ViewChoice extends JPanel {
 			if (e.getSource() == dateChoice) {
 				String temp = getFocusDate.format(dateChoice.getValue());
 				SM.setFocusedDate(temp);
-				System.out.println(temp);
 				wp.getViewViewer();
 				wp.getOverview();
 				//wp.getViewChoice();

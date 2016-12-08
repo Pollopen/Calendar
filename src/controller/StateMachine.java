@@ -81,7 +81,6 @@ public class StateMachine {
 		// TODO format date and set focuseddate
 		String formattedDate;
 		formattedDate=date.substring(0,4)+"/"+date.substring(4,6)+"/"+date.substring(6,8);
-		System.out.println("Formatted date to: "+formattedDate);
 		focusedDate=formattedDate;
 	}
 

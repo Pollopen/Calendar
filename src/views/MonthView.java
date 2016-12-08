@@ -113,7 +113,6 @@ public class MonthView extends JPanel{
 			for (int i = 0; i < filteredEventArray.length; i++) {
 				String checkEventDayStart=(filteredEventArray[i].getStart_time()).substring(0,4)+(filteredEventArray[i].getStart_time()).substring(5,7)+(filteredEventArray[i].getStart_time()).substring(8,10);
 				String checkEventDayEnd=(filteredEventArray[i].getEnd_time()).substring(0,4)+(filteredEventArray[i].getEnd_time()).substring(5,7)+(filteredEventArray[i].getEnd_time()).substring(8,10);
-				System.out.println(filteredEventArray[i].getName()+" start: "+checkEventDayStart+" end: "+checkEventDayEnd+ "comparing with"+checkDate);
 				if(checkDate.equals(checkEventDayStart)||checkDate.equals(checkEventDayEnd)||checkIfInProgress(checkDate, checkEventDayStart, checkEventDayEnd)){
 							if(filteredEventArray[i].getFullDay()==1){
 								if(tempFullDayEvents==1){
@@ -251,7 +250,6 @@ public class MonthView extends JPanel{
 						Event tempEvent=ea[i];
 						filteredList[k]=tempEvent;
 						k++;
-						System.out.println(tempEvent.getName());
 					}
 				}
 			}

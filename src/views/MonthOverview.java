@@ -212,7 +212,6 @@ public class MonthOverview extends JPanel{
 						Event tempEvent=ea[i];
 						filteredList[k]=tempEvent;
 						k++;
-						System.out.println(tempEvent.getName());
 					}
 				}
 			}
