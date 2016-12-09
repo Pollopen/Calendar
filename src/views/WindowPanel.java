@@ -46,31 +46,20 @@ import views.calendar.addedit.CalAddEdit;
 
 public class WindowPanel extends JPanel {
 
-	private JPanel notificationPanel, editCalendar1, editCalendar2, editCalendar3, form, main, addCalMain, center, centerEvent, mainPanel,
-			leftPanel, addEventButtonPanel, overviewPanel, CalendarChoicePanel, placeholderPanel, rightPanel,
-			upperLeftPanel, upperRightPanel, top, centerLeft, centerRight, addCalCenterRight, addCalCenterRight1,
-			addCalCenterRight2, addCalCenterRight3, addCalCenterLeft, addCalCenter, editEventMain, editEventTop,
+	private JPanel overviewPanel1, overviewPanel2,notificationPanel, main, center, centerEvent, mainPanel,
+			leftPanel, addEventButtonPanel, overviewPanel, CalendarChoicePanel, rightPanel,
+			upperLeftPanel, upperRightPanel, top, centerLeft, centerRight, editEventMain, editEventTop,
 			editEventCenter, editEventLeft, editEventRight;
 
-	private JLabel calEditDescLabel, calEditNameLabel, calAddLabel, calAddNotLabel, calAddNameLabel, loginLabel,
-			emailLabel, passLabel, regLabel, regHere, passConfLabel, fnameLabel, snameLabel, calendarNameLabel,
-			nameLabel, locationLabel, calListLabel, startTimeLabel, endTimeLabel, eventDescLabel, descriptionLabel,
-			calendarDescLabel, regEmailLabel, regPassLabel, regPassConfLabel, regFNameLabel, regSNameLabel,
-			loginPageLabel, editEventNameLabel, editEventLocationLabel, editEventStartLabel, editEventEndLabel,
+	private JLabel nameLabel, locationLabel, startTimeLabel, endTimeLabel, eventDescLabel, editEventNameLabel, editEventLocationLabel, editEventStartLabel, editEventEndLabel,
 			editEventDescLabel;
-	private JTextField calEditNameField, calAddNameField, calAddNotField, emailField, fnameField, snameField, nameField,
-			locationField, calendarNameField, calendarDescField, regEmailField, regSNameField, regFNameField,
-			editEventNameField, editEventLocationField, userSearchField;
-	private JPasswordField regPassField, regPassConfField;
+	private JTextField nameField,locationField, editEventNameField, editEventLocationField, userSearchField;
 	private DefaultListModel listModel;
 	private Calendar[] calArray, eventCalArray;
 	private JList userList;
 	private Event[] editEventArray;
-	private JTextArea calendarDescTextArea, calAddDescTextArea;
-	private JPasswordField passField, passConfField;
-	private JButton addEventButton, calAddButton, loginButton, registerPageButton, registerButton, loginPageButton, regButton,
-			calSaveButton, calRemoveButton, eventCreate, editEventButton, deleteEventButton, userSearchButton, nextWeekButton, prevWeekButton;
-	private JTextArea calEditDescTextArea, eventDescArea, editEventDescArea;
+	private JButton addEventButton, eventCreate, editEventButton, deleteEventButton, userSearchButton, nextWeekButton, prevWeekButton;
+	private JTextArea eventDescArea, editEventDescArea;
 	private JCheckBox fullDayActivity, editFullDayActivity;
 	private JSpinner startTimeSpinner, endTimeSpinner, editStartTimeSpinner, editEndTimeSpinner;
 	private JSpinner.DateEditor startTimeEditor, endTimeEditor, editStartTimeEditor, editEndTimeEditor;
@@ -83,16 +72,15 @@ public class WindowPanel extends JPanel {
 	private JComboBox<String> calDropDown, editEventDropDown;
 	private String eventCreateCalArray, editEventObjectArray;
 	private GregorianCalendar editStartGregCal, editEndGregCal;
-	private WindowPanel windowpanel;
 	private Window window;
 	private User user;
 	private StateMachine SM;
 	private CalChooseList calChooseList;
 	private ViewChoice viewChoice;
 	private MonthOverview monthOverview;
+	private MonthYearPanel monthYearPanel;
 
 	public WindowPanel(Window window) {
-		windowpanel = this;
 		this.window = window;
 		gbc = new GridBagConstraints();
 		lForButton = new ListenForButton();
@@ -113,9 +101,6 @@ public class WindowPanel extends JPanel {
 	}
 
 	public void getIndexPage() {
-		// center.removeAll();
-		// center.add(new Index(this));
-		// center.updateUI();
 		gbc = new GridBagConstraints();
 		MenuList menu = new MenuList();
 		window.setJMenuBar(menu.createMenuBar(window, this, user));
@@ -167,7 +152,7 @@ public class WindowPanel extends JPanel {
 		mainPanel.add(leftPanel, gbc);
 		
 		notificationPanel = new JPanel();
-		notificationPanel.setPreferredSize(new Dimension(200, 190));
+		notificationPanel.setPreferredSize(new Dimension(200, 150));
 		notificationPanel.setVisible(true);
 		notificationPanel.setBackground(new Color(255, 0, 255));
 
@@ -195,14 +180,35 @@ public class WindowPanel extends JPanel {
 		addEventButtonPanel.add(addEventButton, gbc);
 
 		overviewPanel = new JPanel();
-		overviewPanel.setPreferredSize(new Dimension(200, 200));
+		overviewPanel.setPreferredSize(new Dimension(200, 240));
 		overviewPanel.setVisible(true);
+		overviewPanel.setLayout(new GridBagLayout());
 		//overviewPanel.setBackground(new Color(100, 100, 100));
 
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 
 		leftPanel.add(overviewPanel, gbc);
+		
+		overviewPanel1 = new JPanel();
+		overviewPanel1.setPreferredSize(new Dimension(200, 40));
+		overviewPanel1.setVisible(true);
+		//overviewPanel.setBackground(new Color(100, 100, 100));
+
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+
+		overviewPanel.add(overviewPanel1, gbc);
+		
+		overviewPanel2 = new JPanel();
+		overviewPanel2.setPreferredSize(new Dimension(200, 200));
+		overviewPanel2.setVisible(true);
+		//overviewPanel.setBackground(new Color(100, 100, 100));
+
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+
+		overviewPanel.add(overviewPanel2, gbc);
 		
 		
 		CalendarChoicePanel = new JPanel();
@@ -232,29 +238,18 @@ public class WindowPanel extends JPanel {
 
 		mainPanel.add(rightPanel, gbc);
 
-		getAddEventPage();
+		getViewViewer();
 
 		center.updateUI();
-		/*
-		 * calendarPanel = new JPanel(); calendarPanel.setPreferredSize(new
-		 * Dimension(1175, 725)); calendarPanel.setVisible(true);
-		 * calendarPanel.setBackground(new Color(255, 0, 0));
-		 * 
-		 * gbc.gridx = 0; gbc.gridy = 0;
-		 * 
-		 * rightPanel.add(calendarPanel, gbc);
-		 */
-
 	}
 
 	public void getOverview(){
-		overviewPanel.removeAll();
+		overviewPanel1.removeAll();
+		overviewPanel2.removeAll();
 		
 		if (calChooseList != null) {
 			remove(calChooseList);
 		}
-		gbc.gridx = 0;
-		gbc.gridy = 6;
 		DateFormat tempFormat = new SimpleDateFormat("yyyy/MM/dd");
 		Date tempDate = null;
 		try {
@@ -262,126 +257,25 @@ public class WindowPanel extends JPanel {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		monthOverview = new MonthOverview(SM, user, tempDate, false);
-		overviewPanel.add(monthOverview);
-		overviewPanel.updateUI();
+		monthYearPanel = new MonthYearPanel(SM);
+		overviewPanel1.add(monthYearPanel);
+		monthOverview = new MonthOverview(SM, user, tempDate, false,this);
+		overviewPanel2.add(monthOverview);
+		overviewPanel1.updateUI();
+		overviewPanel2.updateUI();
 		
 	}
 
 	public void getRegisterPage() {
-		// center.removeAll();
-		// 
-		// center.updateUI();
 		center.removeAll();
 		center.add(new Register(window, this));
 		center.updateUI();
-		gbc.insets = new Insets(0, 0, 0, 0);
 	}
 
-	public void getLoginPage() {
-		/*
-		 * 
-		 * center.removeAll();
-		 * center.add(new Login(this));
-		 * center.updateUI();
-		 */
-		window.setJMenuBar(null);
-		user = null;
-		SQLManager.setUser(user);
-		center.removeAll();
-		main = new JPanel();
-		main.setPreferredSize(new Dimension(1400, 800));
-		main.setLayout(new GridBagLayout());
-
-		center.add(main);
-
-		form = new JPanel();
-		form.setLayout(new GridBagLayout());
-		form.setPreferredSize(new Dimension(480, 600));
-		form.setVisible(true);
-		form.setBorder(BorderFactory.createLineBorder(Color.black));
-
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-
-		main.add(form, gbc);
-
-		// Login text
-		loginLabel = new JLabel("Logga in här!", JLabel.CENTER);
-		loginLabel.setFont(new Font("Serif", Font.PLAIN, 25));
-
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.insets = new Insets(0, 0, 10, 0);
-
-		form.add(loginLabel, gbc);
-
-		// Email
-		emailLabel = new JLabel("Email: ");
-		emailLabel.setFont(new Font("Serif", Font.PLAIN, 20));
-		emailField = new JTextField();
-		emailField.setPreferredSize(new Dimension(300, 30));
-
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		gbc.insets = new Insets(0, 0, 10, 0);
-
-		form.add(emailLabel, gbc);
-
-		gbc.gridx = 0;
-		gbc.gridy = 2;
-		gbc.insets = new Insets(0, 0, 10, 0);
-
-		form.add(emailField, gbc);
-
-		// Password
-		passLabel = new JLabel("Lösenord: ");
-		passLabel.setFont(new Font("Serif", Font.PLAIN, 20));
-		passField = new JPasswordField();
-		passField.setPreferredSize(new Dimension(300, 30));
-
-		gbc.gridx = 0;
-		gbc.gridy = 3;
-		gbc.insets = new Insets(0, 0, 10, 0);
-
-		form.add(passLabel, gbc);
-
-		gbc.gridx = 0;
-		gbc.gridy = 4;
-		gbc.insets = new Insets(0, 0, 10, 0);
-
-		form.add(passField, gbc);
-
-		// Login button
-		loginButton = new JButton("Logga in!");
-
-		gbc.gridx = 0;
-		gbc.gridy = 5;
-		gbc.insets = new Insets(0, 0, 10, 0);
-
-		form.add(loginButton, gbc);
-
-		// Registration
-		regLabel = new JLabel("Inget konto? Registrera dig här!", JLabel.CENTER);
-		regLabel.setFont(new Font("Serif", Font.PLAIN, 20));
-		registerPageButton = new JButton("Registrera dig!");
-
-		gbc.gridx = 0;
-		gbc.gridy = 6;
-		gbc.insets = new Insets(0, 0, 10, 0);
-
-		form.add(regLabel, gbc);
-
-		gbc.gridx = 0;
-		gbc.gridy = 7;
-		gbc.insets = new Insets(0, 0, 10, 0);
-
-		form.add(registerPageButton, gbc);
-
-		loginButton.addActionListener(lForButton);
-		registerPageButton.addActionListener(lForButton);
-		center.updateUI();
-		gbc.insets = new Insets(0, 0, 0, 0);
+	public void getLoginPage() { 
+		 center.removeAll();
+		 center.add(new Login(window, this, user));
+		 center.updateUI();
 	}
 
 	public void getAddEventPage() {
@@ -920,17 +814,13 @@ public class WindowPanel extends JPanel {
 	}
 
 	public void getAddCalendarPage() {
-
 		rightPanel.removeAll();
-
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		rightPanel.add(new CalAddEdit(SM, this, user), gbc);
-
 		rightPanel.updateUI();
 	}
 	public void calChoiceList() {
-
 		CalendarChoicePanel.removeAll();
 		if (calChooseList != null) {
 			remove(calChooseList);
@@ -939,7 +829,6 @@ public class WindowPanel extends JPanel {
 		gbc.gridy = 6;
 		calChooseList = new CalChooseList(calArray, SM, this);
 		CalendarChoicePanel.add(calChooseList, gbc);
-
 	}
 
 	public void getViewViewer() {
@@ -957,10 +846,10 @@ public class WindowPanel extends JPanel {
 			rightPanel.add(new MonthView(SM, user,this), gbc);
 			break;
 		case 4:
-			rightPanel.add(new YearView(SM, user), gbc);
+			rightPanel.add(new YearView(SM, user, this), gbc);
 			break;
 		default:
-			rightPanel.add(new DayView(), gbc);
+			rightPanel.add(new MonthView(SM, user,this), gbc);
 			break;
 		}
 		rightPanel.updateUI();
@@ -978,91 +867,29 @@ public class WindowPanel extends JPanel {
 		upperRightPanel.add(viewChoice, gbc);
 		upperRightPanel.updateUI();
 	}
-
 	public void sendUser(User user) {
 		this.user = user;
 	}
-
 	private class ListenForButton implements ActionListener {
 
 		// This method is called when an event occurs
 
 		public void actionPerformed(ActionEvent e) {
-
 			// Check if the source of the event was the button
-
-			if (e.getSource() == loginButton) {
-				String loginEmail = emailField.getText();
-				char[] loginPassCandidate = passField.getPassword();
-				if (SQLManager.checkLogin(loginEmail, loginPassCandidate, window, windowpanel)) {
-					getIndexPage();
-				}
-			}
-			
 			if (e.getSource() == addEventButton) {
 				getAddEventPage();
 			}
-			if (e.getSource() == registerPageButton) {
-				getRegisterPage();
-			}
-			
-			if (e.getSource() == calSaveButton) {
-				String temp1 = calEditNameField.getText();
-				String temp2 = calEditDescTextArea.getText();
-				if (SQLManager.editCalendar(calArray[SM.getCalEditStatus()].getCal_id(), temp1, temp2)) {
-					addCalCenterLeft.removeAll();
-					user.reloadarrays();
-					getAddCalendarPage();
-					CalendarChoicePanel.removeAll();
-					calChoiceList();
-				}
-
-			}
-			if (e.getSource() == calRemoveButton) {
-
-				SQLManager.removeCalendar(calArray[SM.getCalEditStatus()].getCal_id());
-				user.reloadarrays();
-				getAddCalendarPage();
-				CalendarChoicePanel.removeAll();
-				calChoiceList();
-
-			}
-			if (e.getSource() == calAddButton) {
-				String temp1 = calAddNameField.getText();
-				String temp2 = calAddDescTextArea.getText();
-				if (SQLManager.addCalendar(temp1, temp2)) {
-					addCalCenterLeft.removeAll();
-					user.reloadarrays();
-					getAddCalendarPage();
-					CalendarChoicePanel.removeAll();
-					calChoiceList();
-				}
-
-			}
 
 			if (e.getSource() == userSearchButton) {
-
 				String inputSearch = userSearchField.getText();
-
 				Object[][] inputResult = SQLManager.searchForUser(inputSearch);
-
 				for (int i = 0; i < inputResult.length; i++) {
-						
 					listModel.addElement(inputResult[i][1]);
-					
 					System.out.println(inputResult[i][1]);
-					 
 					//int[] user_id = (int[]) inputResult[i][0];
-					
-					
 				}
-
-				//System.out.println(inputResult[1][0] + "Heeeeeeeeeeeeeeej");
-
 			}
-
 			if (e.getSource() == fullDayActivity) {
-
 				if (fullDayActivity.isSelected()) {
 					// centerLeft.remove(startTimeSpinner);
 					// centerLeft.remove(endTimeSpinner);
@@ -1073,15 +900,11 @@ public class WindowPanel extends JPanel {
 					endTimeSpinner.setVisible(false);
 					centerLeft.updateUI();
 				} else {
-
 					startDatePicker.setPreferredSize(new Dimension(202, 30));
 					endDatePicker.setPreferredSize(new Dimension(202, 30));
-
 					startTimeSpinner.setVisible(true);
 					endTimeSpinner.setVisible(true);
-
 					centerLeft.updateUI();
-
 				}
 			}
 
@@ -1092,22 +915,17 @@ public class WindowPanel extends JPanel {
 					// centerLeft.remove(endTimeSpinner);
 					editStartDatePicker.setPreferredSize(new Dimension(300, 30));
 					editEndDatePicker.setPreferredSize(new Dimension(300, 30));
-
 					editStartTimeSpinner.setVisible(false);
 					editEndTimeSpinner.setVisible(false);
-
 					editEventLeft.updateUI();
 
 				} else {
 
 					editStartDatePicker.setPreferredSize(new Dimension(202, 30));
 					editEndDatePicker.setPreferredSize(new Dimension(202, 30));
-
 					editStartTimeSpinner.setVisible(true);
 					editEndTimeSpinner.setVisible(true);
-
 					editEventLeft.updateUI();
-
 				}
 			}
 

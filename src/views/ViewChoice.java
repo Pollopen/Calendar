@@ -241,6 +241,18 @@ public class ViewChoice extends JPanel {
 				wp.getViewChoice();
 				wp.getOverview();
 			}
+			if (e.getSource() == nextYearButton) {
+				SM.forwardYear();
+				wp.getViewViewer();
+				wp.getViewChoice();
+				wp.getOverview();
+			}
+			if (e.getSource() == prevYearButton) {
+				SM.backYear();
+				wp.getViewViewer();
+				wp.getViewChoice();
+				wp.getOverview();
+			}
 
 		}
 	}

@@ -22,7 +22,7 @@ public class StateMachine {
 		this.user=user;
 		calEditStatus=0;
 		activeCalendars=null;
-		activeview=1;
+		activeview=3;
 		pagesLogin=1;
 		date = new Date();
 		System.out.println(sdf.format(date)); //2016/11/16 12:08:43
@@ -32,8 +32,13 @@ public class StateMachine {
 	public int getCalEditStatus() {
 		return calEditStatus;
 	}
-	public String getFormattedDate(){
+	public String getUnformattedDate(){
 		String tempDate=sdf.format(date);
+		String formatDate=tempDate.substring(0, 4)+tempDate.substring(5, 7)+tempDate.substring(8, 10);
+		return formatDate;
+	}
+	public String getUnformattedFocusDate(){
+		String tempDate=focusedDate;
 		String formatDate=tempDate.substring(0, 4)+tempDate.substring(5, 7)+tempDate.substring(8, 10);
 		return formatDate;
 	}
@@ -95,4 +100,21 @@ public class StateMachine {
 	public void setFocusedDate(String focusedDate) {
 		this.focusedDate = focusedDate;
 	}
+	public void forwardYear() {
+		String focusDate=getUnformattedFocusDate();
+		int tempYear=Integer.parseInt(focusDate.substring(0, 4));
+		tempYear++;
+		String newDate=tempYear+focusDate.substring(4);
+		setUnformattedDate(newDate);
+		System.out.println("New focusdate(+)= "+newDate);
+	}
+	public void backYear(){
+		String focusDate=getUnformattedFocusDate();
+		int tempYear=Integer.parseInt(focusDate.substring(0, 4));
+		tempYear--;
+		String newDate=tempYear+focusDate.substring(4);
+		setUnformattedDate(newDate);
+		System.out.println("New focusdate(-)= "+newDate);
+	}
+	
 }

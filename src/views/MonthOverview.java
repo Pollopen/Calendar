@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 
 import CalViewButton.DayButton;
 import CalViewButton.EventButton;
@@ -34,6 +35,7 @@ public class MonthOverview extends JPanel{
 	private Date focusedDate;
 	private DateFormat getFocusDate = new SimpleDateFormat("yyyy/MM/dd");
 	private DateFormat getWeekDay = new SimpleDateFormat("u");
+	private DateFormat month = new SimpleDateFormat("MMMM");
 	int tempNormalEvents;
 	int tempFullDayEvents;
 	private int weekDay, j, dayOfMonth;
@@ -41,19 +43,32 @@ public class MonthOverview extends JPanel{
 	private Event[] filteredEventArray;
 	private GridBagConstraints gbc;
 	private Border etchedBorder;
+	private TitledBorder title;
+	private WindowPanel wp;
 	
-	public MonthOverview(StateMachine SM, User user, Date focusDate, boolean yearview){
+	
+	public MonthOverview(StateMachine SM, User user, Date focusDate, boolean yearview, WindowPanel wp){
 		etchedBorder = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 		this.user=user;
 		gbc= new GridBagConstraints();
 		this.SM=SM;
+		this.wp=wp;
 		if(yearview){
 			setPreferredSize(new Dimension(300, 300));
-			setBorder(etchedBorder);
+			String tempString = month.format(focusDate);
+			String tempString2 = tempString.substring(0, 1).toUpperCase() + tempString.substring(1);
+			title = BorderFactory.createTitledBorder(
+                    etchedBorder, tempString2);
+			title.setTitleJustification(TitledBorder.CENTER);
+			setBorder(title);
 		}else{
 			setPreferredSize(new Dimension(200, 200));
 		}
-		setLayout(new GridLayout(7,7));
+		if(yearview){
+			setLayout(new GridLayout(6,7));
+		}else{
+			setLayout(new GridLayout(7,7));
+		}
 		//setBackground(new Color(0, 255, 255));
 		setVisible(true);
 		date=getFocusDate.format(focusDate);
@@ -67,15 +82,18 @@ public class MonthOverview extends JPanel{
 		weekDay = Integer.parseInt(getWeekDay.format(focusedDate));
 
 		filteredEventArray=filterEvents();
-		for (int i = 0; i < weekDays.length; i++) {
-			tempJP=new JPanel();
-			tempJP.setLayout(new GridBagLayout());
-			tempJP.setBackground(new Color(100,100,100));
-			tempJP.setVisible(true);
-			add(tempJP);
-			JLabel day=new JLabel(weekDays[i]);
-			day.setFont(new Font("Serif", Font.PLAIN, 25));
-			tempJP.add(day,gbc);
+		if(yearview){
+		}else{
+			for (int i = 0; i < weekDays.length; i++) {
+				tempJP=new JPanel();
+				tempJP.setLayout(new GridBagLayout());
+				tempJP.setBackground(new Color(100,100,100));
+				tempJP.setVisible(true);
+				add(tempJP);
+				JLabel day=new JLabel(weekDays[i]);
+				day.setFont(new Font("Serif", Font.PLAIN, 25));
+				tempJP.add(day,gbc);
+			}
 		}
 		if(weekDay!=1){
 			for (int i=0;i<(weekDay-1);i++){
@@ -101,7 +119,7 @@ public class MonthOverview extends JPanel{
 				}
 			}
 			
-			tempJP.add(new OverviewDayButton(Integer.toString(j),checkDate,hasEvent,SM));
+			tempJP.add(new OverviewDayButton(Integer.toString(j),checkDate,hasEvent,SM,wp));
 			
 	
 			j++;
