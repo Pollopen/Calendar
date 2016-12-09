@@ -46,7 +46,7 @@ import views.calendar.addedit.CalAddEdit;
 
 public class WindowPanel extends JPanel {
 
-	private JPanel notificationPanel, editCalendar1, editCalendar2, editCalendar3, form, main, addCalMain, center, centerEvent, mainPanel,
+	private JPanel overviewPanel1, overviewPanel2,notificationPanel, editCalendar1, editCalendar2, editCalendar3, form, main, addCalMain, center, centerEvent, mainPanel,
 			leftPanel, addEventButtonPanel, overviewPanel, CalendarChoicePanel, placeholderPanel, rightPanel,
 			upperLeftPanel, upperRightPanel, top, centerLeft, centerRight, addCalCenterRight, addCalCenterRight1,
 			addCalCenterRight2, addCalCenterRight3, addCalCenterLeft, addCalCenter, editEventMain, editEventTop,
@@ -90,6 +90,7 @@ public class WindowPanel extends JPanel {
 	private CalChooseList calChooseList;
 	private ViewChoice viewChoice;
 	private MonthOverview monthOverview;
+	private MonthYearPanel monthYearPanel;
 
 	public WindowPanel(Window window) {
 		windowpanel = this;
@@ -167,7 +168,7 @@ public class WindowPanel extends JPanel {
 		mainPanel.add(leftPanel, gbc);
 		
 		notificationPanel = new JPanel();
-		notificationPanel.setPreferredSize(new Dimension(200, 190));
+		notificationPanel.setPreferredSize(new Dimension(200, 150));
 		notificationPanel.setVisible(true);
 		notificationPanel.setBackground(new Color(255, 0, 255));
 
@@ -195,14 +196,35 @@ public class WindowPanel extends JPanel {
 		addEventButtonPanel.add(addEventButton, gbc);
 
 		overviewPanel = new JPanel();
-		overviewPanel.setPreferredSize(new Dimension(200, 200));
+		overviewPanel.setPreferredSize(new Dimension(200, 240));
 		overviewPanel.setVisible(true);
+		overviewPanel.setLayout(new GridBagLayout());
 		//overviewPanel.setBackground(new Color(100, 100, 100));
 
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 
 		leftPanel.add(overviewPanel, gbc);
+		
+		overviewPanel1 = new JPanel();
+		overviewPanel1.setPreferredSize(new Dimension(200, 40));
+		overviewPanel1.setVisible(true);
+		//overviewPanel.setBackground(new Color(100, 100, 100));
+
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+
+		overviewPanel.add(overviewPanel1, gbc);
+		
+		overviewPanel2 = new JPanel();
+		overviewPanel2.setPreferredSize(new Dimension(200, 200));
+		overviewPanel2.setVisible(true);
+		//overviewPanel.setBackground(new Color(100, 100, 100));
+
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+
+		overviewPanel.add(overviewPanel2, gbc);
 		
 		
 		CalendarChoicePanel = new JPanel();
@@ -248,13 +270,12 @@ public class WindowPanel extends JPanel {
 	}
 
 	public void getOverview(){
-		overviewPanel.removeAll();
+		overviewPanel1.removeAll();
+		overviewPanel2.removeAll();
 		
 		if (calChooseList != null) {
 			remove(calChooseList);
 		}
-		gbc.gridx = 0;
-		gbc.gridy = 6;
 		DateFormat tempFormat = new SimpleDateFormat("yyyy/MM/dd");
 		Date tempDate = null;
 		try {
@@ -262,9 +283,12 @@ public class WindowPanel extends JPanel {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+		monthYearPanel = new MonthYearPanel(SM);
+		overviewPanel1.add(monthYearPanel);
 		monthOverview = new MonthOverview(SM, user, tempDate, false);
-		overviewPanel.add(monthOverview);
-		overviewPanel.updateUI();
+		overviewPanel2.add(monthOverview);
+		overviewPanel1.updateUI();
+		overviewPanel2.updateUI();
 		
 	}
 

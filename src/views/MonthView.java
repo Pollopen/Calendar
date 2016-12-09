@@ -29,12 +29,12 @@ public class MonthView extends JPanel{
 	private JPanel tempJP, normalEventsPanel;
 	private StateMachine SM;
 	private String date, monthNum, firstDay;
-	private String[] weekDays={"Måndag", "Tisdag", "onsdag", "Torsdag", "Fredag", "Lördag", "Söndag"};
+	private String[] weekDays={"Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag", "Söndag"};
 	private Date focusedDate;
 	private DateFormat getFocusDate = new SimpleDateFormat("yyyy/MM/dd");
 	private DateFormat getWeekDay = new SimpleDateFormat("u");
-	int tempNormalEvents;
-	int tempFullDayEvents;
+	private int tempNormalEvents;
+	private int tempFullDayEvents;
 	private int weekDay, j, dayOfMonth;
 	private User user;
 	private Event[] filteredEventArray;
@@ -70,6 +70,7 @@ public class MonthView extends JPanel{
 			JLabel day=new JLabel(weekDays[i]);
 			day.setFont(new Font("Serif", Font.PLAIN, 25));
 			tempJP.add(day,gbc);
+			tempJP.setBorder(etchedBorder);
 		}
 		if(weekDay!=1){
 			for (int i=0;i<(weekDay-1);i++){
@@ -84,14 +85,13 @@ public class MonthView extends JPanel{
 			tempNormalEvents=0;
 			tempJP=new JPanel();
 			tempJP.setLayout(new BorderLayout());
-			tempJP.setBackground(new Color(200,200,200));
+			tempJP.setBackground(new Color(245,245,245));
 			tempJP.setVisible(true);
 			tempJP.setBorder(etchedBorder);
 			add(tempJP);
 			//JLabel dayNumber = new JLabel(Integer.toString(j));
 			//tempJP.add(dayNumber, BorderLayout.PAGE_START);
 			String checkDate=getCheckDate(firstDay, Integer.toString(j));
-			tempJP.add(new DayButton(Integer.toString(j),checkDate,1,SM,wp), BorderLayout.PAGE_START);
 			for (int i = 0; i < filteredEventArray.length; i++) {
 				String checkEventDayStart=(filteredEventArray[i].getStart_time()).substring(0,4)+(filteredEventArray[i].getStart_time()).substring(5,7)+(filteredEventArray[i].getStart_time()).substring(8,10);
 				String checkEventDayEnd=(filteredEventArray[i].getEnd_time()).substring(0,4)+(filteredEventArray[i].getStart_time()).substring(5,7)+(filteredEventArray[i].getEnd_time()).substring(8,10);
@@ -103,13 +103,21 @@ public class MonthView extends JPanel{
 					}
 				}
 			}
+
+			normalEventsPanel = new JPanel();
+			normalEventsPanel.setPreferredSize(new Dimension(150, 80));
+			normalEventsPanel.setLayout(new GridLayout(3,4));
+			normalEventsPanel.setOpaque(false);
+			tempJP.add(normalEventsPanel, BorderLayout.PAGE_START);
+			normalEventsPanel.add(new DayButton(Integer.toString(j),checkDate,1,SM,wp));
+
 			
 			if(tempFullDayEvents==0){
 				JLabel empty = new JLabel("");
 				tempJP.add(empty, BorderLayout.PAGE_END);	
 			}
-			gbc.gridx=0;
-			gbc.gridy=0;
+			
+			int eventNumber=0;
 			for (int i = 0; i < filteredEventArray.length; i++) {
 				String checkEventDayStart=(filteredEventArray[i].getStart_time()).substring(0,4)+(filteredEventArray[i].getStart_time()).substring(5,7)+(filteredEventArray[i].getStart_time()).substring(8,10);
 				String checkEventDayEnd=(filteredEventArray[i].getEnd_time()).substring(0,4)+(filteredEventArray[i].getEnd_time()).substring(5,7)+(filteredEventArray[i].getEnd_time()).substring(8,10);
@@ -123,25 +131,23 @@ public class MonthView extends JPanel{
 									tempFullDayEvents=-1;
 								}
 							}else{
-								if(normalEventsPanel==null){
-									normalEventsPanel = new JPanel();
-									normalEventsPanel.setPreferredSize(new Dimension(150, 50));
-									normalEventsPanel.setLayout(new GridBagLayout());
-									normalEventsPanel.setOpaque(false);
-									tempJP.add(normalEventsPanel, BorderLayout.CENTER);
-								}
-								if(gbc.gridx>=2){
-									normalEventsPanel.add(new DayButton("...", checkDate, 2,SM, wp), gbc);
+								if(eventNumber>=10){
+									normalEventsPanel.add(new DayButton("...", checkDate, 2,SM, wp));
 								}else{
-									normalEventsPanel.add(new EventButton(filteredEventArray[i].getName().substring(0, 1),filteredEventArray[i]), gbc);
-									gbc.gridx++;
+									normalEventsPanel.add(new EventButton("",filteredEventArray[i]));
+									eventNumber++;
 								}
 							}
 						
 					
 				}
 			}
-			
+			if(tempNormalEvents<=9){
+				for (int i = 0; i < (10-tempNormalEvents); i++) {
+					JLabel empty = new JLabel("");
+					normalEventsPanel.add(empty);
+				}
+			}
 			j++;
 			if(j>dayOfMonth){
 				break;
@@ -154,10 +160,7 @@ public class MonthView extends JPanel{
 		updateUI();
 		
 	}
-	private boolean checkLongEvent(Event event) {
-		// TODO Auto-generated method stub
-		return true;
-	}
+	
 	private boolean checkIfInProgress(String checkDate, String checkEventDayStart, String checkEventDayEnd) {
 		if(Integer.parseInt(checkDate)>Integer.parseInt(checkEventDayStart)&&Integer.parseInt(checkDate)<Integer.parseInt(checkEventDayEnd)){
 			return true;
