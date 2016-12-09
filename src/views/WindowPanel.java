@@ -1,6 +1,5 @@
 package views;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -17,7 +16,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Properties;
 
-import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -25,7 +23,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -154,12 +151,14 @@ public class WindowPanel extends JPanel {
 		notificationPanel = new JPanel();
 		notificationPanel.setPreferredSize(new Dimension(200, 150));
 		notificationPanel.setVisible(true);
-		notificationPanel.setBackground(new Color(255, 0, 255));
+		//notificationPanel.setBackground(new Color(255, 0, 255));
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 
 		leftPanel.add(notificationPanel, gbc);
+		
+		getNotificationPage();
 
 		addEventButtonPanel = new JPanel();
 		addEventButtonPanel.setPreferredSize(new Dimension(200, 60));
@@ -266,6 +265,12 @@ public class WindowPanel extends JPanel {
 		
 	}
 
+	public void getNotificationPage() {
+		notificationPanel.removeAll();
+		notificationPanel.add(new NotificationView());
+		notificationPanel.updateUI();
+	}
+	
 	public void getRegisterPage() {
 		center.removeAll();
 		center.add(new Register(window, this));
@@ -883,9 +888,12 @@ public class WindowPanel extends JPanel {
 			if (e.getSource() == userSearchButton) {
 				String inputSearch = userSearchField.getText();
 				Object[][] inputResult = SQLManager.searchForUser(inputSearch);
+				
+				listModel.removeAllElements();
+				
 				for (int i = 0; i < inputResult.length; i++) {
 					listModel.addElement(inputResult[i][1]);
-					System.out.println(inputResult[i][1]);
+					//System.out.println(inputResult[i][1]);
 					//int[] user_id = (int[]) inputResult[i][0];
 				}
 			}
@@ -1104,6 +1112,12 @@ public class WindowPanel extends JPanel {
 				user.reloadarrays();
 
 				getDeleteAndEditEventPage();
+				
+				notificationPanel.removeAll();
+				
+				notificationPanel.add(new NotificationView());
+				
+				notificationPanel.updateUI();
 
 			}
 
@@ -1116,7 +1130,12 @@ public class WindowPanel extends JPanel {
 				user.reloadarrays();
 
 				getDeleteAndEditEventPage();
-
+				
+				notificationPanel.removeAll();
+				
+				notificationPanel.add(new NotificationView());
+				
+				notificationPanel.updateUI();
 			}
 
 			if (e.getSource() == eventCreate) {
@@ -1193,6 +1212,14 @@ public class WindowPanel extends JPanel {
 				user.reloadarrays();
 
 				getAddEventPage();
+				
+				notificationPanel.removeAll();
+				
+				notificationPanel.add(new NotificationView());
+				
+				notificationPanel.updateUI();
+				
+				
 
 			}
 
