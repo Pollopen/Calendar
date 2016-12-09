@@ -133,7 +133,7 @@ public class MonthView extends JPanel{
 								if(gbc.gridx>=2){
 									normalEventsPanel.add(new DayButton("...", checkDate, 2,SM, wp), gbc);
 								}else{
-									normalEventsPanel.add(new EventButton(filteredEventArray[i].getName().substring(0, 1),filteredEventArray[i]), gbc);
+									normalEventsPanel.add(new EventButton("",filteredEventArray[i]), gbc);
 									gbc.gridx++;
 								}
 							}

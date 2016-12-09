@@ -159,17 +159,20 @@ public class SQLManager {
 		String SQL = "SELECT user.user_id, CONCAT(user.fname,' ', user.sname) AS name, user.email FROM user WHERE user_id != "
 				+ user.getId() + " AND (LCASE(CONCAT(user.fname,' ', user.sname)) LIKE LCASE('%" + inputSearch
 				+ "%')  OR LCASE(email) LIKE LCASE('%" + inputSearch + "%'))";
-		
+
 		Object[][] data = db.getData(SQL);
 
 		db.execute(SQL);
-		
-		
-		
+
 		System.out.println(data);
 
 		return data;
 
+	}
+	
+	public static boolean getClosestEvent()
+	{
+		return true;
 	}
 
 	public static JavaDB getDb() {
