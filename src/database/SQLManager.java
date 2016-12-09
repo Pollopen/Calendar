@@ -164,21 +164,21 @@ public class SQLManager {
 
 		db.execute(SQL);
 
-		//System.out.println(data);
+		// System.out.println(data);
 
 		return data;
 
 	}
-	
-	public static Object[][] getClosestEvent()
-	{
-		
-		String SQL = "SELECT event_id, name, start_time, end_time FROM event WHERE creator_id = "+user.getId()+" AND start_time > NOW() ORDER BY start_time LIMIT 1";
-		
+
+	public static Object[][] getClosestEvent() {
+
+		String SQL = "SELECT event_id, name, start_time, end_time FROM event WHERE creator_id = " + user.getId()
+				+ " AND start_time > NOW() ORDER BY start_time LIMIT 1";
+
 		Object[][] data = db.getData(SQL);
-		
+
 		db.execute(SQL);
-		
+
 		return data;
 	}
 
