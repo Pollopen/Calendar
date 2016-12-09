@@ -1,6 +1,5 @@
 package views;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -17,7 +16,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Properties;
 
-import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -25,7 +23,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -43,6 +40,7 @@ import object.Event;
 import object.User;
 import views.calendar.CalChooseList;
 import views.calendar.addedit.CalAddEdit;
+import views.MonthYearPanel;
 
 public class WindowPanel extends JPanel {
 

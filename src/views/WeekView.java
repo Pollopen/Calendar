@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,7 +28,7 @@ public class WeekView extends JPanel {
 	private String date, tempFocusedDay, tempFocusedMonth, tempFocusedYear, tempStartTimeString, tempEndTimeString,
 			tempEventName;
 	private Date focusedDate;
-	private DateFormat getFocusDate = new SimpleDateFormat("yyyy-MM-dd");
+	private DateFormat getFocusDate = new SimpleDateFormat("yyyy/MM/dd");
 	private DateFormat getWeekDay = new SimpleDateFormat("u");
 	private DateFormat getMonth = new SimpleDateFormat("M");
 	private int weekDay, newDayDate, newMonthDate, newYearDate;
@@ -39,19 +40,19 @@ public class WeekView extends JPanel {
 		this.SM = SM;
 		this.user = user;
 
-		this.setLayout(new BorderLayout());
-		this.setPreferredSize(new Dimension(1175, 725));
-		this.setVisible(true);
+		setLayout(new BorderLayout());
+		setPreferredSize(new Dimension(1175, 725));
+		setVisible(true);
 
 		eventArray = user.getEventArray();
 
 		cal = Calendar.getInstance();
 		date = SM.getFocusedDate();
-
+		System.out.println("checkdate focused date: "+getCheckDate(date));
 		tempFocusedDay = date.substring(8, 10);
 		newDayDate = Integer.parseInt(tempFocusedDay);
 		System.out.println("Day: " + tempFocusedDay);
-
+		
 		tempFocusedMonth = date.substring(5, 7);
 		newMonthDate = Integer.parseInt(tempFocusedMonth);
 		System.out.println("Month: " + tempFocusedMonth);
@@ -59,7 +60,15 @@ public class WeekView extends JPanel {
 		tempFocusedYear = date.substring(0, 4);
 		newYearDate = Integer.parseInt(tempFocusedYear);
 		System.out.println("Year: " + tempFocusedYear);
-
+		String tempString=date.substring(0, 10);
+		try {
+			focusedDate=getFocusDate.parse(tempString);
+		} catch (ParseException e) {
+			System.out.println("Date Conversion failed!"+tempString);
+		}
+		
+		weekDay = Integer.parseInt(getWeekDay.format(focusedDate));
+		System.out.println("veckodag: "+weekDay);
 		JPanel north = new JPanel(new GridLayout(2, 1));
 		JPanel days = new JPanel(new GridLayout(1, 7));
 		north.setPreferredSize(new Dimension(2000, 100));
@@ -70,14 +79,6 @@ public class WeekView extends JPanel {
 		add(BorderLayout.NORTH, north);
 
 		JPanel center = new JPanel(new GridLayout(1, 7));
-
-		
-
-
-
-	
-		
-		
 		add(BorderLayout.CENTER, center);
 
 		String[] dayName = { "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag", "Söndag" };
@@ -98,58 +99,41 @@ public class WeekView extends JPanel {
 
 		}
 
-		// cal.set(newYearDate = Integer.parseInt(tempFocusedYear), newMonthDate
-		// = Integer.parseInt(tempFocusedMonth), newDayDate =
-		// Integer.parseInt(tempFocusedDay));
-
-		// System.out.println(newYearDate + " " + cal.get(Calendar.YEAR));
-		// System.out.println(newMonthDate + " " + cal.get(Calendar.MONTH));
-		// System.out.println(newDayDate);
-
-		//System.out.println(cal.get(Calendar.DAY_OF_WEEK));
-
 		cal.set(newYearDate, (newMonthDate - 1), newDayDate);
 
 		cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH),
 				cal.get(Calendar.DAY_OF_MONTH) - (cal.get(Calendar.DAY_OF_WEEK) - 2));
 
-		for (int i = cal.get(Calendar.DAY_OF_MONTH); i < cal.get(Calendar.DAY_OF_MONTH) + 7; i++) {
-
+		
+		
+		//datum utskrivning 
+		for (int i = 1; i <= 7; i++) { // TODO FIXA DENNA 
 			dayOfMonthLabel = new JLabel();
-			dayOfMonthLabel.setText("" + i);
-
+			if(weekDay==i){
+				dayOfMonthLabel.setText("idag "+Integer.toString(i));
+			}else{
+				dayOfMonthLabel.setText(Integer.toString(i));//datumet
+			}
 			weekDatePanel = new JPanel();
 			weekDatePanel.setPreferredSize(new Dimension(165, 25));
 			weekDatePanel.setVisible(true);
-
 			dates.add(weekDatePanel);
 			weekDatePanel.add(dayOfMonthLabel);
-
 		}
-		
 		
 		for (int i = 0; i < 7; i++) {
 			daypanels[i] = new DayPanel();
-
-//			System.out.println(" Year: " + eventCal.get(Calendar.YEAR) + " Month: " + eventCal.get(Calendar.MONTH)
-//					+ " Day of week: " + eventCal.get(Calendar.DAY_OF_WEEK));
-			
-			
-
-//			if (i == 4) {
-//				daypanels[i].addEvent(eventArray[i]);
-//			}
-
 			center.add(daypanels[i]);
-
 		}
 		
 		for(int i = 0; i < eventArray.length; i++)
 		{
 			tempEventName = eventArray[i].getName();
 			tempStartTimeString = eventArray[i].getStart_time().substring(0, 10);
-			tempEndTimeString = eventArray[i].getEnd_time();
-	
+			tempEndTimeString = eventArray[i].getEnd_time().substring(0, 10);
+			System.out.println("checkdate start time: "+getCheckDate(tempStartTimeString));
+			System.out.println("checkdate end time: "+getCheckDate(tempEndTimeString));
+			
 			String tempYear = tempStartTimeString.substring(0, 4);
 			String tempMonth = tempStartTimeString.substring(5, 7);
 			String tempDay = tempStartTimeString.substring(8, 10);
@@ -157,13 +141,6 @@ public class WeekView extends JPanel {
 			int tempYearInt = Integer.parseInt(tempYear);
 			int tempMonthInt = Integer.parseInt(tempMonth);
 			int tempDayInt = Integer.parseInt(tempDay);
-
-//			System.out.println(" ------------------------------------------ ");
-//			System.out.println(tempYear);
-//			System.out.println(tempMonth);
-//			System.out.println(tempDay);
-//			System.out.println(" ------------------------------------------ ");
-
 
 			cal.set(tempYearInt, (tempMonthInt - 1), tempDayInt);
 			
@@ -177,9 +154,7 @@ public class WeekView extends JPanel {
 			System.out.println(Integer.parseInt(test) + " Test");
 			
 		
-			daypanels[day].addEvent(eventArray[i]);	
-			
-			
+			daypanels[day].addEvent(eventArray[i]);
 		}
 		
 		for(DayPanel p : daypanels)
@@ -205,5 +180,52 @@ public class WeekView extends JPanel {
 		}
 		return 0;
 	}
+	private int getDaysOfMonth(String firstDay){
+		String monthNum=firstDay.substring(5, 7);
+		switch (Integer.parseInt(monthNum)) {
+			case 1:
+				return 31;
+			case 2:
+				if(isLeapYear(firstDay)){
+					return 29;
+				}else{
+					return 28;
+				}
+			case 3:
+				return 31;
+			case 4:
+				return 30;
+			case 5:
+				return 31;
+			case 6:
+				return 30;
+			case 7:
+				return 31;
+			case 8:
+				return 31;
+			case 9:
+				return 30;
+			case 10:
+				return 31;
+			case 11:
+				return 30;
+			case 12:
+				return 31;
+			default:
+				return 31;
+		}
+	}
+	public static boolean isLeapYear(String firstDay) {
+		String year=firstDay.substring(0, 4);
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.YEAR, Integer.parseInt(year));
+		return cal.getActualMaximum(Calendar.DAY_OF_YEAR) > 365;
+	}
+	public String getCheckDate(String firstday){
+		String checkdate;
+		checkdate=firstday.substring(0, 4)+firstday.substring(5, 7)+firstday.substring(8, 10);
+		return checkdate;
+	}
+	
 
 }
