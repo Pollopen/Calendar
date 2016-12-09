@@ -11,17 +11,22 @@ import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
 import controller.StateMachine;
+import views.WindowPanel;
 
 public class OverviewDayButton extends JButton implements ActionListener {
 	private Border etchedBorder;
 	private String date;
-	public OverviewDayButton(String text, String date, boolean hasEvent, StateMachine SM) {
+	private StateMachine SM;
+	private WindowPanel wp;
+	public OverviewDayButton(String text, String date, boolean hasEvent, StateMachine SM, WindowPanel wp) {
 		super(text);
 		etchedBorder = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 		this.date=date;
+		this.SM=SM;
+		this.wp=wp;
 		addActionListener(this);
 		setMargin(new Insets(0, 0, 0, 0));
-		if(date.equals(SM.getFormattedDate())){
+		if(date.equals(SM.getUnformattedDate())){
 			setForeground(Color.RED);
 		}
 		if(hasEvent){
@@ -35,6 +40,10 @@ public class OverviewDayButton extends JButton implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		System.out.println(date);
+		SM.setUnformattedDate(date);
+		wp.getViewViewer();
+		wp.getViewChoice();
+		wp.getOverview();
 	}
 
 }

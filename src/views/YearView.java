@@ -23,7 +23,8 @@ public class YearView extends JPanel{
 	private String focusDate;
 	private Border etchedBorder;
 	private TitledBorder title;
-	public YearView(StateMachine SM, User user){
+	private WindowPanel wp;
+	public YearView(StateMachine SM, User user, WindowPanel wp){
 		etchedBorder = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 		title = BorderFactory.createTitledBorder(
                 etchedBorder, SM.getFocusedDate().substring(0,4));
@@ -32,12 +33,13 @@ public class YearView extends JPanel{
 		
 		setBorder(title);
 		this.SM=SM;
+		this.wp=wp;
 		focusDate=SM.getFocusedDate();
 		setPreferredSize(new Dimension(1175, 725));
 		setLayout(new GridLayout(3, 4));
 		
 		for (int i = 0; i < 12; i++) {
-			add(new MonthOverview(SM, user, changeMonth(focusDate, i),true));
+			add(new MonthOverview(SM, user, changeMonth(focusDate, i),true,wp));
 		}
 		
 	}

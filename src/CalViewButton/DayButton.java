@@ -25,7 +25,7 @@ public class DayButton extends JButton implements ActionListener {
 		addActionListener(this);
 		setMargin(new Insets(0, 0, 0, 0));
 		
-		if(date.equals(SM.getFormattedDate())&&isdatenumber==1){
+		if(date.equals(SM.getUnformattedDate())&&isdatenumber==1){
 			setForeground(Color.RED);
 		}
 		if(isdatenumber>=2){

@@ -44,13 +44,15 @@ public class MonthOverview extends JPanel{
 	private GridBagConstraints gbc;
 	private Border etchedBorder;
 	private TitledBorder title;
+	private WindowPanel wp;
 	
 	
-	public MonthOverview(StateMachine SM, User user, Date focusDate, boolean yearview){
+	public MonthOverview(StateMachine SM, User user, Date focusDate, boolean yearview, WindowPanel wp){
 		etchedBorder = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 		this.user=user;
 		gbc= new GridBagConstraints();
 		this.SM=SM;
+		this.wp=wp;
 		if(yearview){
 			setPreferredSize(new Dimension(300, 300));
 			String tempString = month.format(focusDate);
@@ -117,7 +119,7 @@ public class MonthOverview extends JPanel{
 				}
 			}
 			
-			tempJP.add(new OverviewDayButton(Integer.toString(j),checkDate,hasEvent,SM));
+			tempJP.add(new OverviewDayButton(Integer.toString(j),checkDate,hasEvent,SM,wp));
 			
 	
 			j++;
