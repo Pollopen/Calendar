@@ -30,6 +30,7 @@ public class DayButton extends JButton implements ActionListener {
 		}
 		if(isdatenumber>=2){
 			setToolTipText("Mer event finns!");
+			setBackground(new Color(200,200,200));
 			if (isdatenumber==2) {
 				setPreferredSize(new Dimension(50, 50));
 			}

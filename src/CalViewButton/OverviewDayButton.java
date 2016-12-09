@@ -25,6 +25,7 @@ public class OverviewDayButton extends JButton implements ActionListener {
 		this.SM=SM;
 		this.wp=wp;
 		addActionListener(this);
+		setBackground(new Color(200,200,200));
 		setMargin(new Insets(0, 0, 0, 0));
 		if(date.equals(SM.getUnformattedDate())){
 			setForeground(Color.RED);

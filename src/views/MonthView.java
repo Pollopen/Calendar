@@ -105,7 +105,7 @@ public class MonthView extends JPanel{
 			}
 
 			normalEventsPanel = new JPanel();
-			normalEventsPanel.setPreferredSize(new Dimension(150, 80));
+			normalEventsPanel.setPreferredSize(new Dimension(150, 75));
 			normalEventsPanel.setLayout(new GridLayout(3,4));
 			normalEventsPanel.setOpaque(false);
 			tempJP.add(normalEventsPanel, BorderLayout.PAGE_START);
@@ -131,8 +131,11 @@ public class MonthView extends JPanel{
 									tempFullDayEvents=-1;
 								}
 							}else{
-								if(eventNumber>=10){
+								if(eventNumber==10){
 									normalEventsPanel.add(new DayButton("...", checkDate, 2,SM, wp));
+									eventNumber++;
+								}else if(eventNumber>=11){
+									//nothing
 								}else{
 									normalEventsPanel.add(new EventButton("",filteredEventArray[i]));
 									eventNumber++;

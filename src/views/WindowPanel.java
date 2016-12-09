@@ -46,31 +46,20 @@ import views.calendar.addedit.CalAddEdit;
 
 public class WindowPanel extends JPanel {
 
-	private JPanel overviewPanel1, overviewPanel2,notificationPanel, editCalendar1, editCalendar2, editCalendar3, form, main, addCalMain, center, centerEvent, mainPanel,
-			leftPanel, addEventButtonPanel, overviewPanel, CalendarChoicePanel, placeholderPanel, rightPanel,
-			upperLeftPanel, upperRightPanel, top, centerLeft, centerRight, addCalCenterRight, addCalCenterRight1,
-			addCalCenterRight2, addCalCenterRight3, addCalCenterLeft, addCalCenter, editEventMain, editEventTop,
+	private JPanel overviewPanel1, overviewPanel2,notificationPanel, main, center, centerEvent, mainPanel,
+			leftPanel, addEventButtonPanel, overviewPanel, CalendarChoicePanel, rightPanel,
+			upperLeftPanel, upperRightPanel, top, centerLeft, centerRight, editEventMain, editEventTop,
 			editEventCenter, editEventLeft, editEventRight;
 
-	private JLabel calEditDescLabel, calEditNameLabel, calAddLabel, calAddNotLabel, calAddNameLabel, loginLabel,
-			emailLabel, passLabel, regLabel, regHere, passConfLabel, fnameLabel, snameLabel, calendarNameLabel,
-			nameLabel, locationLabel, calListLabel, startTimeLabel, endTimeLabel, eventDescLabel, descriptionLabel,
-			calendarDescLabel, regEmailLabel, regPassLabel, regPassConfLabel, regFNameLabel, regSNameLabel,
-			loginPageLabel, editEventNameLabel, editEventLocationLabel, editEventStartLabel, editEventEndLabel,
+	private JLabel nameLabel, locationLabel, startTimeLabel, endTimeLabel, eventDescLabel, editEventNameLabel, editEventLocationLabel, editEventStartLabel, editEventEndLabel,
 			editEventDescLabel;
-	private JTextField calEditNameField, calAddNameField, calAddNotField, emailField, fnameField, snameField, nameField,
-			locationField, calendarNameField, calendarDescField, regEmailField, regSNameField, regFNameField,
-			editEventNameField, editEventLocationField, userSearchField;
-	private JPasswordField regPassField, regPassConfField;
+	private JTextField nameField,locationField, editEventNameField, editEventLocationField, userSearchField;
 	private DefaultListModel listModel;
 	private Calendar[] calArray, eventCalArray;
 	private JList userList;
 	private Event[] editEventArray;
-	private JTextArea calendarDescTextArea, calAddDescTextArea;
-	private JPasswordField passField, passConfField;
-	private JButton addEventButton, calAddButton, loginButton, registerPageButton, registerButton, loginPageButton, regButton,
-			calSaveButton, calRemoveButton, eventCreate, editEventButton, deleteEventButton, userSearchButton, nextWeekButton, prevWeekButton;
-	private JTextArea calEditDescTextArea, eventDescArea, editEventDescArea;
+	private JButton addEventButton, eventCreate, editEventButton, deleteEventButton, userSearchButton, nextWeekButton, prevWeekButton;
+	private JTextArea eventDescArea, editEventDescArea;
 	private JCheckBox fullDayActivity, editFullDayActivity;
 	private JSpinner startTimeSpinner, endTimeSpinner, editStartTimeSpinner, editEndTimeSpinner;
 	private JSpinner.DateEditor startTimeEditor, endTimeEditor, editStartTimeEditor, editEndTimeEditor;
@@ -83,7 +72,6 @@ public class WindowPanel extends JPanel {
 	private JComboBox<String> calDropDown, editEventDropDown;
 	private String eventCreateCalArray, editEventObjectArray;
 	private GregorianCalendar editStartGregCal, editEndGregCal;
-	private WindowPanel windowpanel;
 	private Window window;
 	private User user;
 	private StateMachine SM;
@@ -93,7 +81,6 @@ public class WindowPanel extends JPanel {
 	private MonthYearPanel monthYearPanel;
 
 	public WindowPanel(Window window) {
-		windowpanel = this;
 		this.window = window;
 		gbc = new GridBagConstraints();
 		lForButton = new ListenForButton();
@@ -114,9 +101,6 @@ public class WindowPanel extends JPanel {
 	}
 
 	public void getIndexPage() {
-		// center.removeAll();
-		// center.add(new Index(this));
-		// center.updateUI();
 		gbc = new GridBagConstraints();
 		MenuList menu = new MenuList();
 		window.setJMenuBar(menu.createMenuBar(window, this, user));
@@ -254,19 +238,9 @@ public class WindowPanel extends JPanel {
 
 		mainPanel.add(rightPanel, gbc);
 
-		getAddEventPage();
+		getViewViewer();
 
 		center.updateUI();
-		/*
-		 * calendarPanel = new JPanel(); calendarPanel.setPreferredSize(new
-		 * Dimension(1175, 725)); calendarPanel.setVisible(true);
-		 * calendarPanel.setBackground(new Color(255, 0, 0));
-		 * 
-		 * gbc.gridx = 0; gbc.gridy = 0;
-		 * 
-		 * rightPanel.add(calendarPanel, gbc);
-		 */
-
 	}
 
 	public void getOverview(){
@@ -293,9 +267,6 @@ public class WindowPanel extends JPanel {
 	}
 
 	public void getRegisterPage() {
-		// center.removeAll();
-		// 
-		// center.updateUI();
 		center.removeAll();
 		center.add(new Register(window, this));
 		center.updateUI();
@@ -843,17 +814,13 @@ public class WindowPanel extends JPanel {
 	}
 
 	public void getAddCalendarPage() {
-
 		rightPanel.removeAll();
-
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		rightPanel.add(new CalAddEdit(SM, this, user), gbc);
-
 		rightPanel.updateUI();
 	}
 	public void calChoiceList() {
-
 		CalendarChoicePanel.removeAll();
 		if (calChooseList != null) {
 			remove(calChooseList);
@@ -862,7 +829,6 @@ public class WindowPanel extends JPanel {
 		gbc.gridy = 6;
 		calChooseList = new CalChooseList(calArray, SM, this);
 		CalendarChoicePanel.add(calChooseList, gbc);
-
 	}
 
 	public void getViewViewer() {
@@ -883,7 +849,7 @@ public class WindowPanel extends JPanel {
 			rightPanel.add(new YearView(SM, user, this), gbc);
 			break;
 		default:
-			rightPanel.add(new DayView(), gbc);
+			rightPanel.add(new MonthView(SM, user,this), gbc);
 			break;
 		}
 		rightPanel.updateUI();
@@ -901,11 +867,9 @@ public class WindowPanel extends JPanel {
 		upperRightPanel.add(viewChoice, gbc);
 		upperRightPanel.updateUI();
 	}
-
 	public void sendUser(User user) {
 		this.user = user;
 	}
-
 	private class ListenForButton implements ActionListener {
 
 		// This method is called when an event occurs

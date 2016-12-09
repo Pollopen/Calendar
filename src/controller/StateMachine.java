@@ -22,7 +22,7 @@ public class StateMachine {
 		this.user=user;
 		calEditStatus=0;
 		activeCalendars=null;
-		activeview=1;
+		activeview=3;
 		pagesLogin=1;
 		date = new Date();
 		System.out.println(sdf.format(date)); //2016/11/16 12:08:43
