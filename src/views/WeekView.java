@@ -120,20 +120,33 @@ public class WeekView extends JPanel {
 			dates.add(weekDatePanel);
 			weekDatePanel.add(dayOfMonthLabel);
 		}
-		
 		for (int i = 0; i < 7; i++) {
 			daypanels[i] = new DayPanel();
+
+			// System.out.println(" Year: " + eventCal.get(Calendar.YEAR) + "
+			// Month: " + eventCal.get(Calendar.MONTH)
+			// + " Day of week: " + eventCal.get(Calendar.DAY_OF_WEEK));
+
+			// if (i == 4) {
+			// daypanels[i].addEvent(eventArray[i]);
+			// }
+
+
 			center.add(daypanels[i]);
 		}
-		
-		for(int i = 0; i < eventArray.length; i++)
-		{
+
+		for (int i = 0; i < eventArray.length; i++) {
 			tempEventName = eventArray[i].getName();
 			tempStartTimeString = eventArray[i].getStart_time().substring(0, 10);
+
 			tempEndTimeString = eventArray[i].getEnd_time().substring(0, 10);
 			System.out.println("checkdate start time: "+getCheckDate(tempStartTimeString));
 			System.out.println("checkdate end time: "+getCheckDate(tempEndTimeString));
 			
+
+			tempEndTimeString = eventArray[i].getEnd_time();
+
+
 			String tempYear = tempStartTimeString.substring(0, 4);
 			String tempMonth = tempStartTimeString.substring(5, 7);
 			String tempDay = tempStartTimeString.substring(8, 10);
@@ -143,27 +156,28 @@ public class WeekView extends JPanel {
 			int tempDayInt = Integer.parseInt(tempDay);
 
 			cal.set(tempYearInt, (tempMonthInt - 1), tempDayInt);
-			
+
 			int day = cal.get(Calendar.DAY_OF_WEEK);
-			
+
 			day = getDayOfWeek(day);
-			
+
 			String test = date.substring(8, 10);
-			
+
 			System.out.println(day + " day");
 			System.out.println(Integer.parseInt(test) + " Test");
-			
-		
+
+
 			daypanels[day].addEvent(eventArray[i]);
+
+
 		}
-		
-		for(DayPanel p : daypanels)
-		{
+
+		for (DayPanel p : daypanels) {
 			p.setupEvent();
 		}
 
 	}
-	
+
 	public String addZero(int value) {
 		if (value <= 9)
 			return "0" + value;

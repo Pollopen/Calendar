@@ -44,19 +44,19 @@ import views.MonthYearPanel;
 
 public class WindowPanel extends JPanel {
 
-	private JPanel overviewPanel1, overviewPanel2,notificationPanel, main, center, centerEvent, mainPanel,
-			leftPanel, addEventButtonPanel, overviewPanel, CalendarChoicePanel, rightPanel,
-			upperLeftPanel, upperRightPanel, top, centerLeft, centerRight, editEventMain, editEventTop,
-			editEventCenter, editEventLeft, editEventRight;
+	private JPanel overviewPanel1, overviewPanel2, notificationPanel, main, center, centerEvent, mainPanel, leftPanel,
+			addEventButtonPanel, overviewPanel, CalendarChoicePanel, rightPanel, upperLeftPanel, upperRightPanel, top,
+			centerLeft, centerRight, editEventMain, editEventTop, editEventCenter, editEventLeft, editEventRight;
 
-	private JLabel nameLabel, locationLabel, startTimeLabel, endTimeLabel, eventDescLabel, editEventNameLabel, editEventLocationLabel, editEventStartLabel, editEventEndLabel,
-			editEventDescLabel;
-	private JTextField nameField,locationField, editEventNameField, editEventLocationField, userSearchField;
+	private JLabel nameLabel, locationLabel, startTimeLabel, endTimeLabel, eventDescLabel, editEventNameLabel,
+			editEventLocationLabel, editEventStartLabel, editEventEndLabel, editEventDescLabel;
+	private JTextField nameField, locationField, editEventNameField, editEventLocationField, userSearchField;
 	private DefaultListModel listModel;
 	private Calendar[] calArray, eventCalArray;
 	private JList userList;
 	private Event[] editEventArray;
-	private JButton addEventButton, eventCreate, editEventButton, deleteEventButton, userSearchButton, nextWeekButton, prevWeekButton;
+	private JButton addEventButton, eventCreate, editEventButton, deleteEventButton, userSearchButton, nextWeekButton,
+			prevWeekButton;
 	private JTextArea eventDescArea, editEventDescArea;
 	private JCheckBox fullDayActivity, editFullDayActivity;
 	private JSpinner startTimeSpinner, endTimeSpinner, editStartTimeSpinner, editEndTimeSpinner;
@@ -90,7 +90,7 @@ public class WindowPanel extends JPanel {
 		center.setVisible(true);
 		add(center);
 		SM = new StateMachine(user);
-		viewChoice=null;
+		viewChoice = null;
 		/*
 		 * TODO FIX ORGANISATION
 		 */
@@ -128,48 +128,49 @@ public class WindowPanel extends JPanel {
 		upperRightPanel.setPreferredSize(new Dimension(1200, 50));
 		upperRightPanel.setLayout(new GridBagLayout());
 		upperRightPanel.setVisible(true);
-		//upperRightPanel.setBackground(new Color(0, 255, 0));
+		// upperRightPanel.setBackground(new Color(0, 255, 0));
 
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 
 		mainPanel.add(upperRightPanel, gbc);
 		getViewChoice();
-		
 
 		// Left panel
 		leftPanel = new JPanel();
 		leftPanel.setPreferredSize(new Dimension(200, 750));
 		leftPanel.setLayout(new GridBagLayout());
 		leftPanel.setVisible(true);
-		//leftPanel.setBackground(new Color(0, 0, 255));
+		// leftPanel.setBackground(new Color(0, 0, 255));
 
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 
 		mainPanel.add(leftPanel, gbc);
-		
+
 		notificationPanel = new JPanel();
 		notificationPanel.setPreferredSize(new Dimension(200, 150));
 		notificationPanel.setVisible(true);
-		notificationPanel.setBackground(new Color(255, 0, 255));
+		// notificationPanel.setBackground(new Color(255, 0, 255));
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 
 		leftPanel.add(notificationPanel, gbc);
 
+		getNotificationPage();
+
 		addEventButtonPanel = new JPanel();
 		addEventButtonPanel.setPreferredSize(new Dimension(200, 60));
 		addEventButtonPanel.setLayout(new GridBagLayout());
 		addEventButtonPanel.setVisible(true);
-		//addEventButtonPanel.setBackground(new Color(0, 255, 0));
+		// addEventButtonPanel.setBackground(new Color(0, 255, 0));
 
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 
 		leftPanel.add(addEventButtonPanel, gbc);
-		
+
 		addEventButton = new JButton("Skapa Event");
 		addEventButton.addActionListener(lForButton);
 		addEventButton.setFont(new Font("Serif", Font.PLAIN, 25));
@@ -181,38 +182,37 @@ public class WindowPanel extends JPanel {
 		overviewPanel.setPreferredSize(new Dimension(200, 240));
 		overviewPanel.setVisible(true);
 		overviewPanel.setLayout(new GridBagLayout());
-		//overviewPanel.setBackground(new Color(100, 100, 100));
+		// overviewPanel.setBackground(new Color(100, 100, 100));
 
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 
 		leftPanel.add(overviewPanel, gbc);
-		
+
 		overviewPanel1 = new JPanel();
 		overviewPanel1.setPreferredSize(new Dimension(200, 40));
 		overviewPanel1.setVisible(true);
-		//overviewPanel.setBackground(new Color(100, 100, 100));
+		// overviewPanel.setBackground(new Color(100, 100, 100));
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 
 		overviewPanel.add(overviewPanel1, gbc);
-		
+
 		overviewPanel2 = new JPanel();
 		overviewPanel2.setPreferredSize(new Dimension(200, 200));
 		overviewPanel2.setVisible(true);
-		//overviewPanel.setBackground(new Color(100, 100, 100));
+		// overviewPanel.setBackground(new Color(100, 100, 100));
 
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 
 		overviewPanel.add(overviewPanel2, gbc);
-		
-		
+
 		CalendarChoicePanel = new JPanel();
 		CalendarChoicePanel.setPreferredSize(new Dimension(200, 300));
 		CalendarChoicePanel.setVisible(true);
-		//CalendarChoicePanel.setBackground(new Color(255, 0, 255));
+		// CalendarChoicePanel.setBackground(new Color(255, 0, 255));
 
 		gbc.gridx = 0;
 		gbc.gridy = 3;
@@ -241,10 +241,10 @@ public class WindowPanel extends JPanel {
 		center.updateUI();
 	}
 
-	public void getOverview(){
+	public void getOverview() {
 		overviewPanel1.removeAll();
 		overviewPanel2.removeAll();
-		
+
 		if (calChooseList != null) {
 			remove(calChooseList);
 		}
@@ -257,11 +257,17 @@ public class WindowPanel extends JPanel {
 		}
 		monthYearPanel = new MonthYearPanel(SM);
 		overviewPanel1.add(monthYearPanel);
-		monthOverview = new MonthOverview(SM, user, tempDate, false,this);
+		monthOverview = new MonthOverview(SM, user, tempDate, false, this);
 		overviewPanel2.add(monthOverview);
 		overviewPanel1.updateUI();
 		overviewPanel2.updateUI();
-		
+
+	}
+
+	public void getNotificationPage() {
+		notificationPanel.removeAll();
+		notificationPanel.add(new NotificationView());
+		notificationPanel.updateUI();
 	}
 
 	public void getRegisterPage() {
@@ -270,10 +276,10 @@ public class WindowPanel extends JPanel {
 		center.updateUI();
 	}
 
-	public void getLoginPage() { 
-		 center.removeAll();
-		 center.add(new Login(window, this, user));
-		 center.updateUI();
+	public void getLoginPage() {
+		center.removeAll();
+		center.add(new Login(window, this, user));
+		center.updateUI();
 	}
 
 	public void getAddEventPage() {
@@ -380,17 +386,17 @@ public class WindowPanel extends JPanel {
 		gbcLeft.anchor = GridBagConstraints.WEST;
 
 		centerRight.add(userSearchButton, gbcLeft);
-		
+
 		userList = new JList();
 		listModel = new DefaultListModel();
 		userList.setPreferredSize(new Dimension(300, 300));
 		userList.setModel(listModel);
-		
+
 		gbcLeft.gridx = 0;
 		gbcLeft.gridy = 1;
 		gbcLeft.insets = new Insets(0, 0, 10, 0);
 		gbcLeft.anchor = GridBagConstraints.WEST;
-		
+
 		centerRight.add(userList, gbcLeft);
 
 		// Everything on panels
@@ -818,6 +824,7 @@ public class WindowPanel extends JPanel {
 		rightPanel.add(new CalAddEdit(SM, this, user), gbc);
 		rightPanel.updateUI();
 	}
+
 	public void calChoiceList() {
 		CalendarChoicePanel.removeAll();
 		if (calChooseList != null) {
@@ -841,13 +848,13 @@ public class WindowPanel extends JPanel {
 			rightPanel.add(new WeekView(SM, user), gbc);
 			break;
 		case 3:
-			rightPanel.add(new MonthView(SM, user,this), gbc);
+			rightPanel.add(new MonthView(SM, user, this), gbc);
 			break;
 		case 4:
 			rightPanel.add(new YearView(SM, user, this), gbc);
 			break;
 		default:
-			rightPanel.add(new MonthView(SM, user,this), gbc);
+			rightPanel.add(new MonthView(SM, user, this), gbc);
 			break;
 		}
 		rightPanel.updateUI();
@@ -859,15 +866,17 @@ public class WindowPanel extends JPanel {
 			remove(viewChoice);
 		}
 		viewChoice = new ViewChoice(SM, this);
-		gbc.gridx=0;
-		gbc.gridy=0;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
 		gbc.insets = new Insets(0, 0, 0, 0);
 		upperRightPanel.add(viewChoice, gbc);
 		upperRightPanel.updateUI();
 	}
+
 	public void sendUser(User user) {
 		this.user = user;
 	}
+
 	private class ListenForButton implements ActionListener {
 
 		// This method is called when an event occurs
@@ -881,10 +890,12 @@ public class WindowPanel extends JPanel {
 			if (e.getSource() == userSearchButton) {
 				String inputSearch = userSearchField.getText();
 				Object[][] inputResult = SQLManager.searchForUser(inputSearch);
+
+				listModel.removeAllElements();
+
 				for (int i = 0; i < inputResult.length; i++) {
 					listModel.addElement(inputResult[i][1]);
-					System.out.println(inputResult[i][1]);
-					//int[] user_id = (int[]) inputResult[i][0];
+
 				}
 			}
 			if (e.getSource() == fullDayActivity) {
@@ -1103,6 +1114,12 @@ public class WindowPanel extends JPanel {
 
 				getDeleteAndEditEventPage();
 
+				notificationPanel.removeAll();
+
+				notificationPanel.add(new NotificationView());
+
+				notificationPanel.updateUI();
+
 			}
 
 			if (e.getSource() == deleteEventButton) {
@@ -1115,14 +1132,18 @@ public class WindowPanel extends JPanel {
 
 				getDeleteAndEditEventPage();
 
+				notificationPanel.removeAll();
+
+				notificationPanel.add(new NotificationView());
+
+				notificationPanel.updateUI();
 			}
 
 			if (e.getSource() == eventCreate) {
 
 				String inputEventName = nameField.getText();
-				if(inputEventName.isEmpty())
-				{
-						
+				if (inputEventName.isEmpty()) {
+
 				}
 				String inputEventLocation = locationField.getText();
 				String inputEventTextArea = eventDescArea.getText();
@@ -1154,7 +1175,8 @@ public class WindowPanel extends JPanel {
 
 					formatStartDate = inputEventStartYear + "-" + (inputEventStartMonth + 1) + "-" + inputEventStartDay
 							+ " 01:01:01";
-					formatEndDate = inputEventEndYear + "-" + (inputEventEndMonth + 1) + "-" + inputEventEndDay + " 01:01:01";
+					formatEndDate = inputEventEndYear + "-" + (inputEventEndMonth + 1) + "-" + inputEventEndDay
+							+ " 01:01:01";
 				} else {
 
 					inputFullDayEvent = 0;
@@ -1170,8 +1192,8 @@ public class WindowPanel extends JPanel {
 					inputEventStartTime = startTimeEditor.getFormat().format(startTimeSpinner.getValue());
 					inputEventEndTime = endTimeEditor.getFormat().format(endTimeSpinner.getValue());
 
-					formatStartDate = inputEventStartYear + "-" + (inputEventStartMonth + 1) + "-" + inputEventStartDay + " "
-							+ inputEventStartTime + ":01";
+					formatStartDate = inputEventStartYear + "-" + (inputEventStartMonth + 1) + "-" + inputEventStartDay
+							+ " " + inputEventStartTime + ":01";
 					formatEndDate = inputEventEndYear + "-" + (inputEventEndMonth + 1) + "-" + inputEventEndDay + " "
 							+ inputEventEndTime + ":01";
 				}
@@ -1191,6 +1213,12 @@ public class WindowPanel extends JPanel {
 				user.reloadarrays();
 
 				getAddEventPage();
+
+				notificationPanel.removeAll();
+
+				notificationPanel.add(new NotificationView());
+
+				notificationPanel.updateUI();
 
 			}
 
