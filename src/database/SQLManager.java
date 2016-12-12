@@ -11,6 +11,7 @@ import views.WindowPanel;
 public class SQLManager {
 	private static JavaDB db = new JavaDB();
 	private static User user;
+	private static int tempEventId;
 
 	public static boolean checkLogin(String emailfield, char[] passfield, Window window, WindowPanel windowpanel) {
 		String loginPassHashed = "";
@@ -131,6 +132,23 @@ public class SQLManager {
 				+ "','1','" + inputFullDayEvent + "' )";
 
 		db.execute(SQL);
+
+		SQL = "SELECT MAX(event_id) FROM event WHERE cal_id = '" + inputCreateEventForCalendarId + "' AND creator_id = '"
+				+ user.getId() + "' AND name = '" + inputEventName + "' AND description = '" + inputEventTextArea
+				+ "' AND start_time = '" + formatStartDate + "' AND end_time = '" + formatEndDate
+				+ "' AND notification = 1 AND full_day = '" + inputFullDayEvent + "'";
+
+		Object[][] data = db.getData(SQL);
+
+		for (int i = 0; i < data.length; i++) {
+			tempEventId = Integer.parseInt((String) data[0][0]);
+
+			System.out.println(tempEventId + " AYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY ");
+
+		}
+
+		db.execute(SQL);
+
 		return true;
 	}
 
@@ -168,6 +186,16 @@ public class SQLManager {
 
 		return data;
 
+	}
+
+	public static boolean sendEventInvite(int tempSelectedUserId) {
+
+		String SQL = "INSERT INTO shared_event(event_id, user_id, accepted, notification) VALUES('" + tempEventId
+				+ "', '" + tempSelectedUserId + "', '0', '1')";
+
+		db.execute(SQL);
+
+		return true;
 	}
 
 	public static Object[][] getClosestEvent() {

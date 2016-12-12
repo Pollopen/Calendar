@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Properties;
@@ -40,7 +41,6 @@ import object.Event;
 import object.User;
 import views.calendar.CalChooseList;
 import views.calendar.addedit.CalAddEdit;
-import views.MonthYearPanel;
 
 public class WindowPanel extends JPanel {
 
@@ -75,6 +75,7 @@ public class WindowPanel extends JPanel {
 	private StateMachine SM;
 	private CalChooseList calChooseList;
 	private ViewChoice viewChoice;
+	private ArrayList checkList;
 	private MonthOverview monthOverview;
 	private MonthYearPanel monthYearPanel;
 
@@ -94,6 +95,8 @@ public class WindowPanel extends JPanel {
 		/*
 		 * TODO FIX ORGANISATION
 		 */
+
+		checkList = new ArrayList();
 
 		getLoginPage();
 	}
@@ -1118,6 +1121,9 @@ public class WindowPanel extends JPanel {
 				for (int i = 0; i < inputResult.length; i++) {
 					listModel.addElement(inputResult[i][1]);
 
+					checkList.add(inputResult[i][0]);
+
+					System.out.println(inputResult[i][0]);
 				}
 			}
 
@@ -1145,9 +1151,6 @@ public class WindowPanel extends JPanel {
 			if (e.getSource() == eventCreate) {
 
 				String inputEventName = nameField.getText();
-				// if (inputEventName.isEmpty()) {
-				//
-				// }
 				String inputEventLocation = locationField.getText();
 				String inputEventTextArea = eventDescArea.getText();
 				int inputFullDayEvent;
@@ -1210,10 +1213,29 @@ public class WindowPanel extends JPanel {
 				//
 				// System.out.println(inputCreateEventForCalendarId);
 
+				// Create the event
+
 				SQLManager.addEvent(inputEventName, inputEventLocation, inputEventTextArea, inputFullDayEvent,
 						inputCreateEventForCalendarId, formatStartDate, formatEndDate);
 
 				user.reloadarrays();
+				
+				
+
+				// Send invite request if invites were there
+
+				if (listModel.size() > 0) {
+					for (int i = 0; i < userList.getSelectedIndices().length; i++) {
+
+						Object selectedUserId = checkList.get(userList.getSelectedIndices()[i]);
+						int tempSelectedUserId = Integer.parseInt((String) selectedUserId);
+						System.out.println(
+								tempSelectedUserId + " ---------------------- Users id ------------------------ ");
+
+						SQLManager.sendEventInvite(tempSelectedUserId);
+
+					}
+				}
 
 				getAddEventPage();
 
