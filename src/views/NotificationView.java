@@ -51,12 +51,12 @@ public class NotificationView extends JPanel {
 
 			nextEventLabel = new JLabel();
 			nextEventLabel.setText("Nästa event!");
-			nextEventLabel.setFont(new Font(Font.SANS_SERIF, Font.CENTER_BASELINE, 13));
+			nextEventLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
 
 			gbc.gridx = 0;
 			gbc.gridy = 0;
-			gbc.insets = new Insets(0, 0, 10, 10);
-			gbc.anchor = GridBagConstraints.WEST;
+			gbc.insets = new Insets(0, 0, 10, 0);
+			//gbc.anchor = GridBagConstraints.WEST;
 
 			main.add(nextEventLabel, gbc);
 
@@ -66,7 +66,7 @@ public class NotificationView extends JPanel {
 			gbc.gridx = 0;
 			gbc.gridy = 1;
 			gbc.insets = new Insets(0, 0, 10, 10);
-			gbc.anchor = GridBagConstraints.WEST;
+			//gbc.anchor = GridBagConstraints.WEST;
 
 			main.add(generalEventName, gbc);
 
@@ -76,18 +76,17 @@ public class NotificationView extends JPanel {
 			gbc.gridx = 1;
 			gbc.gridy = 1;
 			gbc.insets = new Insets(0, 0, 10, 10);
-			gbc.anchor = GridBagConstraints.WEST;
+			//gbc.anchor = GridBagConstraints.WEST;
 
 			main.add(eventNameLabel, gbc);
 
 			eventStartLabel = new JLabel();
 			eventStartLabel.setText("Start datum:");
-			gbc.anchor = GridBagConstraints.WEST;
 
 			gbc.gridx = 0;
 			gbc.gridy = 2;
 			gbc.insets = new Insets(0, 0, 10, 10);
-			gbc.anchor = GridBagConstraints.WEST;
+			//gbc.anchor = GridBagConstraints.WEST;
 
 			main.add(eventStartLabel, gbc);
 
@@ -97,17 +96,17 @@ public class NotificationView extends JPanel {
 			gbc.gridx = 1;
 			gbc.gridy = 2;
 			gbc.insets = new Insets(0, 0, 10, 10);
-			gbc.anchor = GridBagConstraints.WEST;
+			//gbc.anchor = GridBagConstraints.WEST;
 
 			main.add(eventStartTime, gbc);
 
 			eventEndLabel = new JLabel();
-			eventEndLabel.setText("Start datum:");
+			eventEndLabel.setText("Slut datum:");
 
 			gbc.gridx = 0;
 			gbc.gridy = 3;
 			gbc.insets = new Insets(0, 0, 10, 10);
-			gbc.anchor = GridBagConstraints.WEST;
+			//gbc.anchor = GridBagConstraints.WEST;
 
 			main.add(eventEndLabel, gbc);
 
@@ -117,7 +116,7 @@ public class NotificationView extends JPanel {
 			gbc.gridx = 1;
 			gbc.gridy = 3;
 			gbc.insets = new Insets(0, 0, 0, 10);
-			gbc.anchor = GridBagConstraints.WEST;
+			//gbc.anchor = GridBagConstraints.WEST;
 
 			main.add(eventEndTime, gbc);
 		}
