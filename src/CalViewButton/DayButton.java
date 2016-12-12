@@ -25,7 +25,7 @@ public class DayButton extends JButton implements ActionListener {
 		addActionListener(this);
 		setMargin(new Insets(0, 0, 0, 0));
 		
-		if(date.equals(SM.getUnformattedDate())&&isdatenumber==1){
+		if(date.equals(SM.getEasyDate())&&isdatenumber==1){
 			setForeground(Color.RED);
 		}
 		if(isdatenumber>=2){
@@ -47,7 +47,7 @@ public class DayButton extends JButton implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		System.out.println(date);
-		SM.setUnformattedDate(date);
+		SM.setEasyDate(date);
 		SM.setActiveview(1);
 		wp.getViewViewer();
 		wp.getViewChoice();

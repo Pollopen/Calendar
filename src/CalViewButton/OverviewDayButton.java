@@ -27,7 +27,7 @@ public class OverviewDayButton extends JButton implements ActionListener {
 		addActionListener(this);
 		setBackground(new Color(200,200,200));
 		setMargin(new Insets(0, 0, 0, 0));
-		if(date.equals(SM.getUnformattedDate())){
+		if(date.equals(SM.getEasyDate())){
 			setForeground(Color.RED);
 		}
 		if(hasEvent){
@@ -41,7 +41,7 @@ public class OverviewDayButton extends JButton implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		System.out.println(date);
-		SM.setUnformattedDate(date);
+		SM.setEasyDate(date);
 		wp.getViewViewer();
 		wp.getViewChoice();
 		wp.getOverview();

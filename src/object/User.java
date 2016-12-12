@@ -43,12 +43,14 @@ public class User {
 					(String) data3[j][16], Integer.parseInt((String) data3[j][17]),
 					Integer.parseInt((String) data3[j][18]));
 		}
+		/*
 		for (int i = 0; i < calArray.length; i++) {
 			calArray[i].getAll();
 		}
 		for (int i = 0; i < eventArray.length; i++) {
 			eventArray[i].getAll();
 		}
+		*/
 	}
 
 	public void getAll() {

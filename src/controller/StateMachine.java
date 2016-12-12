@@ -32,12 +32,12 @@ public class StateMachine {
 	public int getCalEditStatus() {
 		return calEditStatus;
 	}
-	public String getUnformattedDate(){
+	public String getEasyDate(){
 		String tempDate=sdf.format(date);
 		String formatDate=tempDate.substring(0, 4)+tempDate.substring(5, 7)+tempDate.substring(8, 10);
 		return formatDate;
 	}
-	public String getUnformattedFocusDate(){
+	public String getEasyFocusDate(){
 		String tempDate=focusedDate;
 		String formatDate=tempDate.substring(0, 4)+tempDate.substring(5, 7)+tempDate.substring(8, 10);
 		return formatDate;
@@ -82,12 +82,42 @@ public class StateMachine {
 	public void setPagesLogin(int pagesLogin) {
 		this.pagesLogin = pagesLogin;
 	}
-	public void setUnformattedDate(String date) {
+	public void setEasyDate(String date) {
 		// TODO format date and set focuseddate
 		String formattedDate;
 		formattedDate=date.substring(0,4)+"/"+date.substring(4,6)+"/"+date.substring(6,8);
 		focusedDate=formattedDate;
 	}
+	//can go forward X days(5) or back X days (-5)
+		public void addToFocusDate(int value){
+			Calendar cal = Calendar.getInstance();
+			String focusedDate = getFocusedDate();
+			focusedDate=DateHandler.StringDateToCalendar(focusedDate);
+			try {
+				int test = Integer.parseInt(focusedDate.substring(8, 10));
+			} catch (Exception e) {
+				focusedDate=DateHandler.convertFromEasyDate(focusedDate);
+			}
+			cal.set(Integer.parseInt(focusedDate.substring(0, 4)), Integer.parseInt(focusedDate.substring(5, 7)), Integer.parseInt(focusedDate.substring(8, 10)));
+			String newFocusedDate;
+			cal.add(Calendar.DATE, value);
+			newFocusedDate = Integer.toString(cal.get(Calendar.YEAR));
+			if(cal.get(Calendar.MONTH)<=9){
+				newFocusedDate+="0"+Integer.toString(cal.get(Calendar.MONTH));
+			}else{
+				newFocusedDate+=Integer.toString(cal.get(Calendar.MONTH));
+			}
+			if(cal.get(Calendar.DATE)<=9){
+				newFocusedDate+="0"+Integer.toString(cal.get(Calendar.DATE));
+			}else{
+				newFocusedDate+=Integer.toString(cal.get(Calendar.DATE));
+			}
+			
+			
+			newFocusedDate=DateHandler.CalendarStringToDateString(newFocusedDate);
+			
+			setEasyDate(newFocusedDate);
+		}
 
 	public Date getdate() {
 		return date;
@@ -101,19 +131,19 @@ public class StateMachine {
 		this.focusedDate = focusedDate;
 	}
 	public void forwardYear() {
-		String focusDate=getUnformattedFocusDate();
+		String focusDate=getEasyFocusDate();
 		int tempYear=Integer.parseInt(focusDate.substring(0, 4));
 		tempYear++;
 		String newDate=tempYear+focusDate.substring(4);
-		setUnformattedDate(newDate);
+		setEasyDate(newDate);
 		System.out.println("New focusdate(+)= "+newDate);
 	}
 	public void backYear(){
-		String focusDate=getUnformattedFocusDate();
+		String focusDate=getEasyFocusDate();
 		int tempYear=Integer.parseInt(focusDate.substring(0, 4));
 		tempYear--;
 		String newDate=tempYear+focusDate.substring(4);
-		setUnformattedDate(newDate);
+		setEasyDate(newDate);
 		System.out.println("New focusdate(-)= "+newDate);
 	}
 	

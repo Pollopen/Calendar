@@ -23,6 +23,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import controller.StateMachine;
+import controller.DateHandler;
 
 public class ViewChoice extends JPanel {
 	private JButton todayButton, dayButton, weekButton, monthButton, yearButton, prevWeekButton, nextWeekButton, prevMonthButton, nextDayButton, nextMonthButton, prevDayButton, prevYearButton, nextYearButton;
@@ -85,7 +86,6 @@ public class ViewChoice extends JPanel {
 		todayButton = new JButton("Idag");
 		todayButton.addActionListener(lForButton);
 		empty = new JLabel("");
-		
 		dateChoice = new JSpinner(new SpinnerDateModel(focusedDate, null, null, Calendar.DAY_OF_MONTH));
 		JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateChoice, "dd/MM/yy");
 		dateChoice.setEditor(dateEditor);
@@ -189,6 +189,11 @@ public class ViewChoice extends JPanel {
 		System.out.println("------------------------------------------------------");
 
 	}
+	
+	public void backOneDay(){
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DAY_OF_MONTH, -1);
+	}
 
 	private class ListenForButton implements ActionListener {
 
@@ -204,6 +209,7 @@ public class ViewChoice extends JPanel {
 				wp.getViewChoice();
 				wp.getOverview();
 			}
+			
 			if (e.getSource() == weekButton) {
 				SM.setActiveview(2);
 				wp.getViewViewer();
@@ -223,18 +229,48 @@ public class ViewChoice extends JPanel {
 				wp.getOverview();
 			}
 			if (e.getSource() == prevWeekButton) {
-				getPrevWeek();
+				//getPrevWeek();
+				SM.addToFocusDate(-7);
 				wp.getViewViewer();
 				wp.getViewChoice();
 				wp.getOverview();
 			}
 			if (e.getSource() == nextWeekButton) {
-				getNextWeek();
+				//getNextWeek();
+				SM.addToFocusDate(7);
 				wp.getViewViewer();
 				wp.getViewChoice();
 				wp.getOverview();
 
 			}
+			if (e.getSource() == nextDayButton) {
+				SM.addToFocusDate(1);
+				wp.getViewViewer();
+				wp.getViewChoice();
+				wp.getOverview();
+			}
+			if (e.getSource() == prevDayButton) {
+				SM.addToFocusDate(-1);
+				wp.getViewViewer();
+				wp.getViewChoice();
+				wp.getOverview();
+			}
+			if (e.getSource() == nextMonthButton) {
+				int dayOfMonth=DateHandler.getDaysOfMonth(SM.getFocusedDate());
+				SM.addToFocusDate(dayOfMonth);
+				wp.getViewViewer();
+				wp.getViewChoice();
+				wp.getOverview();
+			}
+			if (e.getSource() == prevMonthButton) {
+				//TODO Jump back based on last month number of days not the current
+				int dayOfMonth=DateHandler.getDaysOfMonth(SM.getFocusedDate());
+				SM.addToFocusDate(-dayOfMonth);
+				wp.getViewViewer();
+				wp.getViewChoice();
+				wp.getOverview();
+			}
+			
 			if (e.getSource() == todayButton){
 				SM.setFocusedToday();
 				wp.getViewViewer();
