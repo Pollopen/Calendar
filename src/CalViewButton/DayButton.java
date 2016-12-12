@@ -2,6 +2,7 @@ package CalViewButton;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,7 +10,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 import controller.StateMachine;
-import object.Event;
 import views.WindowPanel;
 
 public class DayButton extends JButton implements ActionListener {
@@ -26,11 +26,11 @@ public class DayButton extends JButton implements ActionListener {
 		setMargin(new Insets(0, 0, 0, 0));
 		
 		if(date.equals(SM.getEasyDate())&&isdatenumber==1){
-			setForeground(Color.RED);
+			setForeground(Color.BLUE);
 		}
 		if(isdatenumber>=2){
 			setToolTipText("Mer event finns!");
-			setBackground(new Color(200,200,200));
+			setBackground(new Color(175,255,255));
 			if (isdatenumber==2) {
 				setPreferredSize(new Dimension(50, 50));
 			}

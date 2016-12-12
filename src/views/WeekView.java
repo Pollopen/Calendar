@@ -93,7 +93,7 @@ public class WeekView extends JPanel {
 			dayOfMonthLabel = new JLabel();
 			dayOfMonthLabel.setText(firstDay.substring(6,8)+"/"+firstDay.substring(4,6));//datumet
 			if(SM.getEasyDate().equals(firstDay)){
-				dayOfMonthLabel.setForeground(Color.RED);
+				dayOfMonthLabel.setForeground(Color.BLUE);
 			}
 			firstDay=DateHandler.addToDateString(firstDay, 1);
 			weekDatePanel = new JPanel();
