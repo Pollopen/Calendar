@@ -7,25 +7,28 @@ import javax.swing.JButton;
 
 import database.SQLManager;
 
-public class AcceptEventButtonView extends JButton {
+public class DeclineCalButtonView extends JButton {
 
+	
+	
 	private int buttonId;
 	private WindowPanel wp;
 
-	public AcceptEventButtonView(int sharedEventId, WindowPanel wp) {
+	public DeclineCalButtonView(int sharedEventId, WindowPanel wp) {
 
 		this.wp = wp;
-
-		this.setText("Acceptera");
-
+		
+		this.setText("Neka");
+		
 		buttonId = sharedEventId;
-
+		
 		ListenForButton lForButton = new ListenForButton();
-
+		
 		this.addActionListener(lForButton);
-
+		
+		
 	}
-
+	
 	public int getButtonId() {
 		return buttonId;
 	}
@@ -39,12 +42,14 @@ public class AcceptEventButtonView extends JButton {
 		// This method is called when an event occurs
 
 		public void actionPerformed(ActionEvent e) {
-
-			SQLManager.acceptSharedEvent(buttonId);
-
-			wp.getSharedEventPage();
+	
+				SQLManager.declineSharedCal(buttonId);
+				
+				wp.getSharedCalPage();
 
 		}
 	}
 
+
+	
 }

@@ -52,7 +52,8 @@ public class MenuList {
 	JScrollPane scrollPane;
 	JMenuBar menuBar;
 	JMenu menu, submenu;
-	JMenuItem menuItem, menuView, menuReload, menuLogout, menuAddEvent, menuAddCalendar, menuEditEvent, menuSharedEvent;
+	JMenuItem menuItem, menuView, menuReload, menuLogout, menuAddEvent, menuAddCalendar, menuEditEvent, menuSharedEvent,
+			menuSharedCal;
 	JRadioButtonMenuItem rbMenuItem;
 	JCheckBoxMenuItem cbMenuItem;
 	Window window;
@@ -99,6 +100,10 @@ public class MenuList {
 		menuAddCalendar = new JMenuItem("Lägg till Kalender");
 		menu.add(menuAddCalendar);
 		menuAddCalendar.addActionListener(lForButton);
+
+		menuSharedCal = new JMenuItem("Hantera kalender inbjudningar");
+		menu.add(menuSharedCal);
+		menuSharedCal.addActionListener(lForButton);
 
 		menu.addSeparator();
 
@@ -151,6 +156,9 @@ public class MenuList {
 			}
 			if (e.getSource() == menuSharedEvent) {
 				windowpanel.getSharedEventPage();
+			}
+			if (e.getSource() == menuSharedCal) {
+				windowpanel.getSharedCalPage();
 			}
 		}
 	}

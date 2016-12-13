@@ -8,12 +8,16 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
@@ -25,27 +29,31 @@ import object.Calendar;
 import object.User;
 import views.WindowPanel;
 
-
 public class CalAddEdit extends JPanel {
-	private JPanel calAddPanel, addCalCenterLeft, addCalCenterRight, editCalendar1, editCal2Panel, editCalendar3,editCal2RPanel,editCal2LPanel;
-	private GridBagConstraints gbc;
+	private JPanel calAddPanel, addCalCenterLeft, addCalCenterRight, editCalendar1, editCal2Panel, editCalendar3,
+			editCal2RPanel, editCal2LPanel;
+	private GridBagConstraints gbc, gbcLeft;
 	private Calendar[] calArray;
-	private JTextField calAddNameField, calEditNameField, calendarNameField;
+	private JTextField calAddNameField, calEditNameField, calendarNameField, userSearchField;
 	private JTextArea calAddDescTextArea, calendarDescTextArea, calEditDescTextArea;
-	private JLabel calManageLabel, calAddDescLabel, calAddNameLabel, calAddLabel, calendarDescLabel, calendarNameLabel, calEditDescLabel, calEditNameLabel;
-	private JButton calAddButton, calSaveButton, calRemoveButton;
+	private JLabel calManageLabel, calAddDescLabel, calAddNameLabel, calAddLabel, calendarDescLabel, calendarNameLabel,
+			calEditDescLabel, calEditNameLabel, calInfoLabel;
+	private JButton calAddButton, calSaveButton, calRemoveButton, userSearchButton;
 	private JCheckBox calAddNotBox, calEditNotBox;
 	private User user;
 	private CalEditList calEditList;
 	private StateMachine SM;
 	private WindowPanel wp;
 	private ListenForButton lForButton;
+	private DefaultListModel listModel;
+	private JList userList;
+	private ArrayList checkList;
 	private Border etchedBorder;
-	
-	public CalAddEdit(StateMachine SM, WindowPanel wp, User user){
-		this.user=user;
-		this.SM=SM;
-		this.wp=wp;
+
+	public CalAddEdit(StateMachine SM, WindowPanel wp, User user) {
+		this.user = user;
+		this.SM = SM;
+		this.wp = wp;
 		lForButton = new ListenForButton();
 		gbc = new GridBagConstraints();
 		// Panel management
@@ -59,7 +67,7 @@ public class CalAddEdit extends JPanel {
 		addCalCenterLeft = new JPanel();
 		addCalCenterLeft.setPreferredSize(new Dimension(500, 725));
 		addCalCenterLeft.setLayout(new GridBagLayout());
-		//addCalCenterLeft.setBackground(new Color(0, 255, 0));
+		// addCalCenterLeft.setBackground(new Color(0, 255, 0));
 		addCalCenterLeft.setVisible(true);
 
 		gbc.gridx = 0;
@@ -78,16 +86,19 @@ public class CalAddEdit extends JPanel {
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 
+		checkList = new ArrayList();
+
 		add(addCalCenterRight, gbc);
 
 		calendarEdit(SM.getCalEditStatus());
-	
+
 	}
+
 	public void calendarAdd() {
 		addCalCenterLeft.removeAll();
 		// *name**people in calender**notification*
 		// add new
-		calAddPanel=new JPanel();
+		calAddPanel = new JPanel();
 		calAddPanel.setBorder(etchedBorder);
 		calAddPanel.setLayout(new GridBagLayout());
 		calAddPanel.setPreferredSize(new Dimension(375, 400));
@@ -112,17 +123,17 @@ public class CalAddEdit extends JPanel {
 		calAddNotBox.setSelected(true);
 		calAddButton = new JButton("Lägg till kalender");
 		calAddButton.addActionListener(lForButton);
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		addCalCenterLeft.add(calAddPanel,gbc);
+		addCalCenterLeft.add(calAddPanel, gbc);
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.insets=new Insets(0, 0, 25, 0);
+		gbc.insets = new Insets(0, 0, 25, 0);
 		calAddPanel.add(calAddLabel, gbc);
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		gbc.insets=new Insets(0, 0, 5, 0);
+		gbc.insets = new Insets(0, 0, 5, 0);
 		calAddPanel.add(calAddNameLabel, gbc);
 		gbc.gridx = 0;
 		gbc.gridy = 2;
@@ -138,10 +149,11 @@ public class CalAddEdit extends JPanel {
 		calAddPanel.add(calAddNotBox, gbc);
 		gbc.gridx = 0;
 		gbc.gridy = 6;
-		gbc.insets=new Insets(25, 0, 0, 0);
+		gbc.insets = new Insets(25, 0, 0, 0);
 		calAddPanel.add(calAddButton, gbc);
-		gbc.insets=new Insets(0, 0, 0, 0);
+		gbc.insets = new Insets(0, 0, 0, 0);
 	}
+
 	public void calList() {
 		if (calEditList != null) {
 			remove(calEditList);
@@ -155,33 +167,33 @@ public class CalAddEdit extends JPanel {
 		editCal2LPanel.add(calEditList, gbc);
 
 	}
+
 	public void calendarEdit(int calID) {
 		addCalCenterRight.removeAll();
 
 		editCalendar1 = new JPanel();
 		editCalendar1.setPreferredSize(new Dimension(675, 75));
 		editCalendar1.setLayout(new GridBagLayout());
-		//editCalendar1.setBackground(new Color(255, 0, 0));
+		// editCalendar1.setBackground(new Color(255, 0, 0));
 		editCalendar1.setVisible(true);
-		
+
 		calEditNotBox = new JCheckBox("Notifikationer?");
 		calEditNotBox.setOpaque(false);
 		try {
-			if(calArray[calID].getNotification()==1){
+			if (calArray[calID].getNotification() == 1) {
 				calEditNotBox.setSelected(true);
-			}else{
+			} else {
 				calEditNotBox.setSelected(false);
 			}
 		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
 			calID--;
 			SM.setCalEditStatus(calID);
-			if(calArray[calID].getNotification()==1){
+			if (calArray[calID].getNotification() == 1) {
 				calEditNotBox.setSelected(true);
-			}else{
+			} else {
 				calEditNotBox.setSelected(false);
 			}
 		}
-		
 
 		calSaveButton = new JButton("Spara");
 		calSaveButton.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -201,25 +213,71 @@ public class CalAddEdit extends JPanel {
 		editCal2Panel = new JPanel();
 		editCal2Panel.setPreferredSize(new Dimension(675, 350));
 		editCal2Panel.setLayout(new GridBagLayout());
-		//editCal2Panel.setBackground(new Color(100, 255, 100));
+		// editCal2Panel.setBackground(new Color(100, 255, 100));
 		editCal2Panel.setVisible(true);
-		
+
 		editCal2LPanel = new JPanel();
 		editCal2LPanel.setPreferredSize(new Dimension(225, 350));
 		editCal2LPanel.setLayout(new GridBagLayout());
-		//editCal2LPanel.setBackground(new Color(255, 0, 0));
+		// editCal2LPanel.setBackground(new Color(255, 0, 0));
 		editCal2LPanel.setVisible(true);
 		editCal2RPanel = new JPanel();
 		editCal2RPanel.setPreferredSize(new Dimension(450, 350));
 		editCal2RPanel.setLayout(new GridBagLayout());
-		//editCal2RPanel.setBackground(new Color(0, 255, 0));
+		// editCal2RPanel.setBackground(new Color(0, 255, 0));
 		editCal2RPanel.setVisible(true);
 
 		editCalendar3 = new JPanel();
 		editCalendar3.setPreferredSize(new Dimension(675, 300));
 		editCalendar3.setLayout(new GridBagLayout());
-		editCalendar3.setBackground(new Color(0, 0, 255));
+		// editCalendar3.setBackground(new Color(0, 0, 255));
 		editCalendar3.setVisible(true);
+
+		gbcLeft = new GridBagConstraints();
+
+		calInfoLabel = new JLabel();
+		calInfoLabel.setText("Sök efter användare!");
+
+		gbcLeft.gridx = 0;
+		gbcLeft.gridy = 0;
+		gbcLeft.insets = new Insets(0, 0, 10, 0);
+		gbcLeft.anchor = GridBagConstraints.WEST;
+
+		editCalendar3.add(calInfoLabel, gbcLeft);
+
+		userSearchField = new JTextField();
+		userSearchField.setPreferredSize(new Dimension(300, 30));
+
+		gbcLeft.gridx = 0;
+		gbcLeft.gridy = 1;
+		gbcLeft.insets = new Insets(0, 0, 10, 10);
+		gbcLeft.anchor = GridBagConstraints.WEST;
+
+		editCalendar3.add(userSearchField, gbcLeft);
+
+		userSearchButton = new JButton("Sök!");
+		userSearchButton.setPreferredSize(new Dimension(60, 29));
+
+		gbcLeft.gridx = 1;
+		gbcLeft.gridy = 1;
+		gbcLeft.insets = new Insets(0, 0, 10, 0);
+		gbcLeft.anchor = GridBagConstraints.WEST;
+
+		editCalendar3.add(userSearchButton, gbcLeft);
+
+		userList = new JList();
+		listModel = new DefaultListModel();
+		userList.setModel(listModel);
+		userList.setPreferredSize(new Dimension(300, 200));
+
+		JScrollPane listScrollPane = new JScrollPane(userList);
+
+		gbcLeft.gridx = 0;
+		gbcLeft.gridy = 2;
+		gbcLeft.insets = new Insets(0, 0, 10, 0);
+		gbcLeft.anchor = GridBagConstraints.WEST;
+
+		editCalendar3.add(userList, gbcLeft);
 
 		calEditNameLabel = new JLabel("kalendernamn");
 		calEditNameLabel.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -245,7 +303,7 @@ public class CalAddEdit extends JPanel {
 
 		calendarNameLabel = new JLabel("Kalendernamn");
 		calendarNameLabel.setFont(new Font("Serif", Font.PLAIN, 20));
-		
+
 		calManageLabel = new JLabel("Hantera Kalender:");
 		calManageLabel.setFont(new Font("Serif", Font.PLAIN, 20));
 
@@ -277,7 +335,7 @@ public class CalAddEdit extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		addCalCenterRight.add(editCal2Panel, gbc);
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		editCal2Panel.add(editCal2LPanel);
@@ -300,27 +358,49 @@ public class CalAddEdit extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 3;
 		editCal2RPanel.add(calEditDescTextArea, gbc);
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 4;
 		editCal2RPanel.add(calEditNotBox, gbc);
 
 		calList();
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 
 		addCalCenterRight.add(editCalendar3, gbc);
 
+		userSearchButton.addActionListener(lForButton);
+
 		addCalCenterRight.updateUI();
 
 	}
+
 	private class ListenForButton implements ActionListener {
 
 		// This method is called when an event occurs
 
 		public void actionPerformed(ActionEvent e) {
-			
+
+			if (e.getSource() == userSearchButton) {
+
+				String inputEditSearch = userSearchField.getText();
+				Object[][] inputEditResult = SQLManager.searchForUser(inputEditSearch);
+
+				listModel.removeAllElements();
+
+				for (int i = 0; i < inputEditResult.length; i++) {
+
+					listModel.addElement(inputEditResult[i][1]);
+
+					checkList.add(inputEditResult[i][0]);
+
+					System.out.println(inputEditResult[i][0]);
+
+				}
+
+			}
+
 			// Check if the source of the event was the button
 			if (e.getSource() == calSaveButton) {
 				String temp1 = calEditNameField.getText();
@@ -329,6 +409,20 @@ public class CalAddEdit extends JPanel {
 				System.out.println(temp1);
 				System.out.println(temp2);
 				if (SQLManager.editCalendar(calArray[SM.getCalEditStatus()].getCal_id(), temp1, temp2)) {
+
+					if (listModel.size() > 0) {
+						for (int i = 0; i < userList.getSelectedIndices().length; i++) {
+
+							Object selectedUserId = checkList.get(userList.getSelectedIndices()[i]);
+							int tempSelectedUserId = Integer.parseInt((String) selectedUserId);
+							System.out.println(
+									tempSelectedUserId + " ---------------------- Users id ------------------------ ");
+
+							SQLManager.sendCalInvite(tempSelectedUserId);
+
+						}
+					}
+
 					addCalCenterLeft.removeAll();
 					user.reloadarrays();
 					wp.getAddCalendarPage();
@@ -338,7 +432,7 @@ public class CalAddEdit extends JPanel {
 			}
 			if (e.getSource() == calRemoveButton) {
 				System.out.println("ta bort command");
-				if(SQLManager.removeCalendar(calArray[SM.getCalEditStatus()].getCal_id())){
+				if (SQLManager.removeCalendar(calArray[SM.getCalEditStatus()].getCal_id())) {
 					user.reloadarrays();
 					wp.getAddCalendarPage();
 					wp.calChoiceList();
@@ -362,5 +456,5 @@ public class CalAddEdit extends JPanel {
 
 		}
 	}
-	
+
 }

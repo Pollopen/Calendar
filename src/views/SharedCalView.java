@@ -17,16 +17,16 @@ import javax.swing.JPanel;
 
 import database.SQLManager;
 
-public class SharedEventView extends JPanel {
+public class SharedCalView extends JPanel {
 
 	private Object[][] SQLResult;
-	private JPanel mainPanel, acceptEventPanel, noEventPanel, buttonPanel, acceptEventLeftPanel, acceptEventRightPanel;
+	private JPanel mainPanel, acceptCalPanel, noCalPanel, buttonPanel, acceptCalLeftPanel, acceptCalRightPanel;
 	private JButton updateButton;
-	private JLabel eventNameLabel, noEventLabel;
+	private JLabel calNameLabel, noCalLabel;
 	private GridBagConstraints gbc;
 	private WindowPanel wp;
 
-	public SharedEventView(WindowPanel wp) {
+	public SharedCalView(WindowPanel wp) {
 
 		this.wp = wp;
 
@@ -58,14 +58,14 @@ public class SharedEventView extends JPanel {
 
 		this.add(BorderLayout.CENTER, mainPanel);
 
-		SQLResult = SQLManager.getSharedEvent();
+		SQLResult = SQLManager.getSharedCal();
 
 		if (SQLResult.length > 0) {
 			for (int i = 0; i < SQLResult.length; i++) {
-				acceptEventPanel = new JPanel();
-				acceptEventPanel.setPreferredSize(new Dimension(1075, 100));
-				acceptEventPanel.setLayout(new GridBagLayout());
-				acceptEventPanel.setBackground(new Color(100, 100, 100));
+				acceptCalPanel = new JPanel();
+				acceptCalPanel.setPreferredSize(new Dimension(1075, 100));
+				acceptCalPanel.setLayout(new GridBagLayout());
+				acceptCalPanel.setBackground(new Color(100, 100, 100));
 				// acceptEventPanel.setBorder(BorderFactory.createLineBorder(new
 				// Color(0, 0, 0)));
 
@@ -73,41 +73,41 @@ public class SharedEventView extends JPanel {
 				gbc.gridy = i;
 				gbc.insets = new Insets(0, 0, 10, 0);
 
-				mainPanel.add(acceptEventPanel, gbc);
+				mainPanel.add(acceptCalPanel, gbc);
 
-				acceptEventLeftPanel = new JPanel();
-				acceptEventLeftPanel.setPreferredSize(new Dimension(800, 100));
-				acceptEventLeftPanel.setLayout(new GridBagLayout());
-				acceptEventLeftPanel.setBackground(new Color(200, 200, 200));
+				acceptCalLeftPanel = new JPanel();
+				acceptCalLeftPanel.setPreferredSize(new Dimension(800, 100));
+				acceptCalLeftPanel.setLayout(new GridBagLayout());
+				acceptCalLeftPanel.setBackground(new Color(200, 200, 200));
 				// acceptEventLeftPanel.setBackground(new Color(0, 0, 255));
 
 				gbc.gridx = 0;
 				gbc.gridy = 0;
 				gbc.insets = new Insets(0, 0, 0, 0);
 
-				acceptEventPanel.add(acceptEventLeftPanel, gbc);
+				acceptCalPanel.add(acceptCalLeftPanel, gbc);
 
-				acceptEventRightPanel = new JPanel();
-				acceptEventRightPanel.setPreferredSize(new Dimension(275, 100));
-				acceptEventRightPanel.setLayout(new GridBagLayout());
-				acceptEventRightPanel.setBackground(new Color(200, 200, 200));
+				acceptCalRightPanel = new JPanel();
+				acceptCalRightPanel.setPreferredSize(new Dimension(275, 100));
+				acceptCalRightPanel.setLayout(new GridBagLayout());
+				acceptCalRightPanel.setBackground(new Color(200, 200, 200));
 				// acceptEventRightPanel.setBackground(new Color(0, 255, 0));
 
 				gbc.gridx = 1;
 				gbc.gridy = 0;
 				gbc.insets = new Insets(0, 0, 0, 0);
 
-				acceptEventPanel.add(acceptEventRightPanel, gbc);
+				acceptCalPanel.add(acceptCalRightPanel, gbc);
 
-				eventNameLabel = new JLabel();
-				eventNameLabel.setText(SQLResult[i][5].toString());
-				eventNameLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
+				calNameLabel = new JLabel();
+				calNameLabel.setText(SQLResult[i][5].toString());
+				calNameLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
 
 				gbc.gridx = 0;
 				gbc.gridy = 0;
 				gbc.insets = new Insets(0, 0, 0, 0);
 
-				acceptEventLeftPanel.add(eventNameLabel, gbc);
+				acceptCalLeftPanel.add(calNameLabel, gbc);
 
 				gbc.gridx = 0;
 				gbc.gridy = 0;
@@ -117,37 +117,37 @@ public class SharedEventView extends JPanel {
 
 				// System.out.println(sharedEventId);
 
-				acceptEventRightPanel.add(new AcceptEventButtonView(sharedEventId, wp), gbc);
+				acceptCalRightPanel.add(new AcceptCalButtonView(sharedEventId, wp), gbc);
 
 				gbc.gridx = 1;
 				gbc.gridy = 0;
 				gbc.insets = new Insets(0, 0, 0, 0);
 
-				acceptEventRightPanel.add(new DeclineEventButtonView(sharedEventId, wp), gbc);
+				acceptCalRightPanel.add(new DeclineCalButtonView(sharedEventId, wp), gbc);
 
 			}
 
 		} else {
 
-			noEventPanel = new JPanel();
-			noEventPanel.setPreferredSize(new Dimension(1075, 625));
-			noEventPanel.setLayout(new GridBagLayout());
-			noEventPanel.setBorder(BorderFactory.createLineBorder(new Color(255, 0, 0)));
+			noCalPanel = new JPanel();
+			noCalPanel.setPreferredSize(new Dimension(1075, 625));
+			noCalPanel.setLayout(new GridBagLayout());
+			noCalPanel.setBorder(BorderFactory.createLineBorder(new Color(255, 0, 0)));
 
-			noEventLabel = new JLabel();
-			noEventLabel.setText("Du har inga nya event inbjudningar");
-
-			gbc.gridx = 0;
-			gbc.gridy = 0;
-			gbc.insets = new Insets(0, 0, 10, 0);
-
-			noEventPanel.add(noEventLabel);
+			noCalLabel = new JLabel();
+			noCalLabel.setText("Du har inga nya kalender inbjudningar");
 
 			gbc.gridx = 0;
 			gbc.gridy = 0;
 			gbc.insets = new Insets(0, 0, 10, 0);
 
-			mainPanel.add(noEventPanel, gbc);
+			noCalPanel.add(noCalLabel);
+
+			gbc.gridx = 0;
+			gbc.gridy = 0;
+			gbc.insets = new Insets(0, 0, 10, 0);
+
+			mainPanel.add(noCalPanel, gbc);
 
 		}
 
@@ -164,7 +164,7 @@ public class SharedEventView extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 
 			if (e.getSource() == updateButton) {
-				wp.getSharedEventPage();
+				wp.getSharedCalPage();
 			}
 
 		}
