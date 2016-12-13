@@ -876,6 +876,12 @@ public class WindowPanel extends JPanel {
 		upperRightPanel.updateUI();
 	}
 
+	public void getSharedEventPage() {
+		rightPanel.removeAll();
+		rightPanel.add(new SharedEventView(this));
+		rightPanel.updateUI();
+	}
+
 	public void sendUser(User user) {
 		this.user = user;
 	}
@@ -1219,10 +1225,8 @@ public class WindowPanel extends JPanel {
 						inputCreateEventForCalendarId, formatStartDate, formatEndDate);
 
 				user.reloadarrays();
-				
-				
 
-				// Send invite request if invites were there
+				// Send invite request to people in the list
 
 				if (listModel.size() > 0) {
 					for (int i = 0; i < userList.getSelectedIndices().length; i++) {

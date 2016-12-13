@@ -132,9 +132,9 @@ public class SQLManager {
 
 		db.execute(SQL);
 
-		SQL = "SELECT MAX(event_id) FROM event WHERE cal_id = '" + inputCreateEventForCalendarId + "' AND creator_id = '"
-				+ user.getId() + "' AND name = '" + inputEventName + "' AND description = '" + inputEventTextArea
-				+ "' AND start_time = '" + formatStartDate + "' AND end_time = '" + formatEndDate
+		SQL = "SELECT MAX(event_id) FROM event WHERE cal_id = '" + inputCreateEventForCalendarId
+				+ "' AND creator_id = '" + user.getId() + "' AND name = '" + inputEventName + "' AND description = '"
+				+ inputEventTextArea + "' AND start_time = '" + formatStartDate + "' AND end_time = '" + formatEndDate
 				+ "' AND notification = 1 AND full_day = '" + inputFullDayEvent + "'";
 
 		Object[][] data = db.getData(SQL);
@@ -149,6 +149,37 @@ public class SQLManager {
 		db.execute(SQL);
 
 		return true;
+	}
+
+	public static Object[][] getSharedEvent() {
+
+		String SQL = "SELECT shared_event.se_id, shared_event.event_id, shared_event.user_id, event.creator_id, shared_event.created, event.name FROM shared_event LEFT JOIN event ON shared_event.event_id = event.event_id WHERE shared_event.user_id = "
+				+ user.getId() + " AND accepted = 0";
+
+		Object[][] data = db.getData(SQL);
+
+		db.execute(SQL);
+
+		return data;
+	}
+
+	public static boolean acceptSharedEvent(int buttonId) {
+
+		String SQL = "UPDATE shared_event SET accepted = 1 WHERE se_id = " + buttonId;
+
+		db.execute(SQL);
+
+		return true;
+	}
+	
+	public static boolean declineSharedEvent(int buttonId) {
+		
+		String SQL = "DELETE FROM shared_event WHERE se_id = " + buttonId;
+		
+		db.execute(SQL);
+		
+		return true;
+		
 	}
 
 	public static boolean editEvent(String inputEventName, String inputEventLocation, String inputEventTextArea,
