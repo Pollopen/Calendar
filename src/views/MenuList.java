@@ -48,78 +48,83 @@ import object.User;
  * It has no menu-related event handling.
  */
 public class MenuList {
-    JTextArea output;
-    JScrollPane scrollPane;
-    JMenuBar menuBar;
-    JMenu menu, submenu;
-    JMenuItem menuItem, menuView, menuReload, menuLogout, menuAddEvent, menuAddCalendar, menuEditEvent;
-    JRadioButtonMenuItem rbMenuItem;
-    JCheckBoxMenuItem cbMenuItem;
-    Window window;
-    WindowPanel windowpanel;
-    User user;
+	JTextArea output;
+	JScrollPane scrollPane;
+	JMenuBar menuBar;
+	JMenu menu, submenu;
+	JMenuItem menuItem, menuView, menuReload, menuLogout, menuAddEvent, menuAddCalendar, menuEditEvent, menuSharedEvent,
+			menuSharedCal;
+	JRadioButtonMenuItem rbMenuItem;
+	JCheckBoxMenuItem cbMenuItem;
+	Window window;
+	WindowPanel windowpanel;
+	User user;
 
-    public JMenuBar createMenuBar(Window window, WindowPanel windowpanel, User user) {
-    	this.window = window;
-    	this.windowpanel = windowpanel;
-    	this.user = user;
+	public JMenuBar createMenuBar(Window window, WindowPanel windowpanel, User user) {
+		this.window = window;
+		this.windowpanel = windowpanel;
+		this.user = user;
 
-        ListenForButton lForButton = new ListenForButton();
+		ListenForButton lForButton = new ListenForButton();
 
-        
-        //Create the menu bar.
-        menuBar = new JMenuBar();
+		// Create the menu bar.
+		menuBar = new JMenuBar();
 
-        //Build the first menu.
-        menu = new JMenu("Arkiv");
-        menuBar.add(menu);
+		// Build the first menu.
+		menu = new JMenu("Arkiv");
+		menuBar.add(menu);
 
-        //a group of JMenuItems
-        menuReload = new JMenuItem("Ladda om");
-        menu.add(menuReload);
-        menuReload.addActionListener(lForButton);
-        
-        menu.addSeparator();
-        
-        menuAddEvent = new JMenuItem("Lägg till händelse");
-        menu.add(menuAddEvent);
-        menuAddEvent.addActionListener(lForButton);
-        
-        menuEditEvent = new JMenuItem("Redigera ett event");
-        menu.add(menuEditEvent);
-        menuEditEvent.addActionListener(lForButton);
-        
-        menuView = new JMenuItem("Visa vyer");
-        menu.add(menuView);
-        menuView.addActionListener(lForButton);
-        
-        menuAddCalendar = new JMenuItem("Lägg till Kalender");
-        menu.add(menuAddCalendar);
-        menuAddCalendar.addActionListener(lForButton);
-        
-        menu.addSeparator();
-        
-        menuLogout = new JMenuItem("Logga ut");
-        menu.add(menuLogout);
-        menuLogout.addActionListener(lForButton);
+		// a group of JMenuItems
+		menuReload = new JMenuItem("Ladda om");
+		menu.add(menuReload);
+		menuReload.addActionListener(lForButton);
 
-        //a submenu
-        menu.addSeparator();
-        submenu = new JMenu("Extra");
+		menu.addSeparator();
 
-        menuItem = new JMenuItem("*Kommer snart*");
-        submenu.add(menuItem);
+		menuAddEvent = new JMenuItem("Lägg till händelse");
+		menu.add(menuAddEvent);
+		menuAddEvent.addActionListener(lForButton);
 
-        menuItem = new JMenuItem("*Kommer snart*");
-        submenu.add(menuItem);
-        
-        
-        
-        menu.add(submenu);
+		menuEditEvent = new JMenuItem("Redigera en händelse");
+		menu.add(menuEditEvent);
+		menuEditEvent.addActionListener(lForButton);
 
-        return menuBar;
-    }
-    
+		menuSharedEvent = new JMenuItem("Hantera händelse inbjudningar");
+		menu.add(menuSharedEvent);
+		menuSharedEvent.addActionListener(lForButton);
+
+		menuView = new JMenuItem("Visa vyer");
+		menu.add(menuView);
+		menuView.addActionListener(lForButton);
+
+		menuAddCalendar = new JMenuItem("Lägg till Kalender");
+		menu.add(menuAddCalendar);
+		menuAddCalendar.addActionListener(lForButton);
+
+		menuSharedCal = new JMenuItem("Hantera kalender inbjudningar");
+		menu.add(menuSharedCal);
+		menuSharedCal.addActionListener(lForButton);
+
+		menu.addSeparator();
+
+		menuLogout = new JMenuItem("Logga ut");
+		menu.add(menuLogout);
+		menuLogout.addActionListener(lForButton);
+
+		// a submenu
+		menu.addSeparator();
+		submenu = new JMenu("Extra");
+
+		menuItem = new JMenuItem("*Kommer snart*");
+		submenu.add(menuItem);
+
+		menuItem = new JMenuItem("*Kommer snart*");
+		submenu.add(menuItem);
+
+		menu.add(submenu);
+
+		return menuBar;
+	}
 
 	private class ListenForButton implements ActionListener {
 
@@ -148,6 +153,12 @@ public class MenuList {
 			}
 			if (e.getSource() == menuEditEvent) {
 				windowpanel.getDeleteAndEditEventPage();
+			}
+			if (e.getSource() == menuSharedEvent) {
+				windowpanel.getSharedEventPage();
+			}
+			if (e.getSource() == menuSharedCal) {
+				windowpanel.getSharedCalPage();
 			}
 		}
 	}

@@ -24,6 +24,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -49,14 +50,16 @@ public class WindowPanel extends JPanel {
 			centerLeft, centerRight, editEventMain, editEventTop, editEventCenter, editEventLeft, editEventRight;
 
 	private JLabel nameLabel, locationLabel, startTimeLabel, endTimeLabel, eventDescLabel, editEventNameLabel,
-			editEventLocationLabel, editEventStartLabel, editEventEndLabel, editEventDescLabel;
-	private JTextField nameField, locationField, editEventNameField, editEventLocationField, userSearchField;
-	private DefaultListModel listModel;
+			editEventLocationLabel, editEventStartLabel, editEventEndLabel, editEventDescLabel, editEventInfoLabel,
+			eventInfoLabel;
+	private JTextField nameField, locationField, editEventNameField, editEventLocationField, userSearchField,
+			userEditSearchField;
+	private DefaultListModel listModel, editListModel;
 	private Calendar[] calArray, eventCalArray;
-	private JList userList;
+	private JList<Object> userList, userEditList;
 	private Event[] editEventArray;
 	private JButton addEventButton, eventCreate, editEventButton, deleteEventButton, userSearchButton, nextWeekButton,
-			prevWeekButton;
+			prevWeekButton, userEditSearchButton;
 	private JTextArea eventDescArea, editEventDescArea;
 	private JCheckBox fullDayActivity, editFullDayActivity;
 	private JSpinner startTimeSpinner, endTimeSpinner, editStartTimeSpinner, editEndTimeSpinner;
@@ -75,7 +78,7 @@ public class WindowPanel extends JPanel {
 	private StateMachine SM;
 	private CalChooseList calChooseList;
 	private ViewChoice viewChoice;
-	private ArrayList checkList;
+	private ArrayList checkList, checkEditList;
 	private MonthOverview monthOverview;
 	private MonthYearPanel monthYearPanel;
 
@@ -97,6 +100,7 @@ public class WindowPanel extends JPanel {
 		 */
 
 		checkList = new ArrayList();
+		checkEditList = new ArrayList();
 
 		getLoginPage();
 	}
@@ -106,6 +110,7 @@ public class WindowPanel extends JPanel {
 		MenuList menu = new MenuList();
 		window.setJMenuBar(menu.createMenuBar(window, this, user));
 		center.removeAll();
+		gbcLeft = new GridBagConstraints();
 		// Main panel
 		mainPanel = new JPanel();
 		mainPanel.setPreferredSize(new Dimension(1400, 800));
@@ -370,12 +375,23 @@ public class WindowPanel extends JPanel {
 
 		centerEvent.add(centerRight, gbc);
 
+		eventInfoLabel = new JLabel();
+		eventInfoLabel.setText("Bjud in användare!");
+		eventInfoLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+
+		gbcLeft.gridx = 0;
+		gbcLeft.gridy = 0;
+		gbcLeft.insets = new Insets(0, 0, 10, 0);
+		gbcLeft.anchor = GridBagConstraints.WEST;
+
+		centerRight.add(eventInfoLabel, gbcLeft);
+
 		userSearchField = new JTextField();
 		userSearchField.setPreferredSize(new Dimension(300, 30));
 
 		gbcLeft.gridx = 0;
-		gbcLeft.gridy = 0;
-		gbcLeft.insets = new Insets(0, 0, 0, 10);
+		gbcLeft.gridy = 1;
+		gbcLeft.insets = new Insets(0, 0, 10, 10);
 		gbcLeft.anchor = GridBagConstraints.WEST;
 
 		centerRight.add(userSearchField, gbcLeft);
@@ -384,19 +400,21 @@ public class WindowPanel extends JPanel {
 		userSearchButton.setPreferredSize(new Dimension(60, 29));
 
 		gbcLeft.gridx = 1;
-		gbcLeft.gridy = 0;
-		gbcLeft.insets = new Insets(0, 0, 0, 0);
+		gbcLeft.gridy = 1;
+		gbcLeft.insets = new Insets(0, 0, 10, 0);
 		gbcLeft.anchor = GridBagConstraints.WEST;
 
 		centerRight.add(userSearchButton, gbcLeft);
 
 		userList = new JList();
 		listModel = new DefaultListModel();
-		userList.setPreferredSize(new Dimension(300, 300));
+		userList.setPreferredSize(new Dimension(300, 410));
 		userList.setModel(listModel);
 
+		JScrollPane listScrollPane = new JScrollPane(userList);
+
 		gbcLeft.gridx = 0;
-		gbcLeft.gridy = 1;
+		gbcLeft.gridy = 2;
 		gbcLeft.insets = new Insets(0, 0, 10, 0);
 		gbcLeft.anchor = GridBagConstraints.WEST;
 
@@ -618,6 +636,51 @@ public class WindowPanel extends JPanel {
 		// editEventRight.setBackground(new Color(0, 0, 255));
 		editEventRight.setVisible(true);
 
+		editEventInfoLabel = new JLabel();
+		editEventInfoLabel.setText("Bjud in användare!");
+		editEventInfoLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+
+		gbcLeft.gridx = 0;
+		gbcLeft.gridy = 0;
+		gbcLeft.insets = new Insets(0, 0, 10, 0);
+		gbcLeft.anchor = GridBagConstraints.WEST;
+
+		editEventRight.add(editEventInfoLabel, gbcLeft);
+
+		userEditSearchField = new JTextField();
+		userEditSearchField.setPreferredSize(new Dimension(300, 30));
+
+		gbcLeft.gridx = 0;
+		gbcLeft.gridy = 1;
+		gbcLeft.insets = new Insets(0, 0, 10, 10);
+		gbcLeft.anchor = GridBagConstraints.WEST;
+
+		editEventRight.add(userEditSearchField, gbcLeft);
+
+		userEditSearchButton = new JButton("Sök!");
+		userEditSearchButton.setPreferredSize(new Dimension(60, 29));
+
+		gbcLeft.gridx = 1;
+		gbcLeft.gridy = 1;
+		gbcLeft.insets = new Insets(0, 0, 10, 0);
+		gbcLeft.anchor = GridBagConstraints.WEST;
+
+		editEventRight.add(userEditSearchButton, gbcLeft);
+
+		userEditList = new JList();
+		editListModel = new DefaultListModel();
+		userEditList.setModel(editListModel);
+		userEditList.setPreferredSize(new Dimension(300, 410));
+
+		JScrollPane listScrollPane = new JScrollPane(userEditList);
+
+		gbcLeft.gridx = 0;
+		gbcLeft.gridy = 2;
+		gbcLeft.insets = new Insets(0, 0, 10, 0);
+		gbcLeft.anchor = GridBagConstraints.WEST;
+
+		editEventRight.add(userEditList, gbcLeft);
+
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		gbc.insets = new Insets(0, 0, 0, 0);
@@ -816,6 +879,7 @@ public class WindowPanel extends JPanel {
 		editEventDropDown.addActionListener(lForButton);
 		editEventButton.addActionListener(lForButton);
 		deleteEventButton.addActionListener(lForButton);
+		userEditSearchButton.addActionListener(lForButton);
 		gbc.insets = new Insets(0, 0, 0, 0);
 
 	}
@@ -876,8 +940,35 @@ public class WindowPanel extends JPanel {
 		upperRightPanel.updateUI();
 	}
 
+	public void getSharedEventPage() {
+		rightPanel.removeAll();
+		rightPanel.add(new SharedEventView(this));
+		rightPanel.updateUI();
+	}
+
+	public void getSharedCalPage() {
+		rightPanel.removeAll();
+		rightPanel.add(new SharedCalView(this));
+		rightPanel.updateUI();
+	}
+
 	public void sendUser(User user) {
+
 		this.user = user;
+	}
+
+	public String addZero(int value) {
+		if (value <= 9) {
+			if (value == 0) {
+				return "01";
+			} else {
+				return "0" + value;
+			}
+
+		} else {
+			return "" + value;
+		}
+
 	}
 
 	private class ListenForButton implements ActionListener {
@@ -1016,6 +1107,22 @@ public class WindowPanel extends JPanel {
 
 			}
 
+			if (e.getSource() == userEditSearchButton) {
+				String inputEditSearch = userEditSearchField.getText();
+				Object[][] inputEditResult = SQLManager.searchForUser(inputEditSearch);
+
+				editListModel.removeAllElements();
+
+				for (int i = 0; i < inputEditResult.length; i++) {
+
+					editListModel.addElement(inputEditResult[i][1]);
+
+					checkEditList.add(inputEditResult[i][0]);
+
+					System.out.println(inputEditResult[i][0]);
+				}
+			}
+
 			if (e.getSource() == editEventButton) {
 
 				String inputEventName = editEventNameField.getText();
@@ -1035,7 +1142,7 @@ public class WindowPanel extends JPanel {
 				String formatStartDate = "";
 				String formatEndDate = "";
 
-				if (fullDayActivity.isSelected()) {
+				if (editFullDayActivity.isSelected()) {
 
 					inputFullDayEvent = 1;
 
@@ -1047,9 +1154,10 @@ public class WindowPanel extends JPanel {
 					inputEventEndMonth = editEndDatePicker.getModel().getMonth();
 					inputEventEndDay = editEndDatePicker.getModel().getDay();
 
-					formatStartDate = inputEventStartYear + "-" + inputEventStartMonth + "-" + inputEventStartDay
+					formatStartDate = inputEventStartYear + "-" + addZero(inputEventStartMonth) + "-"
+							+ inputEventStartDay + " 01:01:01";
+					formatEndDate = inputEventEndYear + "-" + addZero(inputEventEndMonth) + "-" + inputEventEndDay
 							+ " 01:01:01";
-					formatEndDate = inputEventEndYear + "-" + inputEventEndMonth + "-" + inputEventEndDay + " 01:01:01";
 				} else {
 
 					inputFullDayEvent = 0;
@@ -1065,9 +1173,9 @@ public class WindowPanel extends JPanel {
 					inputEventStartTime = editStartTimeEditor.getFormat().format(editStartTimeSpinner.getValue());
 					inputEventEndTime = editEndTimeEditor.getFormat().format(editEndTimeSpinner.getValue());
 
-					formatStartDate = inputEventStartYear + "-" + inputEventStartMonth + "-" + inputEventStartDay + " "
-							+ inputEventStartTime + ":01";
-					formatEndDate = inputEventEndYear + "-" + inputEventEndMonth + "-" + inputEventEndDay + " "
+					formatStartDate = inputEventStartYear + "-" + addZero(inputEventStartMonth) + "-"
+							+ inputEventStartDay + " " + inputEventStartTime + ":01";
+					formatEndDate = inputEventEndYear + "-" + addZero(inputEventEndMonth) + "-" + inputEventEndDay + " "
 							+ inputEventEndTime + ":01";
 				}
 
@@ -1084,6 +1192,20 @@ public class WindowPanel extends JPanel {
 						inputEventId, formatStartDate, formatEndDate);
 
 				user.reloadarrays();
+
+				if (editListModel.size() > 0) {
+					for (int i = 0; i < userEditList.getSelectedIndices().length; i++) {
+
+						Object selectedUserId = checkEditList.get(userEditList.getSelectedIndices()[i]);
+						int tempSelectedUserId = Integer.parseInt((String) selectedUserId);
+						// System.out.println(
+						// tempSelectedUserId + " ---------------------- Users
+						// id ------------------------ ");
+
+						SQLManager.sendEventInvite(tempSelectedUserId);
+
+					}
+				}
 
 				getDeleteAndEditEventPage();
 
@@ -1219,10 +1341,8 @@ public class WindowPanel extends JPanel {
 						inputCreateEventForCalendarId, formatStartDate, formatEndDate);
 
 				user.reloadarrays();
-				
-				
 
-				// Send invite request if invites were there
+				// Send invite request to people in the list
 
 				if (listModel.size() > 0) {
 					for (int i = 0; i < userList.getSelectedIndices().length; i++) {

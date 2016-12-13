@@ -56,7 +56,7 @@ public class NotificationView extends JPanel {
 			gbc.gridx = 0;
 			gbc.gridy = 0;
 			gbc.insets = new Insets(0, 0, 10, 0);
-			//gbc.anchor = GridBagConstraints.WEST;
+			// gbc.anchor = GridBagConstraints.WEST;
 
 			main.add(nextEventLabel, gbc);
 
@@ -66,7 +66,7 @@ public class NotificationView extends JPanel {
 			gbc.gridx = 0;
 			gbc.gridy = 1;
 			gbc.insets = new Insets(0, 0, 10, 10);
-			//gbc.anchor = GridBagConstraints.WEST;
+			// gbc.anchor = GridBagConstraints.WEST;
 
 			main.add(generalEventName, gbc);
 
@@ -76,7 +76,7 @@ public class NotificationView extends JPanel {
 			gbc.gridx = 1;
 			gbc.gridy = 1;
 			gbc.insets = new Insets(0, 0, 10, 10);
-			//gbc.anchor = GridBagConstraints.WEST;
+			// gbc.anchor = GridBagConstraints.WEST;
 
 			main.add(eventNameLabel, gbc);
 
@@ -86,7 +86,7 @@ public class NotificationView extends JPanel {
 			gbc.gridx = 0;
 			gbc.gridy = 2;
 			gbc.insets = new Insets(0, 0, 10, 10);
-			//gbc.anchor = GridBagConstraints.WEST;
+			// gbc.anchor = GridBagConstraints.WEST;
 
 			main.add(eventStartLabel, gbc);
 
@@ -96,7 +96,7 @@ public class NotificationView extends JPanel {
 			gbc.gridx = 1;
 			gbc.gridy = 2;
 			gbc.insets = new Insets(0, 0, 10, 10);
-			//gbc.anchor = GridBagConstraints.WEST;
+			// gbc.anchor = GridBagConstraints.WEST;
 
 			main.add(eventStartTime, gbc);
 
@@ -106,7 +106,7 @@ public class NotificationView extends JPanel {
 			gbc.gridx = 0;
 			gbc.gridy = 3;
 			gbc.insets = new Insets(0, 0, 10, 10);
-			//gbc.anchor = GridBagConstraints.WEST;
+			// gbc.anchor = GridBagConstraints.WEST;
 
 			main.add(eventEndLabel, gbc);
 
@@ -116,7 +116,7 @@ public class NotificationView extends JPanel {
 			gbc.gridx = 1;
 			gbc.gridy = 3;
 			gbc.insets = new Insets(0, 0, 0, 10);
-			//gbc.anchor = GridBagConstraints.WEST;
+			// gbc.anchor = GridBagConstraints.WEST;
 
 			main.add(eventEndTime, gbc);
 		}

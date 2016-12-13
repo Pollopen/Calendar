@@ -11,7 +11,7 @@ import views.WindowPanel;
 public class SQLManager {
 	private static JavaDB db = new JavaDB();
 	private static User user;
-	private static int tempEventId;
+	private static int tempEventId, tempCalId;
 
 	public static boolean checkLogin(String emailfield, char[] passfield, Window window, WindowPanel windowpanel) {
 		String loginPassHashed = "";
@@ -103,6 +103,9 @@ public class SQLManager {
 	}
 
 	public static boolean editCalendar(int calId, String calName, String calDesc) {
+
+		tempCalId = calId;
+
 		String SQL = "UPDATE calendar SET name='" + calName + "', description='" + calDesc + "' WHERE cal_id= '" + calId
 				+ "'";
 		db.execute(SQL);
@@ -132,9 +135,9 @@ public class SQLManager {
 
 		db.execute(SQL);
 
-		SQL = "SELECT MAX(event_id) FROM event WHERE cal_id = '" + inputCreateEventForCalendarId + "' AND creator_id = '"
-				+ user.getId() + "' AND name = '" + inputEventName + "' AND description = '" + inputEventTextArea
-				+ "' AND start_time = '" + formatStartDate + "' AND end_time = '" + formatEndDate
+		SQL = "SELECT MAX(event_id) FROM event WHERE cal_id = '" + inputCreateEventForCalendarId
+				+ "' AND creator_id = '" + user.getId() + "' AND name = '" + inputEventName + "' AND description = '"
+				+ inputEventTextArea + "' AND start_time = '" + formatStartDate + "' AND end_time = '" + formatEndDate
 				+ "' AND notification = 1 AND full_day = '" + inputFullDayEvent + "'";
 
 		Object[][] data = db.getData(SQL);
@@ -151,12 +154,90 @@ public class SQLManager {
 		return true;
 	}
 
+	public static Object[][] getSharedEvent() {
+
+		String SQL = "SELECT shared_event.se_id, shared_event.event_id, shared_event.user_id, event.creator_id, shared_event.created, event.name FROM shared_event LEFT JOIN event ON shared_event.event_id = event.event_id WHERE shared_event.user_id = "
+				+ user.getId() + " AND accepted = 0";
+
+		Object[][] data = db.getData(SQL);
+
+		db.execute(SQL);
+
+		return data;
+	}
+
+	public static Object[][] getSharedCal() {
+
+		String SQL = "SELECT shared_calendar.sc_id, shared_calendar.cal_id, shared_calendar.user_id, calendar.creator_id, shared_calendar.created, calendar.name FROM shared_calendar LEFT JOIN calendar ON shared_calendar.cal_id = calendar.cal_id WHERE shared_calendar.user_id = "
+				+ user.getId() + " AND accepted = 0";
+
+		Object[][] data = db.getData(SQL);
+
+		db.execute(SQL);
+
+		return data;
+	}
+
+	public static boolean acceptSharedEvent(int buttonId) {
+
+		String SQL = "UPDATE shared_event SET accepted = 1 WHERE se_id = " + buttonId;
+
+		db.execute(SQL);
+
+		return true;
+	}
+
+	public static boolean declineSharedEvent(int buttonId) {
+
+		String SQL = "DELETE FROM shared_event WHERE se_id = " + buttonId;
+
+		db.execute(SQL);
+
+		return true;
+
+	}
+
+	public static boolean acceptSharedCal(int buttonId) {
+
+		String SQL = "UPDATE shared_calendar SET accepted = 1 WHERE sc_id = " + buttonId;
+
+		db.execute(SQL);
+
+		return true;
+	}
+
+	public static boolean declineSharedCal(int buttonId) {
+
+		String SQL = "DELETE FROM shared_calendar WHERE sc_id = " + buttonId;
+
+		db.execute(SQL);
+
+		return true;
+
+	}
+
 	public static boolean editEvent(String inputEventName, String inputEventLocation, String inputEventTextArea,
 			int inputFullDayEvent, int inputEventId, String formatStartDate, String formatEndDate) {
 
 		String SQL = "UPDATE event SET name = '" + inputEventName + "', location = '" + inputEventLocation
 				+ "', description = '" + inputEventTextArea + "', start_time = '" + formatStartDate + "', end_time = '"
 				+ formatEndDate + "' WHERE event_id = " + inputEventId;
+
+		db.execute(SQL);
+
+		SQL = "SELECT MAX(event_id) FROM event WHERE creator_id = '" + user.getId() + "' AND name = '" + inputEventName
+				+ "' AND description = '" + inputEventTextArea + "' AND start_time = '" + formatStartDate
+				+ "' AND end_time = '" + formatEndDate + "' AND notification = 1 AND full_day = '" + inputFullDayEvent
+				+ "'";
+
+		Object[][] data = db.getData(SQL);
+
+		for (int i = 0; i < data.length; i++) {
+			tempEventId = Integer.parseInt((String) data[0][0]);
+
+			System.out.println(tempEventId + " AYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY ");
+
+		}
 
 		db.execute(SQL);
 		return true;
@@ -190,6 +271,16 @@ public class SQLManager {
 	public static boolean sendEventInvite(int tempSelectedUserId) {
 
 		String SQL = "INSERT INTO shared_event(event_id, user_id, accepted, notification) VALUES('" + tempEventId
+				+ "', '" + tempSelectedUserId + "', '0', '1')";
+
+		db.execute(SQL);
+
+		return true;
+	}
+
+	public static boolean sendCalInvite(int tempSelectedUserId) {
+
+		String SQL = "INSERT INTO shared_calendar(cal_id, user_id, accepted, notification) VALUES('" + tempCalId
 				+ "', '" + tempSelectedUserId + "', '0', '1')";
 
 		db.execute(SQL);
