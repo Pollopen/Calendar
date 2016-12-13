@@ -410,8 +410,8 @@ public class WindowPanel extends JPanel {
 		listModel = new DefaultListModel();
 		userList.setPreferredSize(new Dimension(300, 410));
 		userList.setModel(listModel);
-		
-		 JScrollPane listScrollPane = new JScrollPane(userList);
+
+		JScrollPane listScrollPane = new JScrollPane(userList);
 
 		gbcLeft.gridx = 0;
 		gbcLeft.gridy = 2;
@@ -671,7 +671,7 @@ public class WindowPanel extends JPanel {
 		editListModel = new DefaultListModel();
 		userEditList.setModel(editListModel);
 		userEditList.setPreferredSize(new Dimension(300, 410));
-		
+
 		JScrollPane listScrollPane = new JScrollPane(userEditList);
 
 		gbcLeft.gridx = 0;
@@ -958,10 +958,17 @@ public class WindowPanel extends JPanel {
 	}
 
 	public String addZero(int value) {
-		if (value <= 9)
-			return "0" + value;
-		else
+		if (value <= 9) {
+			if (value == 0) {
+				return "01";
+			} else {
+				return "0" + value;
+			}
+
+		} else {
 			return "" + value;
+		}
+
 	}
 
 	private class ListenForButton implements ActionListener {
