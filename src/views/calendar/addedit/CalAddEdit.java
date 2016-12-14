@@ -398,8 +398,6 @@ public class CalAddEdit extends JPanel {
 
 					checkList.add(inputEditResult[i][0]);
 
-					System.out.println(inputEditResult[i][0]);
-
 				}
 
 			}
@@ -408,9 +406,6 @@ public class CalAddEdit extends JPanel {
 			if (e.getSource() == calSaveButton) {
 				String temp1 = calEditNameField.getText();
 				String temp2 = calEditDescTextArea.getText();
-				System.out.println("save kommand");
-				System.out.println(temp1);
-				System.out.println(temp2);
 				if (SQLManager.editCalendar(calArray[SM.getCalEditStatus()].getCal_id(), temp1, temp2,window)) {
 
 					if (listModel.size() > 0) {
@@ -418,8 +413,6 @@ public class CalAddEdit extends JPanel {
 
 							Object selectedUserId = checkList.get(userList.getSelectedIndices()[i]);
 							int tempSelectedUserId = Integer.parseInt((String) selectedUserId);
-							System.out.println(
-									tempSelectedUserId + " ---------------------- Users id ------------------------ ");
 
 							SQLManager.sendCalInvite(tempSelectedUserId);
 
@@ -434,7 +427,6 @@ public class CalAddEdit extends JPanel {
 
 			}
 			if (e.getSource() == calRemoveButton) {
-				System.out.println("ta bort command");
 				if (SQLManager.removeCalendar(calArray[SM.getCalEditStatus()].getCal_id())) {
 					user.reloadarrays();
 					wp.getAddCalendarPage();
@@ -445,9 +437,6 @@ public class CalAddEdit extends JPanel {
 			if (e.getSource() == calAddButton) {
 				String temp1 = calAddNameField.getText();
 				String temp2 = calAddDescTextArea.getText();
-				System.out.println("*");
-				System.out.println(temp1);
-				System.out.println(temp2);
 				if (SQLManager.addCalendar(window, temp1, temp2)) {
 					addCalCenterLeft.removeAll();
 					user.reloadarrays();

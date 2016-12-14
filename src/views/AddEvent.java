@@ -404,7 +404,6 @@ public class AddEvent extends JPanel {
 
 					checklist.add(inputResult[i][0]);
 
-					System.out.println(inputResult[i][0]);
 				}
 			}
 
@@ -528,7 +527,9 @@ public class AddEvent extends JPanel {
 				if (checkFields == true) {
 					SQLManager.addEvent(inputEventName, inputEventLocation, inputEventTextArea, inputFullDayEvent,
 							inputCreateEventForCalendarId, formatStartDate, formatEndDate);
-					
+
+					// Send invite request to people in the list
+
 					if (listModel.size() > 0) {
 						for (int i = 0; i < userList.getSelectedIndices().length; i++) {
 
@@ -548,10 +549,6 @@ public class AddEvent extends JPanel {
 					wp.getViewViewer();
 
 				}
-
-				// Send invite request to people in the list
-
-				
 
 			}
 

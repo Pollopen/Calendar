@@ -40,7 +40,6 @@ public class OverviewDayButton extends JButton implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
-		System.out.println(date);
 		SM.setEasyDate(date);
 		wp.getViewViewer();
 		wp.getViewChoice();

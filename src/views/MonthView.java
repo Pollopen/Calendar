@@ -134,8 +134,7 @@ public class MonthView extends JPanel {
 					if (filteredEventArray[i].getFullDay() == 1) {
 						if (tempFullDayEvents == 1) {
 
-							tempJP.add(new EventButton(filteredEventArray[i].getName(), filteredEventArray[i], wp, SM,
-									user), BorderLayout.PAGE_END);
+							tempJP.add(new EventButton(filteredEventArray[i].getName(), filteredEventArray[i], wp, SM, user), BorderLayout.PAGE_END);
 
 						} else if (tempFullDayEvents >= 2) {
 							// tempJP.add(new JButton("..."),
@@ -265,13 +264,7 @@ public class MonthView extends JPanel {
 			String eventStartChecker = (ea[i].getStart_time()).substring(0, 4)
 					+ (ea[i].getStart_time()).substring(5, 7);
 			String eventEndChecker = (ea[i].getEnd_time()).substring(0, 4) + (ea[i].getEnd_time()).substring(5, 7);
-			if (monthChecker.equals(eventStartChecker) || monthChecker.equals(eventEndChecker)
-					|| checkForLongEvent(monthChecker, eventStartChecker, eventEndChecker)) {// is
-																								// this
-																								// event
-																								// in
-																								// this
-																								// month?
+			if (monthChecker.equals(eventStartChecker) || monthChecker.equals(eventEndChecker)|| checkForLongEvent(monthChecker, eventStartChecker, eventEndChecker)) {// is
 				int[] aca = SM.getActiveCalendars();
 				for (int j = 0; j < aca.length; j++) {// If calendar is active
 					if (ca[aca[j]].getCal_id() == ea[i].getCal_id()) {
@@ -283,28 +276,24 @@ public class MonthView extends JPanel {
 		filteredList = new Event[matchNumber];
 		int k = 0;
 		for (int i = 0; i < ea.length; i++) {
-			String eventStartChecker = (ea[i].getStart_time()).substring(0, 4)
-					+ (ea[i].getStart_time()).substring(5, 7);
-			String eventEndChecker = (ea[i].getEnd_time()).substring(0, 4) + (ea[i].getEnd_time()).substring(5, 7);
-			if (monthChecker.equals(eventStartChecker) || monthChecker.equals(eventEndChecker)
-					|| checkForLongEvent(monthChecker, eventStartChecker, eventEndChecker)) {// is
-																								// this
-																								// event
-																								// in
-																								// this
-																								// month?
-				int[] aca = SM.getActiveCalendars();
-				for (int j = 0; j < aca.length; j++) {// If calendar is active
-					if (ca[aca[j]].getCal_id() == ea[i].getCal_id()) {
-						Event tempEvent = ea[i];
-						tempEvent.setColorNum(j);
-						filteredList[k] = tempEvent;
+			String eventStartChecker=(ea[i].getStart_time()).substring(0, 4)+(ea[i].getStart_time()).substring(5, 7);
+			String eventEndChecker=(ea[i].getEnd_time()).substring(0, 4)+(ea[i].getEnd_time()).substring(5, 7);
+			if(monthChecker.equals(eventStartChecker)||monthChecker.equals(eventEndChecker)||checkForLongEvent(monthChecker, eventStartChecker, eventEndChecker)){//is this event in this month?
+				int[] aca=SM.getActiveCalendars();
+				for (int j = 0; j < aca.length; j++) {//If calendar is active
+					if(ca[aca[j]].getCal_id()==ea[i].getCal_id()){
+						Event tempEvent=ea[i];
+						tempEvent.setColorNum(SM.getIndexOfCal(ca,ca[aca[j]].getCal_id()));
+						filteredList[k]=tempEvent;
 						k++;
 					}
+
 				}
+
 			}
 		}
 		return filteredList;
 	}
+
 
 }
