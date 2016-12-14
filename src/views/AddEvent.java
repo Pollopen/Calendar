@@ -8,6 +8,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.Properties;
 
 import javax.swing.DefaultListModel;
@@ -16,6 +17,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -28,6 +30,7 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import controller.DateLabelFormatter;
+import controller.StateMachine;
 import database.SQLManager;
 import object.Calendar;
 import object.Event;
@@ -52,17 +55,24 @@ public class AddEvent extends JPanel {
 	private Properties startProperties, endProperties;
 	private GridBagConstraints gbc, gbcLeft;
 	private JComboBox<String> calDropDown;
+	private boolean checkFields;
 	private String eventCreateCalArray;
+	private GregorianCalendar startGregCal, endGregCal;
 	private ArrayList checklist;
 	private User user;
 	private Event event;
+	private StateMachine SM;
 	private WindowPanel wp;
 
-	public AddEvent(User user, Event event, WindowPanel wp) {
+	public AddEvent(User user, Event event, WindowPanel wp, StateMachine SM) {
 
 		this.user = user;
 		this.event = event;
 		this.wp = wp;
+		this.SM = SM;
+
+		startGregCal = new GregorianCalendar();
+		endGregCal = new GregorianCalendar();
 
 		checklist = new ArrayList();
 
@@ -347,8 +357,27 @@ public class AddEvent extends JPanel {
 
 		centerLeft.add(eventDescArea, gbc);
 
-		// rightPanel.updateUI();
-		
+		String tempDate = SM.getFocusedDate();
+
+		String tempStartDateYear = tempDate.substring(0, 4);
+		String tempStartDateMonth = tempDate.substring(5, 7);
+		String tempStartDateDay = tempDate.substring(8, 10);
+
+		startDatePicker.setPreferredSize(new Dimension(202, 30));
+		startDatePicker.getModel().setYear(Integer.parseInt(tempStartDateYear));
+		startDatePicker.getModel().setMonth(Integer.parseInt(tempStartDateMonth) - 1);
+		startDatePicker.getModel().setDay(Integer.parseInt(tempStartDateDay));
+		startDatePicker.getModel().setSelected(true);
+
+		endDatePicker.setPreferredSize(new Dimension(202, 30));
+		endDatePicker.getModel().setYear(Integer.parseInt(tempStartDateYear));
+		endDatePicker.getModel().setMonth(Integer.parseInt(tempStartDateMonth) - 1);
+		endDatePicker.getModel().setDay(Integer.parseInt(tempStartDateDay));
+		endDatePicker.getModel().setSelected(true);
+
+		startTimeSpinner.setValue(startGregCal.getTime());
+		endTimeSpinner.setValue(endGregCal.getTime());
+
 		ListenForButton lForButton = new ListenForButton();
 
 		fullDayActivity.addActionListener(lForButton);
@@ -402,8 +431,20 @@ public class AddEvent extends JPanel {
 
 			if (e.getSource() == eventCreate) {
 
+				checkFields = true;
+
 				String inputEventName = nameField.getText();
+				if (inputEventName.length() < 1) {
+					JOptionPane.showMessageDialog(null, "Eventets namn måste vara minst 2 bokstäver långt!");
+					checkFields = false;
+				}
+
 				String inputEventLocation = locationField.getText();
+				if (inputEventLocation.length() < 1) {
+					JOptionPane.showMessageDialog(null, "Eventets plats måste vara minst två bokstäver långt!");
+					checkFields = false;
+				}
+
 				String inputEventTextArea = eventDescArea.getText();
 				int inputFullDayEvent;
 				int inputEventStartDay = 0;
@@ -431,6 +472,14 @@ public class AddEvent extends JPanel {
 					inputEventEndMonth = endDatePicker.getModel().getMonth();
 					inputEventEndDay = endDatePicker.getModel().getDay();
 
+					int checkStart = inputEventStartYear + inputEventStartMonth + inputEventStartDay;
+					int checkEnd = inputEventEndYear + inputEventEndMonth + inputEventEndDay;
+
+					if (checkStart > checkEnd) {
+						JOptionPane.showMessageDialog(null, "Eventet kan inte sluta innan det börjat!");
+						checkFields = false;
+					}
+
 					formatStartDate = inputEventStartYear + "-" + (inputEventStartMonth + 1) + "-" + inputEventStartDay
 							+ " 01:01:01";
 					formatEndDate = inputEventEndYear + "-" + (inputEventEndMonth + 1) + "-" + inputEventEndDay
@@ -450,46 +499,59 @@ public class AddEvent extends JPanel {
 					inputEventStartTime = startTimeEditor.getFormat().format(startTimeSpinner.getValue());
 					inputEventEndTime = endTimeEditor.getFormat().format(endTimeSpinner.getValue());
 
+					int checkStart = inputEventStartYear + inputEventStartMonth + inputEventStartDay;
+					int checkEnd = inputEventEndYear + inputEventEndMonth + inputEventEndDay;
+
+					int checkStartTime = Integer.parseInt(inputEventStartTime.substring(0, 2))
+							+ Integer.parseInt(inputEventStartTime.substring(3, 5));
+					int checkEndTime = Integer.parseInt(inputEventEndTime.substring(0, 2))
+							+ Integer.parseInt(inputEventEndTime.substring(3, 5));
+
+					if (checkEnd < checkStart) {
+						JOptionPane.showMessageDialog(null, "Eventet kan inte sluta innan det börjat!");
+						checkFields = false;
+					}
+
+					if (checkEnd == checkStart) {
+						if (checkEndTime <= checkStartTime) {
+							JOptionPane.showMessageDialog(null, "Eventet kan inte sluta innan det börjat!");
+							checkFields = false;
+						}
+					}
+
 					formatStartDate = inputEventStartYear + "-" + (inputEventStartMonth + 1) + "-" + inputEventStartDay
 							+ " " + inputEventStartTime + ":01";
 					formatEndDate = inputEventEndYear + "-" + (inputEventEndMonth + 1) + "-" + inputEventEndDay + " "
 							+ inputEventEndTime + ":01";
 				}
 
-				// System.out.println(inputEventStartDay);
-				// System.out.println(inputEventStartMonth);
-				// System.out.println(inputEventStartYear);
+				if (checkFields == true) {
+					SQLManager.addEvent(inputEventName, inputEventLocation, inputEventTextArea, inputFullDayEvent,
+							inputCreateEventForCalendarId, formatStartDate, formatEndDate);
+					
+					if (listModel.size() > 0) {
+						for (int i = 0; i < userList.getSelectedIndices().length; i++) {
 
-				// System.out.println("Start date: " + formatStartDate);
-				// System.out.println("End date: " + formatEndDate);
-				//
-				// System.out.println(inputCreateEventForCalendarId);
+							Object selectedUserId = checklist.get(userList.getSelectedIndices()[i]);
+							int tempSelectedUserId = Integer.parseInt((String) selectedUserId);
+							System.out.println(
+									tempSelectedUserId + " ---------------------- Users id ------------------------ ");
 
-				// Create the event
+							SQLManager.sendEventInvite(tempSelectedUserId);
 
-				SQLManager.addEvent(inputEventName, inputEventLocation, inputEventTextArea, inputFullDayEvent,
-						inputCreateEventForCalendarId, formatStartDate, formatEndDate);
+							wp.getNotificationPage();
 
-				user.reloadarrays();
+						}
+					}
+
+					user.reloadarrays();
+					wp.getViewViewer();
+
+				}
 
 				// Send invite request to people in the list
 
-				if (listModel.size() > 0) {
-					for (int i = 0; i < userList.getSelectedIndices().length; i++) {
-
-						Object selectedUserId = checklist.get(userList.getSelectedIndices()[i]);
-						int tempSelectedUserId = Integer.parseInt((String) selectedUserId);
-						System.out.println(
-								tempSelectedUserId + " ---------------------- Users id ------------------------ ");
-
-						SQLManager.sendEventInvite(tempSelectedUserId);
-
-					}
-				}
 				
-				wp.getAddEventPage();
-
-				wp.getNotificationPage();
 
 			}
 

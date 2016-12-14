@@ -249,7 +249,7 @@ public class WindowPanel extends JPanel {
 	public void getAddEventPage() {
 
 		rightPanel.removeAll();
-		rightPanel.add(new AddEvent(user, null, this));
+		rightPanel.add(new AddEvent(user, null, this, SM));
 		rightPanel.updateUI();
 
 	}

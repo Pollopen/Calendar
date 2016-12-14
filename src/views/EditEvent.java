@@ -17,6 +17,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -58,6 +59,7 @@ public class EditEvent extends JPanel {
 	private GregorianCalendar editStartGregCal, editEndGregCal;
 	private WindowPanel wp;
 	private User user;
+	private boolean checkFields;
 	private Event event;
 	private ArrayList checkEditList;
 
@@ -66,7 +68,7 @@ public class EditEvent extends JPanel {
 		this.wp = wp;
 		this.user = user;
 		this.event = event;
-		
+
 		editStartGregCal = new GregorianCalendar();
 		editEndGregCal = new GregorianCalendar();
 
@@ -171,20 +173,20 @@ public class EditEvent extends JPanel {
 
 		editEventCenter.add(editEventRight, gbc);
 
-//		editEventArray = user.getEventArray();
-//		editEventDropDown = new JComboBox<String>();
-//
-//		for (int i = 0; i < editEventArray.length; i++) {
-//			editEventObjectArray = editEventArray[i].getName();
-//			editEventDropDown.addItem(editEventObjectArray);
-//		}
-//
-//		gbcLeft.gridx = 0;
-//		gbcLeft.gridy = 0;
-//		gbcLeft.insets = new Insets(0, 0, 0, 10);
-//		gbcLeft.anchor = GridBagConstraints.WEST;
-//
-//		editEventTop.add(editEventDropDown, gbcLeft);
+		// editEventArray = user.getEventArray();
+		// editEventDropDown = new JComboBox<String>();
+		//
+		// for (int i = 0; i < editEventArray.length; i++) {
+		// editEventObjectArray = editEventArray[i].getName();
+		// editEventDropDown.addItem(editEventObjectArray);
+		// }
+		//
+		// gbcLeft.gridx = 0;
+		// gbcLeft.gridy = 0;
+		// gbcLeft.insets = new Insets(0, 0, 0, 10);
+		// gbcLeft.anchor = GridBagConstraints.WEST;
+		//
+		// editEventTop.add(editEventDropDown, gbcLeft);
 
 		gbcLeft.gridx = 1;
 		gbcLeft.gridy = 0;
@@ -350,8 +352,7 @@ public class EditEvent extends JPanel {
 		gbc.insets = new Insets(0, 0, 10, 0);
 
 		editEventLeft.add(editEventDescArea, gbc);
-		
-		
+
 		String inputEditEventName = event.getName();
 		String inputEditEventLocation = event.getLoc();
 		String inputEditEventTextArea = event.getDescription();
@@ -359,7 +360,7 @@ public class EditEvent extends JPanel {
 		String tempEventEnd = event.getEnd_time();
 		int inputEventFullDay = event.getFullDay();
 		boolean inputTempBool = false;
-		
+
 		String tempStartDateYear = tempEventStart.substring(0, 4);
 		String tempStartDateMonth = tempEventStart.substring(5, 7);
 		String tempStartDateDay = tempEventStart.substring(8, 10);
@@ -387,7 +388,6 @@ public class EditEvent extends JPanel {
 
 		editEndGregCal.set(java.util.Calendar.HOUR_OF_DAY, Integer.parseInt(tempEndTimeHour));
 		editEndGregCal.set(java.util.Calendar.MINUTE, Integer.parseInt(tempEndTimeMinute));
-		
 
 		if (inputEventFullDay == 0) {
 			inputTempBool = false;
@@ -445,8 +445,6 @@ public class EditEvent extends JPanel {
 			editEventLeft.updateUI();
 
 		}
-		
-		
 
 		ListenForButton lForButton = new ListenForButton();
 
@@ -456,28 +454,6 @@ public class EditEvent extends JPanel {
 		userEditSearchButton.addActionListener(lForButton);
 		gbc.insets = new Insets(0, 0, 0, 0);
 
-	}
-	
-	public String fixDate(String value, int fullDay) {
-		
-		String year = value.substring(0, 4);
-		String month = value.substring(5, 7);
-		String day = value.substring(8, 10);
-		String hour = value.substring(11, 13);
-		String minute = value.substring(14, 16);
-		
-		String formatDate = "";
-		
-		if(fullDay == 0) {
-			
-		} else {
-			
-		}
-		
-		
-		
-		return minute;
-		
 	}
 
 	public String addZero(int value) {
@@ -539,8 +515,19 @@ public class EditEvent extends JPanel {
 
 			if (e.getSource() == editEventButton) {
 
+				checkFields = true;
+
 				String inputEventName = editEventNameField.getText();
+				if (inputEventName.length() < 1) {
+					JOptionPane.showMessageDialog(null, "Eventets namn måste vara minst 2 bokstäver långt!");
+					checkFields = false;
+				}
 				String inputEventLocation = editEventLocationField.getText();
+				if (inputEventLocation.length() < 1) {
+					JOptionPane.showMessageDialog(null,
+							"Eventets plats måste vara minst 2 bokstäver långt!" + "event: " + inputEventLocation);
+					checkFields = false;
+				}
 				String inputEventTextArea = editEventDescArea.getText();
 				int inputFullDayEvent;
 				int inputEventStartDay = 0;
@@ -568,6 +555,14 @@ public class EditEvent extends JPanel {
 					inputEventEndMonth = editEndDatePicker.getModel().getMonth();
 					inputEventEndDay = editEndDatePicker.getModel().getDay();
 
+					int checkStart = inputEventStartYear + inputEventStartMonth + inputEventStartDay;
+					int checkEnd = inputEventEndYear + inputEventEndMonth + inputEventEndDay;
+
+					if (checkStart > checkEnd) {
+						JOptionPane.showMessageDialog(null, "Eventet kan inte sluta innan det börjat!");
+						checkFields = false;
+					}
+
 					formatStartDate = inputEventStartYear + "-" + addZero((inputEventStartMonth + 1)) + "-"
 							+ inputEventStartDay + " 01:01:01";
 					formatEndDate = inputEventEndYear + "-" + addZero((inputEventEndMonth + 1)) + "-" + inputEventEndDay
@@ -587,16 +582,40 @@ public class EditEvent extends JPanel {
 					inputEventStartTime = editStartTimeEditor.getFormat().format(editStartTimeSpinner.getValue());
 					inputEventEndTime = editEndTimeEditor.getFormat().format(editEndTimeSpinner.getValue());
 
+					int checkStart = inputEventStartYear + inputEventStartMonth + inputEventStartDay;
+					int checkEnd = inputEventEndYear + inputEventEndMonth + inputEventEndDay;
+
+					int checkStartTime = Integer.parseInt(inputEventStartTime.substring(0, 2))
+							+ Integer.parseInt(inputEventStartTime.substring(3, 5));
+					int checkEndTime = Integer.parseInt(inputEventEndTime.substring(0, 2))
+							+ Integer.parseInt(inputEventEndTime.substring(3, 5));
+
+					if (checkEnd < checkStart) {
+						JOptionPane.showMessageDialog(null, "Eventet kan inte sluta innan det börjat!");
+						checkFields = false;
+					}
+
+					if (checkEnd == checkStart) {
+						if (checkEndTime <= checkStartTime) {
+							JOptionPane.showMessageDialog(null, "Eventet kan inte sluta innan det börjat!");
+							checkFields = false;
+						}
+					}
+
 					formatStartDate = inputEventStartYear + "-" + addZero((inputEventStartMonth + 1)) + "-"
 							+ inputEventStartDay + " " + inputEventStartTime + ":01";
-					formatEndDate = inputEventEndYear + "-" + addZero((inputEventEndMonth + 1)) + "-" + inputEventEndDay + " "
-							+ inputEventEndTime + ":01";
+					formatEndDate = inputEventEndYear + "-" + addZero((inputEventEndMonth + 1)) + "-" + inputEventEndDay
+							+ " " + inputEventEndTime + ":01";
 				}
 
-				SQLManager.editEvent(inputEventName, inputEventLocation, inputEventTextArea, inputFullDayEvent,
-						inputEventId, formatStartDate, formatEndDate);
+				if (checkFields == true) {
+					SQLManager.editEvent(inputEventName, inputEventLocation, inputEventTextArea, inputFullDayEvent,
+							inputEventId, formatStartDate, formatEndDate);
 
-				user.reloadarrays();
+					user.reloadarrays();
+
+					wp.getViewViewer();
+				}
 
 				if (editListModel.size() > 0) {
 					for (int i = 0; i < userEditList.getSelectedIndices().length; i++) {
@@ -609,14 +628,11 @@ public class EditEvent extends JPanel {
 
 						SQLManager.sendEventInvite(tempSelectedUserId);
 
+						user.reloadarrays();
+						wp.getNotificationPage();
 					}
 				}
 
-				user.reloadarrays();
-				
-				wp.getViewViewer();
-
-				wp.getNotificationPage();
 			}
 
 			if (e.getSource() == deleteEventButton) {

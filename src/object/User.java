@@ -23,13 +23,15 @@ public class User {
 
 	public void reloadarrays() {
 		Object[][] data = db.getData("select * from calendar where creator_id = " + id);
-		Object[][] data2 = db.getData("select calendar.* from shared_calendar RIGHT JOIN calendar on shared_calendar.cal_id=calendar.cal_id where shared_calendar.user_id = "+id+" AND shared_calendar.accepted=1");
-					
+		Object[][] data2 = db.getData(
+				"select calendar.* from shared_calendar RIGHT JOIN calendar on shared_calendar.cal_id=calendar.cal_id where shared_calendar.user_id = "
+						+ id + " AND shared_calendar.accepted=1");
+
 		int numberofresults1 = data.length;
 		int numberofresults2 = data2.length;
-		int numberofresultsTotal = numberofresults1+numberofresults2+1;
+		int numberofresultsTotal = numberofresults1 + numberofresults2 + 1;
 		int eventnum;
-		int i1=0;
+		int i1 = 0;
 		calArray = new Calendar[numberofresultsTotal];
 		for (int i = 0; i < numberofresults1; i++) {
 			calArray[i] = new Calendar(Integer.parseInt((String) data[i][0]), Integer.parseInt((String) data[i][1]),
@@ -37,24 +39,29 @@ public class User {
 					Integer.parseInt((String) data[i][6]));
 			i1++;
 		}
-		for (int i=0; i < numberofresults2; i++) {
+		for (int i = 0; i < numberofresults2; i++) {
 			calArray[i1] = new Calendar(Integer.parseInt((String) data2[i][0]), Integer.parseInt((String) data2[i][1]),
 					(String) data2[i][2], (String) data2[i][3], (String) data2[i][4], (String) data2[i][5],
 					Integer.parseInt((String) data2[i][6]));
 			i1++;
 		}
-		calArray[i1] = new Calendar(0, 0,"Delade Event", "Här finns dem eventen du är inbjuden till!", null, null,1);
-		Object[][] data3 = db.getData("SELECT * FROM calendar RIGHT JOIN event ON calendar.cal_id = event.cal_id WHERE calendar.creator_id = "+ id);
-		Object[][] data4 = db.getData("SELECT event.* FROM shared_calendar RIGHT JOIN calendar on shared_calendar.cal_id=calendar.cal_id RIGHT JOIN event ON calendar.cal_id = event.cal_id WHERE shared_calendar.user_id = "+id+" AND shared_calendar.accepted=1");		
-		Object[][] data5 = db.getData("SELECT event.* FROM shared_event RIGHT JOIN event ON shared_event.event_id=event.event_id WHERE shared_event.user_id = "+id+" AND shared_event.accepted=1");
-				
-				
-		int enum1=data3.length;
-		int enum2=data4.length;
-		int enum3=data5.length;
-		eventnum = enum1+enum2+enum3;
+		calArray[i1] = new Calendar(0, 0, "Delade Event", "Här finns dem eventen du är inbjuden till!", null, null, 1);
+		Object[][] data3 = db.getData(
+				"SELECT * FROM calendar RIGHT JOIN event ON calendar.cal_id = event.cal_id WHERE calendar.creator_id = "
+						+ id);
+		Object[][] data4 = db.getData(
+				"SELECT event.* FROM shared_calendar RIGHT JOIN calendar on shared_calendar.cal_id=calendar.cal_id RIGHT JOIN event ON calendar.cal_id = event.cal_id WHERE shared_calendar.user_id = "
+						+ id + " AND shared_calendar.accepted=1");
+		Object[][] data5 = db.getData(
+				"SELECT event.* FROM shared_event RIGHT JOIN event ON shared_event.event_id=event.event_id WHERE shared_event.user_id = "
+						+ id + " AND shared_event.accepted=1");
+
+		int enum1 = data3.length;
+		int enum2 = data4.length;
+		int enum3 = data5.length;
+		eventnum = enum1 + enum2 + enum3;
 		eventArray = new Event[eventnum];
-		int j1=0;
+		int j1 = 0;
 		for (int j = 0; j < enum1; j++) {
 			eventArray[j] = new Event(Integer.parseInt((String) data3[j][7]), Integer.parseInt((String) data3[j][8]),
 					Integer.parseInt((String) data3[j][9]), (String) data3[j][10], (String) data3[j][11],
