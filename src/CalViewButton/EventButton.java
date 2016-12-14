@@ -22,6 +22,7 @@ public class EventButton extends JButton implements ActionListener {
 
 		setMargin(new Insets(0, 0, 0, 0));
 		setBackground(new Color(175,255,255));
+		setToolTipText(this.event.getName());
 		if(event.getFullDay()!=1){
 			setPreferredSize(new Dimension(50, 50));
 		}

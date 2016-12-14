@@ -166,7 +166,7 @@ public class CalAddEdit extends JPanel {
 		editCal2LPanel.add(calManageLabel, gbc);
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		calEditList = new CalEditList(calArray, SM, wp, this);
+		calEditList = new CalEditList(calArray, SM, wp, this,user);
 		editCal2LPanel.add(calEditList, gbc);
 
 	}

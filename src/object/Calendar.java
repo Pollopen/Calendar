@@ -52,4 +52,8 @@ public class Calendar extends JPanel {
 		return description;
 	}
 
+	public int getCreator_id() {
+		return creator_id;
+	}
+
 }

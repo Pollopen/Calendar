@@ -128,7 +128,7 @@ public class DayView extends JPanel {
 		days.add(weekDaysPanel);
 
 		weekDaysLabel = new JLabel();
-		weekDaysLabel.setText(dayName[weekDay]);
+		weekDaysLabel.setText(dayName[weekDay-1]);
 		weekDaysLabel.setFont(new Font("Serif", Font.PLAIN, 20));
 		weekDaysPanel.add(weekDaysLabel);
 
