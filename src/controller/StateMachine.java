@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import object.Event;
 import object.User;
 
 public class StateMachine {
@@ -170,6 +171,15 @@ public class StateMachine {
 		}
 		Color temp=eventColor[num];
 		return temp;
+	}
+
+	public int getIndexOfCal(object.Calendar[] calArray, int calID) {
+		for (int i = 0; i < calArray.length; i++) {
+			if(calID==calArray[i].getCal_id()){
+				return i;
+			}		
+		}
+		return 1;
 	}
 	
 }

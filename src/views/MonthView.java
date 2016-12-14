@@ -262,7 +262,7 @@ public class MonthView extends JPanel{
 				for (int j = 0; j < aca.length; j++) {//If calendar is active
 					if(ca[aca[j]].getCal_id()==ea[i].getCal_id()){
 						Event tempEvent=ea[i];
-						tempEvent.setColorNum(j);
+						tempEvent.setColorNum(SM.getIndexOfCal(ca,ca[aca[j]].getCal_id()));
 						filteredList[k]=tempEvent;
 						k++;
 					}

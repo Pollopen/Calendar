@@ -1,9 +1,11 @@
 package views.calendar;
 
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -52,6 +54,7 @@ public class CalChooseList extends JPanel implements ListSelectionListener {
 		}
         //Create the list and put it in a scroll pane.
         calChoiceList = new JList(listModel);
+        calChoiceList.setCellRenderer(new ColorRenderer());
         calChoiceList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         calChoiceList.setSelectedIndices(list);
 		SM.setActiveCalendars(list);
@@ -73,6 +76,15 @@ public class CalChooseList extends JPanel implements ListSelectionListener {
 		gbc.gridy = 3;
 		add(calChoiceInfo,gbc);
 	}
+	private class ColorRenderer extends DefaultListCellRenderer {
+        public Component getListCellRendererComponent( JList list, Object value, int index, boolean isSelected, boolean cellHasFocus ) {
+            Component c = super.getListCellRendererComponent( list, value, index, isSelected, cellHasFocus );  
+            if(isSelected){
+            	c.setBackground(SM.getColor(index));
+            }
+            return c;
+        }
+    }
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
 		// TODO Auto-generated method stub
