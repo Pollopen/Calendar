@@ -152,7 +152,7 @@ public class MenuList {
 				windowpanel.getAddCalendarPage();
 			}
 			if (e.getSource() == menuEditEvent) {
-				windowpanel.getDeleteAndEditEventPage();
+				windowpanel.getDeleteAndEditEventPage(null);
 			}
 			if (e.getSource() == menuSharedEvent) {
 				windowpanel.getSharedEventPage();

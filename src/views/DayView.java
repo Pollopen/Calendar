@@ -35,9 +35,13 @@ public class DayView extends JPanel {
 	private Event[] eventArray;
 	private object.Calendar[] calArray;
 	private DayPanel[] daypanels = new DayPanel[7];
+	private WindowPanel wp;
+	private User user;
 
-	public DayView(StateMachine SM, User user) {
+	public DayView(StateMachine SM, User user, WindowPanel wp) {
 		this.SM = SM;
+		this.wp = wp;
+		this.user = user;
 		setLayout(new BorderLayout());
 		setPreferredSize(new Dimension(1175, 725));
 		setVisible(true);
@@ -151,7 +155,7 @@ public class DayView extends JPanel {
 
 		
 
-		daypanels[1] = new DayPanel(filterDayEvents(dayOfWeek,eventArray, calArray),dayOfWeek,3,false);
+		daypanels[1] = new DayPanel(filterDayEvents(dayOfWeek,eventArray, calArray),dayOfWeek,3,false, wp, user);
 		center.add(daypanels[1]);
 
 	}

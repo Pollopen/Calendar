@@ -37,16 +37,16 @@ public class Event extends JPanel {
 	}
 
 	public void getAll() {
-		System.out.print(event_id);
-		System.out.print(calendar_id);
-		System.out.print(creator_id);
-		System.out.print(name);
-		System.out.print(loc);
-		System.out.print(description);
-		System.out.print(created);
-		System.out.print(start_time);
-		System.out.print(end_time);
-		System.out.print(edited);
+		System.out.println(event_id);
+		System.out.println(calendar_id);
+		System.out.println(creator_id);
+		System.out.println(name);
+		System.out.println(loc);
+		System.out.println(description);
+		System.out.println(created);
+		System.out.println(start_time);
+		System.out.println(end_time);
+		System.out.println(edited);
 		System.out.println(notification);
 	}
 

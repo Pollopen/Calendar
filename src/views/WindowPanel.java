@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 
 import controller.StateMachine;
 import object.Calendar;
+import object.Event;
 import object.User;
 import views.calendar.CalChooseList;
 import views.calendar.addedit.CalAddEdit;
@@ -253,10 +254,10 @@ public class WindowPanel extends JPanel {
 
 	}
 
-	public void getDeleteAndEditEventPage() {
+	public void getDeleteAndEditEventPage(Event event) {
 		
 		rightPanel.removeAll();
-		rightPanel.add(new EditEvent(this, user));
+		rightPanel.add(new EditEvent(this, user, event));
 		rightPanel.updateUI();
 
 	}
@@ -286,10 +287,10 @@ public class WindowPanel extends JPanel {
 		gbc.gridy = 0;
 		switch (SM.getActiveview()) {
 		case 1:
-			rightPanel.add(new DayView(SM, user), gbc);
+			rightPanel.add(new DayView(SM, user, this), gbc);
 			break;
 		case 2:
-			rightPanel.add(new WeekView(SM, user), gbc);
+			rightPanel.add(new WeekView(SM, user, this), gbc);
 			break;
 		case 3:
 			rightPanel.add(new MonthView(SM, user, this), gbc);

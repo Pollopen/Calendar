@@ -35,9 +35,11 @@ public class WeekView extends JPanel {
 	private Event[] eventArray;
 	private object.Calendar[] calArray;
 	private DayPanel[] daypanels = new DayPanel[7];
+	private WindowPanel wp;
 
-	public WeekView(StateMachine SM, User user) {
+	public WeekView(StateMachine SM, User user, WindowPanel wp) {
 		this.SM = SM;
+		this.wp = wp;
 		setLayout(new BorderLayout());
 		setPreferredSize(new Dimension(1175, 725));
 		setVisible(true);
@@ -153,7 +155,7 @@ public class WeekView extends JPanel {
 		}
 		dayOfWeek=firstDay;
 		for (int i = 0; i < 7; i++) {
-			daypanels[i] = new DayPanel(filterDayEvents(dayOfWeek,eventArray, calArray),dayOfWeek,i,true);
+			daypanels[i] = new DayPanel(filterDayEvents(dayOfWeek,eventArray, calArray),dayOfWeek,i,true, wp, user);
 			center.add(daypanels[i]);
 			dayOfWeek=DateHandler.addToDateString(dayOfWeek, 1);
 		}

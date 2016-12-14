@@ -124,7 +124,7 @@ public class MonthView extends JPanel{
 				if(checkDate.equals(checkEventDayStart)||checkDate.equals(checkEventDayEnd)||checkIfInProgress(checkDate, checkEventDayStart, checkEventDayEnd)){
 							if(filteredEventArray[i].getFullDay()==1){
 								if(tempFullDayEvents==1){
-									tempJP.add(new EventButton(filteredEventArray[i].getName(),filteredEventArray[i], wp), BorderLayout.PAGE_END);
+									tempJP.add(new EventButton(filteredEventArray[i].getName(),filteredEventArray[i], wp, user), BorderLayout.PAGE_END);
 								}else if(tempFullDayEvents>=2){
 									//tempJP.add(new JButton("..."), BorderLayout.PAGE_END);
 									tempJP.add(new DayButton("...", checkDate, 3,SM, wp), BorderLayout.PAGE_END);
@@ -137,7 +137,7 @@ public class MonthView extends JPanel{
 								}else if(eventNumber>=11){
 									//nothing
 								}else{
-									normalEventsPanel.add(new EventButton("",filteredEventArray[i], wp));
+									normalEventsPanel.add(new EventButton("",filteredEventArray[i], wp, user));
 									eventNumber++;
 								}
 							}

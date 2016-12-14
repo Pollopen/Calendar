@@ -254,27 +254,29 @@ public class SQLManager {
 	public static boolean editEvent(String inputEventName, String inputEventLocation, String inputEventTextArea,
 			int inputFullDayEvent, int inputEventId, String formatStartDate, String formatEndDate) {
 
+		tempEventId = inputEventId;
+		
 		String SQL = "UPDATE event SET name = '" + inputEventName + "', location = '" + inputEventLocation
 				+ "', description = '" + inputEventTextArea + "', start_time = '" + formatStartDate + "', end_time = '"
-				+ formatEndDate + "' WHERE event_id = " + inputEventId;
+				+ formatEndDate + "', full_day = '" + inputFullDayEvent + "' WHERE event_id = " + inputEventId;
 
 		db.execute(SQL);
 
-		SQL = "SELECT MAX(event_id) FROM event WHERE creator_id = '" + user.getId() + "' AND name = '" + inputEventName
-				+ "' AND description = '" + inputEventTextArea + "' AND start_time = '" + formatStartDate
-				+ "' AND end_time = '" + formatEndDate + "' AND notification = 1 AND full_day = '" + inputFullDayEvent
-				+ "'";
-
-		Object[][] data = db.getData(SQL);
-
-		for (int i = 0; i < data.length; i++) {
-			tempEventId = Integer.parseInt((String) data[0][0]);
-
-			System.out.println(tempEventId + " AYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY ");
-
-		}
-
-		db.execute(SQL);
+//		SQL = "SELECT MAX(event_id) FROM event WHERE creator_id = '" + user.getId() + "' AND name = '" + inputEventName
+//				+ "' AND description = '" + inputEventTextArea + "' AND start_time = '" + formatStartDate
+//				+ "' AND end_time = '" + formatEndDate + "' AND notification = 1 AND full_day = '" + inputFullDayEvent
+//				+ "'";
+//
+//		Object[][] data = db.getData(SQL);
+//
+//		for (int i = 0; i < data.length; i++) {
+//			tempEventId = Integer.parseInt((String) data[0][0]);
+//
+//			System.out.println(tempEventId + " AYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY ");
+//
+//		}
+//
+//		db.execute(SQL);
 		return true;
 	}
 
