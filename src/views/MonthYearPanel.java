@@ -28,6 +28,7 @@ public class MonthYearPanel extends JPanel {
 		setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
 		backButton = new JButton("<");
+		lForButton=new ListenForButton();
 		backButton.addActionListener(lForButton);
 		dateShowLabel = new JLabel(date.substring(0, 7));
 		dateShowLabel.setFont(new Font("Serif", Font.PLAIN, 20));

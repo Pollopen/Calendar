@@ -40,7 +40,7 @@ public class NotificationView extends JPanel {
 
 		if (result.length == 0) {
 			nextEventLabel = new JLabel();
-			nextEventLabel.setText("Du har inga kommanade event!");
+			nextEventLabel.setText("Du har inga kommande event!");
 			nextEventLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
 
 			main.add(nextEventLabel);

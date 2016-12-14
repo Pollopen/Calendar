@@ -47,66 +47,64 @@ public class WeekView extends JPanel {
 		calArray = user.getCalArray();
 		date = SM.getFocusedDate();
 		date = DateHandler.convertToEasyDate(date);
-	
-		JPanel timeLine= new JPanel(new GridBagLayout());
+
+		JPanel timeLine = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
-		JPanel centerPanel= new JPanel(new BorderLayout());
-		
-		add(BorderLayout.WEST,timeLine);
-		
-		gbc.gridx=0;
-		gbc.gridy=0;
-		int hour=0;
+		JPanel centerPanel = new JPanel(new BorderLayout());
+
+		add(BorderLayout.WEST, timeLine);
+
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		int hour = 0;
 		for (int i = 0; i < 26; i++) {
-			if(i==0){
+			if (i == 0) {
 				JPanel empty = new JPanel();
 				empty.setPreferredSize(new Dimension(50, 75));
-				//empty.setBackground(new Color(255, 0, 0));
-				timeLine.add(empty,gbc);
+				// empty.setBackground(new Color(255, 0, 0));
+				timeLine.add(empty, gbc);
 				gbc.gridy++;
-			}else if(i==1){
+			} else if (i == 1) {
 				JPanel empty = new JPanel();
 				empty.setPreferredSize(new Dimension(50, 50));
-				//empty.setBackground(new Color(0, 255, 0));
-				timeLine.add(empty,gbc);
+				// empty.setBackground(new Color(0, 255, 0));
+				timeLine.add(empty, gbc);
 				gbc.gridy++;
-			}else{
+			} else {
 				JPanel tempTime = new JPanel();
-				if(i==25){
-					tempTime.setBorder(BorderFactory.createMatteBorder(
-							2, 0, 3, 0, Color.BLACK));
-				}else{
-					tempTime.setBorder(BorderFactory.createMatteBorder(
-	                        2, 0, 2, 0, Color.BLACK));
+				if (i == 25) {
+					tempTime.setBorder(BorderFactory.createMatteBorder(2, 0, 3, 0, Color.BLACK));
+				} else {
+					tempTime.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 0, Color.BLACK));
 				}
 				tempTime.setPreferredSize(new Dimension(50, 25));
-				String timeString="";
-				if (hour<=9) {
-					timeString+="0"+hour+":00";
-				}else{
-					timeString+=hour+":00";
+				String timeString = "";
+				if (hour <= 9) {
+					timeString += "0" + hour + ":00";
+				} else {
+					timeString += hour + ":00";
 				}
 				JLabel time = new JLabel(timeString);
 				tempTime.add(time);
 				hour++;
 
-				timeLine.add(tempTime,gbc);
+				timeLine.add(tempTime, gbc);
 				gbc.gridy++;
 			}
 		}
-		
-		add(BorderLayout.CENTER,centerPanel);
-		
-		String tempString=DateHandler.convertFromEasyDate(date);
+
+		add(BorderLayout.CENTER, centerPanel);
+
+		String tempString = DateHandler.convertFromEasyDate(date);
 		try {
-			focusedDate=getFocusDate.parse(tempString);
+			focusedDate = getFocusDate.parse(tempString);
 		} catch (ParseException e) {
-			System.out.println("Date Conversion failed!"+tempString);
+			System.out.println("Date Conversion failed!" + tempString);
 		}
-		
+
 		weekDay = Integer.parseInt(getWeekDay.format(focusedDate));
-		System.out.println("veckodag: "+weekDay);
-		String firstDay=DateHandler.addToDateString(date, -(weekDay-1));
+		System.out.println("veckodag: " + weekDay);
+		String firstDay = DateHandler.addToDateString(date, -(weekDay - 1));
 		JPanel north = new JPanel(new GridLayout(2, 1));
 		JPanel days = new JPanel(new GridLayout(1, 7));
 		north.setPreferredSize(new Dimension(2000, 75));
@@ -136,28 +134,30 @@ public class WeekView extends JPanel {
 			weekDaysPanel.add(weekDaysLabel);
 
 		}
-		String dayOfWeek=firstDay;
-		//datum utskrivning 
+		String dayOfWeek = firstDay;
+		// datum utskrivning
 		for (int i = 1; i <= 7; i++) {
 			dayOfMonthLabel = new JLabel();
-			dayOfMonthLabel.setText(dayOfWeek.substring(6,8)+"/"+dayOfWeek.substring(4,6));//datumet
-			if(SM.getEasyDate().equals(dayOfWeek)){
+			dayOfMonthLabel.setText(dayOfWeek.substring(6, 8) + "/" + dayOfWeek.substring(4, 6));// datumet
+			if (SM.getEasyDate().equals(dayOfWeek)) {
 				dayOfMonthLabel.setForeground(Color.BLUE);
 			}
-			dayOfWeek=DateHandler.addToDateString(dayOfWeek, 1);
+			dayOfWeek = DateHandler.addToDateString(dayOfWeek, 1);
 			weekDatePanel = new JPanel();
 			weekDatePanel.setPreferredSize(new Dimension(170, 25));
 			weekDatePanel.setVisible(true);
-			weekDatePanel.setBorder(BorderFactory.createMatteBorder(
-					1, 1, 1, 1, Color.BLACK));
+			weekDatePanel.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
 			dates.add(weekDatePanel);
 			weekDatePanel.add(dayOfMonthLabel);
 		}
-		dayOfWeek=firstDay;
+		dayOfWeek = firstDay;
 		for (int i = 0; i < 7; i++) {
-			daypanels[i] = new DayPanel(filterDayEvents(dayOfWeek,eventArray, calArray),dayOfWeek,i,true, wp, user);
+
+			daypanels[i] = new DayPanel(filterDayEvents(dayOfWeek, eventArray, calArray), dayOfWeek, i, true, SM, wp,
+					user);
+
 			center.add(daypanels[i]);
-			dayOfWeek=DateHandler.addToDateString(dayOfWeek, 1);
+			dayOfWeek = DateHandler.addToDateString(dayOfWeek, 1);
 		}
 	}
 
@@ -167,38 +167,53 @@ public class WeekView extends JPanel {
 		else
 			return "" + value;
 	}
-	
-	private Event[] filterDayEvents(String firstDay, Event[] eventArray, object.Calendar[] calArray){
-		Event [] filteredList = null;
-		Event[] ea=eventArray;
-		object.Calendar[] ca=calArray;
 
-		int matchNumber=0;
-		String weekDayChecker=firstDay;
+	private Event[] filterDayEvents(String firstDay, Event[] eventArray, object.Calendar[] calArray) {
+		Event[] filteredList = null;
+		Event[] ea = eventArray;
+		object.Calendar[] ca = calArray;
+
+		int matchNumber = 0;
+		String weekDayChecker = firstDay;
 		for (int i = 0; i < ea.length; i++) {
-			String eventStartChecker=DateHandler.convertToEasyDate(ea[i].getStart_time());
-			String eventEndChecker=DateHandler.convertToEasyDate(ea[i].getEnd_time());
-			if(weekDayChecker.equals(eventStartChecker)||weekDayChecker.equals(eventEndChecker)||checkIfInProgress(weekDayChecker, eventStartChecker, eventEndChecker)){//is this event in this week
-				int[] aca=SM.getActiveCalendars();
-				for (int j = 0; j < aca.length; j++) {//If calendar is active
-					if(ca[aca[j]].getCal_id()==ea[i].getCal_id()){
+			String eventStartChecker = DateHandler.convertToEasyDate(ea[i].getStart_time());
+			String eventEndChecker = DateHandler.convertToEasyDate(ea[i].getEnd_time());
+			if (weekDayChecker.equals(eventStartChecker) || weekDayChecker.equals(eventEndChecker)
+					|| checkIfInProgress(weekDayChecker, eventStartChecker, eventEndChecker)) {// is
+																								// this
+																								// event
+																								// in
+																								// this
+																								// week
+				int[] aca = SM.getActiveCalendars();
+				for (int j = 0; j < aca.length; j++) {// If calendar is active
+					if (ca[aca[j]].getCal_id() == ea[i].getCal_id()) {
 						matchNumber++;
 					}
 				}
 			}
 		}
 
-		filteredList=new Event[matchNumber];
-		int k=0;
+		filteredList = new Event[matchNumber];
+		int k = 0;
 		for (int i = 0; i < ea.length; i++) {
-			String eventStartChecker=DateHandler.convertToEasyDate(ea[i].getStart_time());
-			String eventEndChecker=DateHandler.convertToEasyDate(ea[i].getEnd_time());
-			if(weekDayChecker.equals(eventStartChecker)||weekDayChecker.equals(eventEndChecker)||checkIfInProgress(weekDayChecker, eventStartChecker, eventEndChecker)){//is this event in this day of week
-				int[] aca=SM.getActiveCalendars();
-				for (int j = 0; j < aca.length; j++) {//If calendar is active
-					if(ca[aca[j]].getCal_id()==ea[i].getCal_id()){
-						Event tempEvent=ea[i];
-						filteredList[k]=tempEvent;
+			String eventStartChecker = DateHandler.convertToEasyDate(ea[i].getStart_time());
+			String eventEndChecker = DateHandler.convertToEasyDate(ea[i].getEnd_time());
+			if (weekDayChecker.equals(eventStartChecker) || weekDayChecker.equals(eventEndChecker)
+					|| checkIfInProgress(weekDayChecker, eventStartChecker, eventEndChecker)) {// is
+																								// this
+																								// event
+																								// in
+																								// this
+																								// day
+																								// of
+																								// week
+				int[] aca = SM.getActiveCalendars();
+				for (int j = 0; j < aca.length; j++) {// If calendar is active
+					if (ca[aca[j]].getCal_id() == ea[i].getCal_id()) {
+						Event tempEvent = ea[i];
+						tempEvent.setColorNum(j);
+						filteredList[k] = tempEvent;
 						k++;
 					}
 				}
@@ -209,15 +224,15 @@ public class WeekView extends JPanel {
 	}
 
 	private boolean checkIfInProgress(String checkDate, String checkEventDayStart, String checkEventDayEnd) {
-		if(Integer.parseInt(checkDate)>Integer.parseInt(checkEventDayStart)&&Integer.parseInt(checkDate)<Integer.parseInt(checkEventDayEnd)){
+		if (Integer.parseInt(checkDate) > Integer.parseInt(checkEventDayStart)
+				&& Integer.parseInt(checkDate) < Integer.parseInt(checkEventDayEnd)) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
-		
+
 	}
-	
-	
+
 	public static int getDayOfWeek(int day) {
 		int[] from = { 1, 2, 3, 4, 5, 6, 7 };
 		int[] to = { 6, 0, 1, 2, 3, 4, 5 };
@@ -227,22 +242,23 @@ public class WeekView extends JPanel {
 		}
 		return 0;
 	}
+
 	public static boolean isLeapYear(String firstDay) {
-		String year=firstDay.substring(0, 4);
+		String year = firstDay.substring(0, 4);
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.YEAR, Integer.parseInt(year));
 		return cal.getActualMaximum(Calendar.DAY_OF_YEAR) > 365;
 	}
-	public String getCheckDate(String firstday){
+
+	public String getCheckDate(String firstday) {
 		String checkdate;
 		try {
-			checkdate=firstday.substring(0, 4)+firstday.substring(5, 7)+firstday.substring(8, 10);
+			checkdate = firstday.substring(0, 4) + firstday.substring(5, 7) + firstday.substring(8, 10);
 			return checkdate;
 		} catch (java.lang.StringIndexOutOfBoundsException e) {
 			return firstday;
 		}
-		
+
 	}
-	
 
 }

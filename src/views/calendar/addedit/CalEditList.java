@@ -10,6 +10,7 @@ import javax.swing.event.ListSelectionListener;
 
 import controller.StateMachine;
 import object.Calendar;
+import object.User;
 import views.WindowPanel;
 
 
@@ -20,14 +21,17 @@ public class CalEditList extends JPanel implements ListSelectionListener {
 	private StateMachine SM;
 	private WindowPanel wp;
 	private CalAddEdit cae;
-	public CalEditList(Calendar[] calarray, StateMachine SM, WindowPanel wp, CalAddEdit cae) {
+	public CalEditList(Calendar[] calarray, StateMachine SM, WindowPanel wp, CalAddEdit cae, User user) {
 		this.SM = SM;
 		this.wp = wp;
 		this.cae=cae;
 		listModel = new DefaultListModel();
 
 		for (int i = 0; i < calarray.length; i++) {
-			listModel.addElement(calarray[i].getName());
+			if(calarray[i].getCreator_id()==user.getId()){
+				listModel.addElement(calarray[i].getName());
+			}
+			
 		}
 		// Create the list and put it in a scroll pane.
 		calEditList = new JList(listModel);

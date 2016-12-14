@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
+import controller.StateMachine;
 import object.Event;
 import object.User;
 import views.WindowPanel;
@@ -18,14 +19,16 @@ public class EventButton extends JButton implements ActionListener {
 	private WindowPanel wp;
 	private User user;
 
-	public EventButton(String text, Event event, WindowPanel wp, User user) {
+	public EventButton(String text, Event event, WindowPanel wp, StateMachine SM, User user) {
+
 		super(text);
 		this.event = event;
 		this.wp = wp;
 		this.user = user;
 
 		setMargin(new Insets(0, 0, 0, 0));
-		setBackground(new Color(175, 255, 255));
+		setBackground(SM.getColor(event.getColor()));
+		setToolTipText(this.event.getName());
 		if (event.getFullDay() != 1) {
 			setPreferredSize(new Dimension(50, 50));
 		}

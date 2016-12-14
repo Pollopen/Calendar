@@ -21,7 +21,10 @@ public class DayButton extends JButton implements ActionListener {
 		this.wp=wp;
 		this.SM=SM;
 		this.date=date;
-		setPreferredSize(new Dimension(10, 20));
+		if(isdatenumber!=3){
+			setPreferredSize(new Dimension(10, 20));
+		}
+		
 		addActionListener(this);
 		setMargin(new Insets(0, 0, 0, 0));
 		
@@ -30,7 +33,7 @@ public class DayButton extends JButton implements ActionListener {
 		}
 		if(isdatenumber>=2){
 			setToolTipText("Mer event finns!");
-			setBackground(new Color(175,255,255));
+			setBackground(new Color(209,255,250));
 			if (isdatenumber==2) {
 				setPreferredSize(new Dimension(50, 50));
 			}

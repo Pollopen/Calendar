@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Color;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -17,6 +18,7 @@ public class StateMachine {
 	private User user;
 	private DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 	private Date date;
+	private Color[] eventColor;
 	
 	public StateMachine(User user){
 		this.user=user;
@@ -27,6 +29,22 @@ public class StateMachine {
 		date = new Date();
 		System.out.println(sdf.format(date)); //2016/11/16 12:08:43
 		focusedDate=sdf.format(date);
+		eventColor=genColorArray();
+	}
+
+	private Color[] genColorArray() {
+		Color[] temp = new Color[10];
+		temp[0]= new Color(154,255,143);
+		temp[1]= new Color(143,210,255);
+		temp[2]= new Color(255,143,210);
+		temp[3]= new Color(210,255,143);
+		temp[4]= new Color(197,158,255);
+		temp[5]= new Color(255,244,143);
+		temp[6]= new Color(255,143,154);
+		temp[7]= new Color(143,255,188);
+		temp[8]= new Color(188,143,255);
+		temp[9]= new Color(186,255,82);
+		return temp;
 	}
 
 	public int getCalEditStatus() {
@@ -145,6 +163,13 @@ public class StateMachine {
 		String newDate=tempYear+focusDate.substring(4);
 		setEasyDate(newDate);
 		System.out.println("New focusdate(-)= "+newDate);
+	}
+	public Color getColor(int num){
+		while (num>10){
+			num-=10;
+		}
+		Color temp=eventColor[num];
+		return temp;
 	}
 	
 }
