@@ -26,7 +26,8 @@ public class WeekView extends JPanel {
 
 	private StateMachine SM;
 	private JPanel weekDaysPanel, weekDatePanel;
-	private JLabel weekDaysLabel, dayOfMonthLabel;
+	private JLabel dayOfMonthLabel;
+	private DayWeekAddEvent weekDays;
 	private String date;
 	private Date focusedDate;
 	private DateFormat getFocusDate = new SimpleDateFormat("yyyy/MM/dd");
@@ -118,7 +119,7 @@ public class WeekView extends JPanel {
 		centerPanel.add(BorderLayout.CENTER, center);
 
 		String[] dayName = { "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag", "Söndag" };
-
+		String dayOfWeek = firstDay;
 		for (int i = 0; i < 7; i++) {
 
 			weekDaysPanel = new JPanel();
@@ -128,13 +129,12 @@ public class WeekView extends JPanel {
 			weekDaysPanel.setBackground(new Color(200, 200, 200));
 			days.add(weekDaysPanel);
 
-			weekDaysLabel = new JLabel();
-			weekDaysLabel.setText(dayName[i]);
-			weekDaysLabel.setFont(new Font("Serif", Font.PLAIN, 20));
-			weekDaysPanel.add(weekDaysLabel);
+			weekDays = new DayWeekAddEvent(dayName[i], dayOfWeek, SM, wp);
+			weekDaysPanel.add(weekDays);
+			dayOfWeek = DateHandler.addToDateString(dayOfWeek, 1);
 
 		}
-		String dayOfWeek = firstDay;
+		dayOfWeek = firstDay;
 		// datum utskrivning
 		for (int i = 1; i <= 7; i++) {
 			dayOfMonthLabel = new JLabel();
