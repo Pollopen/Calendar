@@ -58,8 +58,7 @@ public class WindowPanel extends JPanel {
 	private Calendar[] calArray, eventCalArray;
 	private JList<Object> userList, userEditList;
 	private Event[] editEventArray;
-	private JButton addEventButton, eventCreate, editEventButton, deleteEventButton, userSearchButton, nextWeekButton,
-			prevWeekButton, userEditSearchButton;
+	private JButton addEventButton, eventCreate, editEventButton, deleteEventButton, userSearchButton, userEditSearchButton;
 	private JTextArea eventDescArea, editEventDescArea;
 	private JCheckBox fullDayActivity, editFullDayActivity;
 	private JSpinner startTimeSpinner, endTimeSpinner, editStartTimeSpinner, editEndTimeSpinner;
@@ -263,7 +262,7 @@ public class WindowPanel extends JPanel {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		monthYearPanel = new MonthYearPanel(SM);
+		monthYearPanel = new MonthYearPanel(SM,this);
 		overviewPanel1.add(monthYearPanel);
 		monthOverview = new MonthOverview(SM, user, tempDate, false, this);
 		overviewPanel2.add(monthOverview);
@@ -909,7 +908,7 @@ public class WindowPanel extends JPanel {
 		gbc.gridy = 0;
 		switch (SM.getActiveview()) {
 		case 1:
-			rightPanel.add(new DayView(), gbc);
+			rightPanel.add(new DayView(SM, user), gbc);
 			break;
 		case 2:
 			rightPanel.add(new WeekView(SM, user), gbc);

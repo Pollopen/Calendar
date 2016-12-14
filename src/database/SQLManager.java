@@ -48,14 +48,35 @@ public class SQLManager {
 		return false;
 	}
 
-	public static boolean register(Window window, String fname, String sname, String email, char[] pass1,
-			char[] pass2) {
+	public static boolean register(Window window, String fname, String sname, String email, char[] pass1,char[] pass2) {
 		int pass1Length = pass1.length;
 		int pass2Length = pass2.length;
 		boolean passwordMatch = true;
 		String hashed = "";
-		// password=String.valueOf(pass1);
-		// System.out.println(password);
+		
+		if(fname.length()<2){
+			JOptionPane.showMessageDialog(window, "Förnamn behöver vara åtminstone 2 bokstäver",
+					"Registrering misslyckades!", JOptionPane.INFORMATION_MESSAGE);
+			return false;
+		}
+		if(sname.length()<2){
+			JOptionPane.showMessageDialog(window, "Efternamn behöver vara åtminstone 2 bokstäver",
+					"Registrering misslyckades!", JOptionPane.INFORMATION_MESSAGE);
+			return false;
+		}
+		if(pass1.length<5){
+			JOptionPane.showMessageDialog(window, "Lösenordet behöver vara minst 5 tecken",
+					"Registrering misslyckades!", JOptionPane.INFORMATION_MESSAGE);
+			return false;
+		}
+		if(email.contains("@")&&email.contains(".")&&email.length()>4){
+			
+		}else{
+			JOptionPane.showMessageDialog(window, "Emailen är felaktig eller för kort (Minst 5 tecken)",
+					"Registrering misslyckades!", JOptionPane.INFORMATION_MESSAGE);
+			return false;
+		}
+		
 		if (pass1Length == pass2Length) {
 			for (int i = 1; i <= pass1Length; i++) {
 				if (pass1[i - 1] == pass2[i - 1]) {

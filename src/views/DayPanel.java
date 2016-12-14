@@ -20,7 +20,7 @@ public class DayPanel extends JPanel {
 	private Event[] eventArray,fullDay,normal;
 	private GridBagConstraints gbc = new GridBagConstraints();
 	private String date;
-	public DayPanel(Event[] eventArray,String date, int h) {
+	public DayPanel(Event[] eventArray,String date, int h, boolean inweekview) {
 		this.eventArray=eventArray;
 		this.date=date;
 		System.out.println("date= "+date);
@@ -39,12 +39,21 @@ public class DayPanel extends JPanel {
 					1, 1, 2, 1, Color.BLACK));
 		}
 		JPanel fullDayEvents = new JPanel();
-		
-		fullDayEvents.setPreferredSize(new Dimension(157, 50));
-		//fullDayEvents.setBackground(new Color(255, 0, 0));
 		JPanel normalEvents = new JPanel();
-		normalEvents.setPreferredSize(new Dimension(157, 595));
-		//normalEvents.setBackground(new Color(0, 255, 0));
+		if(inweekview){
+			fullDayEvents.setPreferredSize(new Dimension(157, 50));
+			//fullDayEvents.setBackground(new Color(255, 0, 0));
+		
+			normalEvents.setPreferredSize(new Dimension(157, 595));
+			//normalEvents.setBackground(new Color(0, 255, 0));
+		}else{
+			fullDayEvents.setPreferredSize(new Dimension(1115, 50));
+			//fullDayEvents.setBackground(new Color(255, 0, 0));
+		
+			normalEvents.setPreferredSize(new Dimension(1115, 595));
+			//normalEvents.setBackground(new Color(0, 255, 0));
+		}
+		
 		gbc.gridx=0;
 		gbc.gridy=0;
 		add(fullDayEvents,gbc);
@@ -90,7 +99,6 @@ public class DayPanel extends JPanel {
 		normalEvents.setLayout(new GridLayout(1, normal.length));
 		//normalEvents.setBackground(new Color(255, 0, 0));
 		//int color=35;
-		boolean endsToday=true;
 		for (int i = 0; i < normal.length; i++) {
 			JPanel tempPanel = new JPanel(null);
 			//tempPanel.setBackground(new Color(0, color, 0));
@@ -99,7 +107,12 @@ public class DayPanel extends JPanel {
 			int height=595;
 			if(checkIfInProgress(normal[i])){
 				NormalEventWeek tempEventButton=new NormalEventWeek(normal[i].getName(),normal[i]);
-				tempEventButton.setBounds(0, 0, 157/normal.length , height);
+				if(inweekview){
+					tempEventButton.setBounds(0, 0, 157/normal.length , height);
+				}else{
+					tempEventButton.setBounds(0, 0, 1115/normal.length , height);
+				}
+				
 				tempPanel.add(tempEventButton);
 			}else{
 				int tempStartPoint = getStart(normal[i]);
@@ -108,8 +121,13 @@ public class DayPanel extends JPanel {
 				NormalEventWeek tempEventButton=new NormalEventWeek(normal[i].getName(),normal[i]);
 				if((tempLength+tempStartPoint)>595){
 					tempLength=height-tempStartPoint;
-				}	
-				tempEventButton.setBounds(0, tempStartPoint, 157/normal.length , tempLength);
+				}
+				if(inweekview){
+					tempEventButton.setBounds(0, tempStartPoint, 157/normal.length , tempLength);
+				}else{
+					tempEventButton.setBounds(0, tempStartPoint, 1115/normal.length , tempLength);
+				}
+				
 				tempPanel.add(tempEventButton);
 			}
 		}

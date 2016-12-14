@@ -172,6 +172,14 @@ public class MonthView extends JPanel{
 		}
 		
 	}
+	private boolean checkForLongEvent(String monthcheck, String startcheck, String endcheck) {
+		if(Integer.parseInt(monthcheck)>Integer.parseInt(startcheck)&&Integer.parseInt(monthcheck)<Integer.parseInt(endcheck)){
+			return true;
+		}else{
+			return false;
+		}
+		
+	}
 	private int getDaysOfMonth(String firstDay){
 		monthNum=firstDay.substring(5, 7);
 		switch (Integer.parseInt(monthNum)) {
@@ -235,7 +243,7 @@ public class MonthView extends JPanel{
 		for (int i = 0; i < ea.length; i++) {
 			String eventStartChecker=(ea[i].getStart_time()).substring(0, 4)+(ea[i].getStart_time()).substring(5, 7);
 			String eventEndChecker=(ea[i].getEnd_time()).substring(0, 4)+(ea[i].getEnd_time()).substring(5, 7);
-			if(monthChecker.equals(eventStartChecker)||monthChecker.equals(eventEndChecker)){//is this event in this month?
+			if(monthChecker.equals(eventStartChecker)||monthChecker.equals(eventEndChecker)||checkForLongEvent(monthChecker, eventStartChecker, eventEndChecker)){//is this event in this month?
 				int[] aca=SM.getActiveCalendars();
 				for (int j = 0; j < aca.length; j++) {//If calendar is active
 					if(ca[aca[j]].getCal_id()==ea[i].getCal_id()){
@@ -249,7 +257,7 @@ public class MonthView extends JPanel{
 		for (int i = 0; i < ea.length; i++) {
 			String eventStartChecker=(ea[i].getStart_time()).substring(0, 4)+(ea[i].getStart_time()).substring(5, 7);
 			String eventEndChecker=(ea[i].getEnd_time()).substring(0, 4)+(ea[i].getEnd_time()).substring(5, 7);
-			if(monthChecker.equals(eventStartChecker)||monthChecker.equals(eventEndChecker)){//is this event in this month?
+			if(monthChecker.equals(eventStartChecker)||monthChecker.equals(eventEndChecker)||checkForLongEvent(monthChecker, eventStartChecker, eventEndChecker)){//is this event in this month?
 				int[] aca=SM.getActiveCalendars();
 				for (int j = 0; j < aca.length; j++) {//If calendar is active
 					if(ca[aca[j]].getCal_id()==ea[i].getCal_id()){

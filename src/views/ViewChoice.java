@@ -6,16 +6,12 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.NetworkInterface;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
@@ -28,27 +24,17 @@ import controller.DateHandler;
 public class ViewChoice extends JPanel {
 	private JButton todayButton, dayButton, weekButton, monthButton, yearButton, prevWeekButton, nextWeekButton, prevMonthButton, nextDayButton, nextMonthButton, prevDayButton, prevYearButton, nextYearButton;
 	private GridBagConstraints gbc;
-	private JLabel empty;
-	private GregorianCalendar gc;
 	private ListenForButton lForButton;
-	private SimpleDateFormat sdf;
 	private StateMachine SM;
 	private WindowPanel wp;
-	private Calendar cal;
-	private String date;
 	private JSpinner dateChoice;
 	private DateFormat getFocusDate = new SimpleDateFormat("yyyy/MM/dd");
 	private Date focusedDate;
-	private int week;
-	private static int nextWeeksDate = 7;
-	private static int prevWeeksDate = -7;
 
 	public ViewChoice(StateMachine SM, WindowPanel wp) {
 		this.SM = SM;
 		this.wp = wp;
 		setOpaque(false);
-		
-		cal = Calendar.getInstance();
 		gbc = new GridBagConstraints();
 		setPreferredSize(new Dimension(1150, 40));
 		setLayout(new GridLayout(1,18));
@@ -85,7 +71,6 @@ public class ViewChoice extends JPanel {
 		nextYearButton.addActionListener(lForButton);
 		todayButton = new JButton("Idag");
 		todayButton.addActionListener(lForButton);
-		empty = new JLabel("");
 		dateChoice = new JSpinner(new SpinnerDateModel(focusedDate, null, null, Calendar.DAY_OF_MONTH));
 		JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateChoice, "dd/MM/yy");
 		dateChoice.setEditor(dateEditor);
@@ -147,47 +132,6 @@ public class ViewChoice extends JPanel {
 			return "0" + value;
 		else
 			return "" + value;
-	}
-	
-	public void getPrevWeek()
-	{
-		String formatPrevDate = "";
-		
-		prevWeeksDate -= 7;
-
-		cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), prevWeeksDate);
-
-		formatPrevDate = cal.get(Calendar.YEAR) + "/" + addZero(cal.get(Calendar.MONTH) + 1) + "/"
-				+ addZero(cal.get(Calendar.DAY_OF_MONTH));
-		
-		SM.setFocusedDate(formatPrevDate);
-
-		System.out.println("------------------------------------------------------");
-		System.out.println("Sju dagar bak: " + prevWeeksDate);
-		System.out.println(SM.getFocusedDate());
-		System.out.println("Formaterat datum " + formatPrevDate);
-		System.out.println("------------------------------------------------------");
-	}
-
-	public void getNextWeek() {
-		
-		String formatDate = "";
-
-		nextWeeksDate += 7;
-
-		cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), nextWeeksDate);
-
-		formatDate = cal.get(Calendar.YEAR) + "/" + addZero(cal.get(Calendar.MONTH) + 1) + "/"
-				+ addZero(cal.get(Calendar.DAY_OF_MONTH));
-
-		SM.setFocusedDate(formatDate);
-
-		System.out.println("------------------------------------------------------");
-		System.out.println("Sju dagar framåt: " + nextWeeksDate);
-		System.out.println(SM.getFocusedDate());
-		System.out.println("Formaterat datum " + formatDate);
-		System.out.println("------------------------------------------------------");
-
 	}
 	
 	public void backOneDay(){
