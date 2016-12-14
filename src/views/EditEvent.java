@@ -1,6 +1,5 @@
 package views;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -59,18 +58,23 @@ public class EditEvent extends JPanel {
 	private GregorianCalendar editStartGregCal, editEndGregCal;
 	private WindowPanel wp;
 	private User user;
+	private Event event;
 	private ArrayList checkEditList;
 
-	public EditEvent(WindowPanel wp, User user) {
-		
+	public EditEvent(WindowPanel wp, User user, Event event) {
+
 		this.wp = wp;
 		this.user = user;
+		this.event = event;
+		
+		editStartGregCal = new GregorianCalendar();
+		editEndGregCal = new GregorianCalendar();
 
 		checkEditList = new ArrayList();
-		
+
 		gbc = new GridBagConstraints();
 		gbcLeft = new GridBagConstraints();
-		
+
 		editEventMain = new JPanel();
 		editEventMain.setPreferredSize(new Dimension(1175, 725));
 		editEventMain.setLayout(new GridBagLayout());
@@ -81,7 +85,6 @@ public class EditEvent extends JPanel {
 		editEventTop = new JPanel();
 		editEventTop.setPreferredSize(new Dimension(1175, 50));
 		editEventTop.setLayout(new GridBagLayout());
-		editEventTop.setBackground(new Color(255, 0, 0));
 		editEventTop.setVisible(true);
 
 		gbc.gridx = 0;
@@ -93,7 +96,6 @@ public class EditEvent extends JPanel {
 		editEventCenter = new JPanel();
 		editEventCenter.setPreferredSize(new Dimension(1175, 675));
 		editEventCenter.setLayout(new GridBagLayout());
-		// center.setBackground(new Color(0, 255, 0));
 		editEventCenter.setVisible(true);
 
 		gbc.gridx = 0;
@@ -105,7 +107,6 @@ public class EditEvent extends JPanel {
 		editEventLeft = new JPanel();
 		editEventLeft.setPreferredSize(new Dimension(700, 675));
 		editEventLeft.setLayout(new GridBagLayout());
-		// editEventLeft.setBackground(new Color(0, 255, 0));
 		editEventLeft.setVisible(true);
 
 		gbc.gridx = 0;
@@ -117,7 +118,6 @@ public class EditEvent extends JPanel {
 		editEventRight = new JPanel();
 		editEventRight.setPreferredSize(new Dimension(475, 675));
 		editEventRight.setLayout(new GridBagLayout());
-		// editEventRight.setBackground(new Color(0, 0, 255));
 		editEventRight.setVisible(true);
 
 		editEventInfoLabel = new JLabel();
@@ -171,20 +171,20 @@ public class EditEvent extends JPanel {
 
 		editEventCenter.add(editEventRight, gbc);
 
-		editEventArray = user.getEventArray();
-		editEventDropDown = new JComboBox<String>();
-
-		for (int i = 0; i < editEventArray.length; i++) {
-			editEventObjectArray = editEventArray[i].getName() + " " + editEventArray[i].getCal_id();
-			editEventDropDown.addItem(editEventObjectArray);
-		}
-
-		gbcLeft.gridx = 0;
-		gbcLeft.gridy = 0;
-		gbcLeft.insets = new Insets(0, 0, 0, 10);
-		gbcLeft.anchor = GridBagConstraints.WEST;
-
-		editEventTop.add(editEventDropDown, gbcLeft);
+//		editEventArray = user.getEventArray();
+//		editEventDropDown = new JComboBox<String>();
+//
+//		for (int i = 0; i < editEventArray.length; i++) {
+//			editEventObjectArray = editEventArray[i].getName();
+//			editEventDropDown.addItem(editEventObjectArray);
+//		}
+//
+//		gbcLeft.gridx = 0;
+//		gbcLeft.gridy = 0;
+//		gbcLeft.insets = new Insets(0, 0, 0, 10);
+//		gbcLeft.anchor = GridBagConstraints.WEST;
+//
+//		editEventTop.add(editEventDropDown, gbcLeft);
 
 		gbcLeft.gridx = 1;
 		gbcLeft.gridy = 0;
@@ -265,8 +265,6 @@ public class EditEvent extends JPanel {
 		editEventLeft.add(editFullDayActivity, gbcLeft);
 
 		editStartModel = new UtilDateModel();
-		// model.setDate(20,04,2014);
-		// Need this...
 		editStartProperties = new Properties();
 		editStartProperties.put("text.today", "Today");
 		editStartProperties.put("text.month", "Month");
@@ -275,7 +273,6 @@ public class EditEvent extends JPanel {
 		editStartDatePanel = new JDatePanelImpl(editStartModel, editStartProperties);
 		editStartDatePicker = new JDatePickerImpl(editStartDatePanel, new DateLabelFormatter());
 		editStartDatePicker.setTextEditable(false);
-		// startDatePicker.setPreferredSize(new Dimension(300, 30))
 
 		gbcLeft.gridx = 0;
 		gbcLeft.gridy = 6;
@@ -306,8 +303,6 @@ public class EditEvent extends JPanel {
 		editEventLeft.add(editEventEndLabel, gbc);
 
 		editEndModel = new UtilDateModel();
-		// model.setDate(20,04,2014);
-		// Need this...
 		editEndProperties = new Properties();
 		editEndProperties.put("text.today", "Today");
 		editEndProperties.put("text.month", "Month");
@@ -316,7 +311,6 @@ public class EditEvent extends JPanel {
 		editEndDatePanel = new JDatePanelImpl(editEndModel, editEndProperties);
 		editEndDatePicker = new JDatePickerImpl(editEndDatePanel, new DateLabelFormatter());
 		editEndDatePicker.setTextEditable(false);
-		// endDatePicker.setPreferredSize(new Dimension(200, 30));
 
 		gbcLeft.gridx = 0;
 		gbcLeft.gridy = 8;
@@ -356,11 +350,107 @@ public class EditEvent extends JPanel {
 		gbc.insets = new Insets(0, 0, 10, 0);
 
 		editEventLeft.add(editEventDescArea, gbc);
+		
+		
+		String inputEditEventName = event.getName();
+		String inputEditEventLocation = event.getLoc();
+		String inputEditEventTextArea = event.getDescription();
+		String tempEventStart = event.getStart_time();
+		String tempEventEnd = event.getEnd_time();
+		int inputEventFullDay = event.getFullDay();
+		boolean inputTempBool = false;
+		
+		String tempStartDateYear = tempEventStart.substring(0, 4);
+		String tempStartDateMonth = tempEventStart.substring(5, 7);
+		String tempStartDateDay = tempEventStart.substring(8, 10);
+
+		String tempEndDateYear = tempEventEnd.substring(0, 4);
+		String tempEndDateMonth = tempEventEnd.substring(5, 7);
+		String tempEndDateDay = tempEventEnd.substring(8, 10);
+
+		String tempStartTimeHour = tempEventStart.substring(11, 13);
+		String tempStartTimeMinute = tempEventStart.substring(14, 16);
+
+		String tempEndTimeHour = tempEventEnd.substring(11, 13);
+		String tempEndTimeMinute = tempEventEnd.substring(14, 16);
+
+		editStartGregCal.set(java.util.Calendar.YEAR, Integer.parseInt(tempStartDateYear));
+		editStartGregCal.set(java.util.Calendar.MONTH, Integer.parseInt(tempStartDateMonth));
+		editStartGregCal.set(java.util.Calendar.DAY_OF_MONTH, Integer.parseInt(tempStartDateDay));
+
+		editEndGregCal.set(java.util.Calendar.YEAR, Integer.parseInt(tempEndDateYear));
+		editEndGregCal.set(java.util.Calendar.MONTH, Integer.parseInt(tempEndDateMonth));
+		editEndGregCal.set(java.util.Calendar.DAY_OF_MONTH, Integer.parseInt(tempEndDateDay));
+
+		editStartGregCal.set(java.util.Calendar.HOUR_OF_DAY, Integer.parseInt(tempStartTimeHour));
+		editStartGregCal.set(java.util.Calendar.MINUTE, Integer.parseInt(tempStartTimeMinute));
+
+		editEndGregCal.set(java.util.Calendar.HOUR_OF_DAY, Integer.parseInt(tempEndTimeHour));
+		editEndGregCal.set(java.util.Calendar.MINUTE, Integer.parseInt(tempEndTimeMinute));
+		
+
+		if (inputEventFullDay == 0) {
+			inputTempBool = false;
+		} else {
+			inputTempBool = true;
+		}
+
+		editEventNameField.setText(inputEditEventName);
+		editEventLocationField.setText(inputEditEventLocation);
+		editEventDescArea.setText(inputEditEventTextArea);
+		editFullDayActivity.setSelected(inputTempBool);
+
+		if (editFullDayActivity.isSelected()) {
+			// centerLeft.remove(startTimeSpinner);
+			// centerLeft.remove(endTimeSpinner);
+			editStartDatePicker.setPreferredSize(new Dimension(300, 30));
+			editStartDatePicker.getModel().setYear(Integer.parseInt(tempEndDateYear));
+			editStartDatePicker.getModel().setMonth(Integer.parseInt(tempEndDateMonth) - 1);
+			editStartDatePicker.getModel().setDay(Integer.parseInt(tempEndDateDay));
+			editStartDatePicker.getModel().setSelected(true);
+
+			editEndDatePicker.setPreferredSize(new Dimension(300, 30));
+			editEndDatePicker.getModel().setYear(Integer.parseInt(tempEndDateYear));
+			editEndDatePicker.getModel().setMonth(Integer.parseInt(tempEndDateMonth) - 1);
+			editEndDatePicker.getModel().setDay(Integer.parseInt(tempEndDateDay));
+			editEndDatePicker.getModel().setSelected(true);
+
+			editStartTimeSpinner.setVisible(false);
+			editStartTimeSpinner.setValue(editStartGregCal.getTime());
+
+			editEndTimeSpinner.setVisible(false);
+			editEndTimeSpinner.setValue(editEndGregCal.getTime());
+
+			editEventLeft.updateUI();
+		} else {
+
+			editStartDatePicker.setPreferredSize(new Dimension(202, 30));
+			editStartDatePicker.getModel().setYear(Integer.parseInt(tempEndDateYear));
+			editStartDatePicker.getModel().setMonth(Integer.parseInt(tempEndDateMonth) - 1);
+			editStartDatePicker.getModel().setDay(Integer.parseInt(tempEndDateDay));
+			editStartDatePicker.getModel().setSelected(true);
+
+			editEndDatePicker.setPreferredSize(new Dimension(202, 30));
+			editEndDatePicker.getModel().setYear(Integer.parseInt(tempEndDateYear));
+			editEndDatePicker.getModel().setMonth(Integer.parseInt(tempEndDateMonth) - 1);
+			editEndDatePicker.getModel().setDay(Integer.parseInt(tempEndDateDay));
+			editEndDatePicker.getModel().setSelected(true);
+
+			editStartTimeSpinner.setVisible(true);
+			editEndTimeSpinner.setVisible(true);
+
+			editStartTimeSpinner.setValue(editStartGregCal.getTime());
+			editEndTimeSpinner.setValue(editEndGregCal.getTime());
+
+			editEventLeft.updateUI();
+
+		}
+		
+		
 
 		ListenForButton lForButton = new ListenForButton();
 
 		editFullDayActivity.addActionListener(lForButton);
-		editEventDropDown.addActionListener(lForButton);
 		editEventButton.addActionListener(lForButton);
 		deleteEventButton.addActionListener(lForButton);
 		userEditSearchButton.addActionListener(lForButton);
@@ -368,6 +458,28 @@ public class EditEvent extends JPanel {
 
 	}
 	
+	public String fixDate(String value, int fullDay) {
+		
+		String year = value.substring(0, 4);
+		String month = value.substring(5, 7);
+		String day = value.substring(8, 10);
+		String hour = value.substring(11, 13);
+		String minute = value.substring(14, 16);
+		
+		String formatDate = "";
+		
+		if(fullDay == 0) {
+			
+		} else {
+			
+		}
+		
+		
+		
+		return minute;
+		
+	}
+
 	public String addZero(int value) {
 		if (value <= 9) {
 			if (value == 0) {
@@ -381,7 +493,6 @@ public class EditEvent extends JPanel {
 		}
 
 	}
-
 
 	private class ListenForButton implements ActionListener {
 
@@ -408,111 +519,6 @@ public class EditEvent extends JPanel {
 					editEndTimeSpinner.setVisible(true);
 					editEventLeft.updateUI();
 				}
-			}
-
-			if (e.getSource() == editEventDropDown) {
-				String inputEditEventName = user.getEventArray()[editEventDropDown.getSelectedIndex()].getName();
-				String inputEditEventLocation = user.getEventArray()[editEventDropDown.getSelectedIndex()].getLoc();
-				String inputEditEventTextArea = user.getEventArray()[editEventDropDown.getSelectedIndex()]
-						.getDescription();
-				String inputEditEventStartDate = user.getEventArray()[editEventDropDown.getSelectedIndex()]
-						.getStart_time();
-				String inputEditEventEndDate = user.getEventArray()[editEventDropDown.getSelectedIndex()].getEnd_time();
-				String inputEditEventStartTime = user.getEventArray()[editEventDropDown.getSelectedIndex()]
-						.getStart_time();
-				String inputEditEventEndTime = user.getEventArray()[editEventDropDown.getSelectedIndex()].getEnd_time();
-				int inputEditEventFullDay = user.getEventArray()[editEventDropDown.getSelectedIndex()]
-						.getEvent_full_day();
-				boolean inputTempBool = false;
-
-				String tempStartDateYear = inputEditEventStartDate.substring(0, 4);
-				String tempStartDateMonth = inputEditEventStartDate.substring(5, 7);
-				String tempStartDateDay = inputEditEventStartDate.substring(8, 10);
-
-				String tempEndDateYear = inputEditEventEndDate.substring(0, 4);
-				String tempEndDateMonth = inputEditEventEndDate.substring(5, 7);
-				String tempEndDateDay = inputEditEventEndDate.substring(8, 10);
-
-				String tempStartTimeHour = inputEditEventStartTime.substring(11, 13);
-				String tempStartTimeMinute = inputEditEventStartTime.substring(14, 16);
-
-				String tempEndTimeHour = inputEditEventEndTime.substring(11, 13);
-				String tempEndTimeMinute = inputEditEventEndTime.substring(14, 16);
-
-				editStartGregCal = new GregorianCalendar();
-				editEndGregCal = new GregorianCalendar();
-
-				editStartGregCal.set(java.util.Calendar.YEAR, Integer.parseInt(tempStartDateYear));
-				editStartGregCal.set(java.util.Calendar.MONTH, Integer.parseInt(tempStartDateMonth));
-				editStartGregCal.set(java.util.Calendar.DAY_OF_MONTH, Integer.parseInt(tempStartDateDay));
-
-				editEndGregCal.set(java.util.Calendar.YEAR, Integer.parseInt(tempEndDateYear));
-				editEndGregCal.set(java.util.Calendar.MONTH, Integer.parseInt(tempEndDateMonth));
-				editEndGregCal.set(java.util.Calendar.DAY_OF_MONTH, Integer.parseInt(tempEndDateDay));
-
-				editStartGregCal.set(java.util.Calendar.HOUR_OF_DAY, Integer.parseInt(tempStartTimeHour));
-				editStartGregCal.set(java.util.Calendar.MINUTE, Integer.parseInt(tempStartTimeMinute));
-
-				editEndGregCal.set(java.util.Calendar.HOUR_OF_DAY, Integer.parseInt(tempEndTimeHour));
-				editEndGregCal.set(java.util.Calendar.MINUTE, Integer.parseInt(tempEndTimeMinute));
-
-				if (inputEditEventFullDay == 0) {
-					inputTempBool = false;
-				} else {
-					inputTempBool = true;
-				}
-
-				editEventNameField.setText(inputEditEventName);
-				editEventLocationField.setText(inputEditEventLocation);
-				editEventDescArea.setText(inputEditEventTextArea);
-				editFullDayActivity.setSelected(inputTempBool);
-
-				if (editFullDayActivity.isSelected()) {
-					// centerLeft.remove(startTimeSpinner);
-					// centerLeft.remove(endTimeSpinner);
-					editStartDatePicker.setPreferredSize(new Dimension(300, 30));
-					editStartDatePicker.getModel().setYear(Integer.parseInt(tempEndDateYear));
-					editStartDatePicker.getModel().setMonth(Integer.parseInt(tempEndDateMonth));
-					editStartDatePicker.getModel().setDay(Integer.parseInt(tempEndDateDay));
-					editStartDatePicker.getModel().setSelected(true);
-
-					editEndDatePicker.setPreferredSize(new Dimension(300, 30));
-					editEndDatePicker.getModel().setYear(Integer.parseInt(tempEndDateYear));
-					editEndDatePicker.getModel().setMonth(Integer.parseInt(tempEndDateMonth));
-					editEndDatePicker.getModel().setDay(Integer.parseInt(tempEndDateDay));
-					editEndDatePicker.getModel().setSelected(true);
-
-					editStartTimeSpinner.setVisible(false);
-					editStartTimeSpinner.setValue(editStartGregCal.getTime());
-
-					editEndTimeSpinner.setVisible(false);
-					editEndTimeSpinner.setValue(editEndGregCal.getTime());
-
-					editEventLeft.updateUI();
-				} else {
-
-					editStartDatePicker.setPreferredSize(new Dimension(202, 30));
-					editStartDatePicker.getModel().setYear(Integer.parseInt(tempEndDateYear));
-					editStartDatePicker.getModel().setMonth(Integer.parseInt(tempEndDateMonth));
-					editStartDatePicker.getModel().setDay(Integer.parseInt(tempEndDateDay));
-					editStartDatePicker.getModel().setSelected(true);
-
-					editEndDatePicker.setPreferredSize(new Dimension(202, 30));
-					editEndDatePicker.getModel().setYear(Integer.parseInt(tempEndDateYear));
-					editEndDatePicker.getModel().setMonth(Integer.parseInt(tempEndDateMonth));
-					editEndDatePicker.getModel().setDay(Integer.parseInt(tempEndDateDay));
-					editEndDatePicker.getModel().setSelected(true);
-
-					editStartTimeSpinner.setVisible(true);
-					editEndTimeSpinner.setVisible(true);
-
-					editStartTimeSpinner.setValue(editStartGregCal.getTime());
-					editEndTimeSpinner.setValue(editEndGregCal.getTime());
-
-					editEventLeft.updateUI();
-
-				}
-
 			}
 
 			if (e.getSource() == userEditSearchButton) {
@@ -543,7 +549,7 @@ public class EditEvent extends JPanel {
 				int inputEventEndDay = 0;
 				int inputEventEndMonth = 0;
 				int inputEventEndYear = 0;
-				int inputEventId = user.getEventArray()[editEventDropDown.getSelectedIndex()].getEvent_id();
+				int inputEventId = event.getEvent_id();
 				String inputEventStartTime = "";
 				String inputEventEndTime = "";
 
@@ -562,9 +568,9 @@ public class EditEvent extends JPanel {
 					inputEventEndMonth = editEndDatePicker.getModel().getMonth();
 					inputEventEndDay = editEndDatePicker.getModel().getDay();
 
-					formatStartDate = inputEventStartYear + "-" + addZero(inputEventStartMonth) + "-"
+					formatStartDate = inputEventStartYear + "-" + addZero((inputEventStartMonth + 1)) + "-"
 							+ inputEventStartDay + " 01:01:01";
-					formatEndDate = inputEventEndYear + "-" + addZero(inputEventEndMonth) + "-" + inputEventEndDay
+					formatEndDate = inputEventEndYear + "-" + addZero((inputEventEndMonth + 1)) + "-" + inputEventEndDay
 							+ " 01:01:01";
 				} else {
 
@@ -581,20 +587,11 @@ public class EditEvent extends JPanel {
 					inputEventStartTime = editStartTimeEditor.getFormat().format(editStartTimeSpinner.getValue());
 					inputEventEndTime = editEndTimeEditor.getFormat().format(editEndTimeSpinner.getValue());
 
-					formatStartDate = inputEventStartYear + "-" + addZero(inputEventStartMonth) + "-"
+					formatStartDate = inputEventStartYear + "-" + addZero((inputEventStartMonth + 1)) + "-"
 							+ inputEventStartDay + " " + inputEventStartTime + ":01";
-					formatEndDate = inputEventEndYear + "-" + addZero(inputEventEndMonth) + "-" + inputEventEndDay + " "
+					formatEndDate = inputEventEndYear + "-" + addZero((inputEventEndMonth + 1)) + "-" + inputEventEndDay + " "
 							+ inputEventEndTime + ":01";
 				}
-
-				// System.out.println(inputEventStartDay);
-				// System.out.println(inputEventStartMonth);
-				// System.out.println(inputEventStartYear);
-
-				// System.out.println("Start date: " + formatStartDate);
-				// System.out.println("End date: " + formatEndDate);
-				//
-				// System.out.println(inputCreateEventForCalendarId);
 
 				SQLManager.editEvent(inputEventName, inputEventLocation, inputEventTextArea, inputFullDayEvent,
 						inputEventId, formatStartDate, formatEndDate);
@@ -615,20 +612,22 @@ public class EditEvent extends JPanel {
 					}
 				}
 
-				wp.getDeleteAndEditEventPage();
+				user.reloadarrays();
+				
+				wp.getViewViewer();
 
 				wp.getNotificationPage();
 			}
 
 			if (e.getSource() == deleteEventButton) {
 
-				int eventId = user.getEventArray()[editEventDropDown.getSelectedIndex()].getEvent_id();
+				int eventId = event.getEvent_id();
 
 				SQLManager.deleteEvent(eventId);
 
 				user.reloadarrays();
 
-				wp.getDeleteAndEditEventPage();
+				wp.getAddEventPage();
 
 				wp.getNotificationPage();
 			}
