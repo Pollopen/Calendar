@@ -116,21 +116,35 @@ public class SQLManager {
 		return false;
 	}
 
-	public static boolean addCalendar(String calName, String calDesc) {
-		String SQL = "INSERT INTO calendar(creator_id, name, description) VALUES('" + user.getId() + "','" + calName
+	public static boolean addCalendar(Window window, String calName, String calDesc) {
+		if(calName.length()<1||calDesc.length()<1){
+			String SQL = "INSERT INTO calendar(creator_id, name, description) VALUES('" + user.getId() + "','" + calName
 				+ "','" + calDesc + "');";
-		db.execute(SQL);
-		return true;
+			db.execute(SQL);
+			return true;
+		}else{
+			JOptionPane.showMessageDialog(window, "Både namn och beskrivning måste ha ett värde!",
+					"Kalender lades INTE till!", JOptionPane.INFORMATION_MESSAGE);
+			return false;
+		}
+		
+		
 	}
 
-	public static boolean editCalendar(int calId, String calName, String calDesc) {
+	public static boolean editCalendar(int calId, String calName, String calDesc, Window window) {
 
 		tempCalId = calId;
-
-		String SQL = "UPDATE calendar SET name='" + calName + "', description='" + calDesc + "' WHERE cal_id= '" + calId
+		if(calName.length()<1||calDesc.length()<1){
+			String SQL = "UPDATE calendar SET name='" + calName + "', description='" + calDesc + "' WHERE cal_id= '" + calId
 				+ "'";
-		db.execute(SQL);
-		return true;
+			db.execute(SQL);
+			return true;
+		}else{
+			JOptionPane.showMessageDialog(window, "Både namn och beskrivning måste ha ett värde!",
+					"Kalender uppdaterades INTE till!", JOptionPane.INFORMATION_MESSAGE);
+			return false;
+		}
+		
 	}
 
 	public static boolean manageCalendar(int calId, String calName, String calDesc) {

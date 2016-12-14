@@ -887,7 +887,7 @@ public class WindowPanel extends JPanel {
 		rightPanel.removeAll();
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		rightPanel.add(new CalAddEdit(SM, this, user), gbc);
+		rightPanel.add(new CalAddEdit(SM, this, user, window), gbc);
 		rightPanel.updateUI();
 	}
 
