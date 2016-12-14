@@ -29,6 +29,7 @@ public class WindowPanel extends JPanel {
 			addEventButtonPanel, overviewPanel, CalendarChoicePanel, rightPanel, upperLeftPanel, upperRightPanel;
 	private Calendar[] calArray;
 	private JButton addEventButton;
+
 	private ListenForButton lForButton;
 	private GridBagConstraints gbc, gbcLeft;
 	private Window window;
@@ -217,7 +218,7 @@ public class WindowPanel extends JPanel {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		monthYearPanel = new MonthYearPanel(SM);
+		monthYearPanel = new MonthYearPanel(SM,this);
 		overviewPanel1.add(monthYearPanel);
 		monthOverview = new MonthOverview(SM, user, tempDate, false, this);
 		overviewPanel2.add(monthOverview);
@@ -264,7 +265,7 @@ public class WindowPanel extends JPanel {
 		rightPanel.removeAll();
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		rightPanel.add(new CalAddEdit(SM, this, user), gbc);
+		rightPanel.add(new CalAddEdit(SM, this, user, window), gbc);
 		rightPanel.updateUI();
 	}
 
@@ -285,7 +286,7 @@ public class WindowPanel extends JPanel {
 		gbc.gridy = 0;
 		switch (SM.getActiveview()) {
 		case 1:
-			rightPanel.add(new DayView(), gbc);
+			rightPanel.add(new DayView(SM, user), gbc);
 			break;
 		case 2:
 			rightPanel.add(new WeekView(SM, user), gbc);

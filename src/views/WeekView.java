@@ -27,28 +27,22 @@ public class WeekView extends JPanel {
 	private StateMachine SM;
 	private JPanel weekDaysPanel, weekDatePanel;
 	private JLabel weekDaysLabel, dayOfMonthLabel;
-	private Calendar cal, eventCal;
-	private String date, tempFocusedDay, tempFocusedMonth, tempFocusedYear, tempStartTimeString, tempEndTimeString,
-			tempEventName;
+	private String date;
 	private Date focusedDate;
 	private DateFormat getFocusDate = new SimpleDateFormat("yyyy/MM/dd");
 	private DateFormat getWeekDay = new SimpleDateFormat("u");
-	private DateFormat getMonth = new SimpleDateFormat("M");
-	private int weekDay, newDayDate, newMonthDate, newYearDate;
-	private User user;
-	private Event[] eventArray, filteredEventDayArray;
+	private int weekDay;
+	private Event[] eventArray;
 	private object.Calendar[] calArray;
 	private DayPanel[] daypanels = new DayPanel[7];
 
 	public WeekView(StateMachine SM, User user) {
 		this.SM = SM;
-		this.user = user;
 		setLayout(new BorderLayout());
 		setPreferredSize(new Dimension(1175, 725));
 		setVisible(true);
 		eventArray = user.getEventArray();
 		calArray = user.getCalArray();
-		cal = Calendar.getInstance();
 		date = SM.getFocusedDate();
 		date = DateHandler.convertToEasyDate(date);
 	
@@ -60,7 +54,6 @@ public class WeekView extends JPanel {
 		
 		gbc.gridx=0;
 		gbc.gridy=0;
-		boolean even=true;
 		int hour=0;
 		for (int i = 0; i < 26; i++) {
 			if(i==0){
@@ -160,7 +153,7 @@ public class WeekView extends JPanel {
 		}
 		dayOfWeek=firstDay;
 		for (int i = 0; i < 7; i++) {
-			daypanels[i] = new DayPanel(filterDayEvents(dayOfWeek,eventArray, calArray),dayOfWeek,i);
+			daypanels[i] = new DayPanel(filterDayEvents(dayOfWeek,eventArray, calArray),dayOfWeek,i,true);
 			center.add(daypanels[i]);
 			dayOfWeek=DateHandler.addToDateString(dayOfWeek, 1);
 		}
@@ -231,41 +224,6 @@ public class WeekView extends JPanel {
 				return to[i];
 		}
 		return 0;
-	}
-	private int getDaysOfMonth(String firstDay){
-		String monthNum=firstDay.substring(5, 7);
-		switch (Integer.parseInt(monthNum)) {
-			case 1:
-				return 31;
-			case 2:
-				if(isLeapYear(firstDay)){
-					return 29;
-				}else{
-					return 28;
-				}
-			case 3:
-				return 31;
-			case 4:
-				return 30;
-			case 5:
-				return 31;
-			case 6:
-				return 30;
-			case 7:
-				return 31;
-			case 8:
-				return 31;
-			case 9:
-				return 30;
-			case 10:
-				return 31;
-			case 11:
-				return 30;
-			case 12:
-				return 31;
-			default:
-				return 31;
-		}
 	}
 	public static boolean isLeapYear(String firstDay) {
 		String year=firstDay.substring(0, 4);

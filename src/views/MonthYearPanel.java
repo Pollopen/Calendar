@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import controller.DateHandler;
 import controller.StateMachine;
 
 public class MonthYearPanel extends JPanel {
@@ -18,7 +19,11 @@ public class MonthYearPanel extends JPanel {
 	private JLabel dateShowLabel;
 	private ListenForButton lForButton;
 	private GridBagConstraints gbc;
-	public MonthYearPanel(StateMachine SM){
+	private StateMachine SM;
+	private WindowPanel wp;
+	public MonthYearPanel(StateMachine SM, WindowPanel wp){
+		this.SM=SM;
+		this.wp=wp;
 		String date = SM.getFocusedDate();
 		setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
@@ -51,11 +56,20 @@ public class MonthYearPanel extends JPanel {
 
 			// Check if the source of the event was the button
 
-			if (e.getSource() == backButton) {
-				
-			}
 			if (e.getSource() == forwardButton) {
-				
+				int dayOfMonth=DateHandler.getDaysOfMonth(SM.getFocusedDate());
+				SM.addToFocusDate(dayOfMonth);
+				wp.getViewViewer();
+				wp.getViewChoice();
+				wp.getOverview();
+			}
+			if (e.getSource() == backButton) {
+				//TODO Jump back based on last month number of days not the current
+				int dayOfMonth=DateHandler.getDaysOfMonth(SM.getFocusedDate());
+				SM.addToFocusDate(-dayOfMonth);
+				wp.getViewViewer();
+				wp.getViewChoice();
+				wp.getOverview();
 			}
 
 		}

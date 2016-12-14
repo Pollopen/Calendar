@@ -27,6 +27,7 @@ import controller.StateMachine;
 import database.SQLManager;
 import object.Calendar;
 import object.User;
+import views.Window;
 import views.WindowPanel;
 
 public class CalAddEdit extends JPanel {
@@ -49,8 +50,10 @@ public class CalAddEdit extends JPanel {
 	private JList userList;
 	private ArrayList checkList;
 	private Border etchedBorder;
+	private Window window;
 
-	public CalAddEdit(StateMachine SM, WindowPanel wp, User user) {
+	public CalAddEdit(StateMachine SM, WindowPanel wp, User user, Window window) {
+		this.window=window;
 		this.user = user;
 		this.SM = SM;
 		this.wp = wp;
@@ -408,7 +411,7 @@ public class CalAddEdit extends JPanel {
 				System.out.println("save kommand");
 				System.out.println(temp1);
 				System.out.println(temp2);
-				if (SQLManager.editCalendar(calArray[SM.getCalEditStatus()].getCal_id(), temp1, temp2)) {
+				if (SQLManager.editCalendar(calArray[SM.getCalEditStatus()].getCal_id(), temp1, temp2,window)) {
 
 					if (listModel.size() > 0) {
 						for (int i = 0; i < userList.getSelectedIndices().length; i++) {
@@ -445,7 +448,7 @@ public class CalAddEdit extends JPanel {
 				System.out.println("*");
 				System.out.println(temp1);
 				System.out.println(temp2);
-				if (SQLManager.addCalendar(temp1, temp2)) {
+				if (SQLManager.addCalendar(window, temp1, temp2)) {
 					addCalCenterLeft.removeAll();
 					user.reloadarrays();
 					wp.getAddCalendarPage();
