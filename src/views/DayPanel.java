@@ -33,7 +33,6 @@ public class DayPanel extends JPanel {
 		this.wp = wp;
 		this.user = user;
 
-		System.out.println("date= " + date);
 
 		// setBorder(BorderFactory.createLineBorder(new Color(0, 255, 0)));
 		setLayout(new GridBagLayout());
@@ -92,7 +91,6 @@ public class DayPanel extends JPanel {
 				n++;
 			}
 		}
-		System.out.println("FulldayEvents: " + tempFullDayEvents + "normal events: " + tempNormalEvents);
 
 		// String checkEventDayStart=eventArray[i].getStart_time();
 		// String checkEventDayEnd=eventArray[i].getEnd_time();
@@ -172,7 +170,6 @@ public class DayPanel extends JPanel {
 			startTime += (24.7 * hour);
 			// half hour
 			startTime += (0.41 * halfHour);
-			System.out.println(startTime);
 			return startTime;
 		}
 		// if events starts before this day
@@ -182,7 +179,6 @@ public class DayPanel extends JPanel {
 			startTime += (24.7 * Integer.parseInt(tempEndTime.substring(11, 13)));
 			// half hour
 			startTime += (0.41 * Integer.parseInt(tempEndTime.substring(14, 16)));
-			System.out.println(startTime);
 			return startTime;
 		}
 		// if Event ends after this day
@@ -195,8 +191,6 @@ public class DayPanel extends JPanel {
 	private int getStart(Event event) {
 		String time = event.getStart_time();
 		String eventDate = DateHandler.convertToEasyDate(time);
-		System.out.println(time);
-		System.out.println(time.substring(11, 13) + ":" + time.substring(14, 16));
 		if (Integer.parseInt(eventDate) < Integer.parseInt(date)) {
 			return 0;
 		}
@@ -205,7 +199,6 @@ public class DayPanel extends JPanel {
 		startTime += (24.7 * Integer.parseInt(time.substring(11, 13)));
 		// half hour
 		startTime += (0.41 * Integer.parseInt(time.substring(14, 16)));
-		System.out.println(startTime);
 		return startTime;
 	}
 

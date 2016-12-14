@@ -28,7 +28,6 @@ public class StateMachine {
 		activeview=3;
 		pagesLogin=1;
 		date = new Date();
-		System.out.println(sdf.format(date)); //2016/11/16 12:08:43
 		focusedDate=sdf.format(date);
 		eventColor=genColorArray();
 	}
@@ -155,7 +154,6 @@ public class StateMachine {
 		tempYear++;
 		String newDate=tempYear+focusDate.substring(4);
 		setEasyDate(newDate);
-		System.out.println("New focusdate(+)= "+newDate);
 	}
 	public void backYear(){
 		String focusDate=getEasyFocusDate();
@@ -163,7 +161,6 @@ public class StateMachine {
 		tempYear--;
 		String newDate=tempYear+focusDate.substring(4);
 		setEasyDate(newDate);
-		System.out.println("New focusdate(-)= "+newDate);
 	}
 	public Color getColor(int num){
 		while (num>10){

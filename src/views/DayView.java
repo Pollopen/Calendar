@@ -106,7 +106,6 @@ public class DayView extends JPanel {
 		}
 
 		weekDay = Integer.parseInt(getWeekDay.format(focusedDate));
-		System.out.println("veckodag: " + weekDay);
 		JPanel north = new JPanel(new GridLayout(2, 1));
 		JPanel days = new JPanel(new GridLayout(1, 1));
 		north.setPreferredSize(new Dimension(2000, 75));

@@ -104,7 +104,6 @@ public class WeekView extends JPanel {
 		}
 
 		weekDay = Integer.parseInt(getWeekDay.format(focusedDate));
-		System.out.println("veckodag: " + weekDay);
 		String firstDay = DateHandler.addToDateString(date, -(weekDay - 1));
 		JPanel north = new JPanel(new GridLayout(2, 1));
 		JPanel days = new JPanel(new GridLayout(1, 7));

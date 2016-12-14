@@ -375,7 +375,6 @@ public class AddEvent extends JPanel {
 
 					checklist.add(inputResult[i][0]);
 
-					System.out.println(inputResult[i][0]);
 				}
 			}
 
@@ -479,8 +478,6 @@ public class AddEvent extends JPanel {
 
 						Object selectedUserId = checklist.get(userList.getSelectedIndices()[i]);
 						int tempSelectedUserId = Integer.parseInt((String) selectedUserId);
-						System.out.println(
-								tempSelectedUserId + " ---------------------- Users id ------------------------ ");
 
 						SQLManager.sendEventInvite(tempSelectedUserId);
 

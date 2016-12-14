@@ -24,9 +24,7 @@ public class DayWeekAddEvent extends JButton implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		System.out.println("before change focusdate"+date);
 		SM.setEasyDate(date);
-		System.out.println("after change focusdate"+SM.getFocusedDate());
 		wp.getViewViewer();
 		wp.getViewChoice();
 		wp.getOverview();

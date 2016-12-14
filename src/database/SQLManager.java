@@ -30,7 +30,6 @@ public class SQLManager {
 		if (accfound == 1) {
 			char[] loginPassCandidate = passfield;
 			if (BCrypt.checkpw(String.valueOf(loginPassCandidate), loginPassHashed)) {
-				System.out.println("It matches");
 				user = new User(Integer.parseInt((String) data[0][0]), (String) data[0][1], (String) data[0][3],
 						(String) data[0][4], (String) data[0][5]);
 				// user = new user (int,string,string,string);
@@ -179,8 +178,6 @@ public class SQLManager {
 
 		for (int i = 0; i < data.length; i++) {
 			tempEventId = Integer.parseInt((String) data[0][0]);
-
-			System.out.println(tempEventId + " AYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY ");
 
 		}
 

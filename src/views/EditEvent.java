@@ -533,7 +533,6 @@ public class EditEvent extends JPanel {
 
 					checkEditList.add(inputEditResult[i][0]);
 
-					System.out.println(inputEditResult[i][0]);
 				}
 			}
 
