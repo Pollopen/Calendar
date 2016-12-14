@@ -26,8 +26,8 @@ import views.calendar.addedit.CalAddEdit;
 
 public class WindowPanel extends JPanel {
 
-	private JPanel overviewPanel1, overviewPanel2, notificationPanel, center, mainPanel, leftPanel,
-			addEventButtonPanel, overviewPanel, CalendarChoicePanel, rightPanel, upperLeftPanel, upperRightPanel;
+	private JPanel overviewPanel1, overviewPanel2, notificationPanel, center, mainPanel, leftPanel, addEventButtonPanel,
+			overviewPanel, CalendarChoicePanel, rightPanel, upperLeftPanel, upperRightPanel;
 	private Calendar[] calArray;
 	private JButton addEventButton;
 
@@ -80,7 +80,7 @@ public class WindowPanel extends JPanel {
 		upperLeftPanel.setPreferredSize(new Dimension(200, 50));
 		upperLeftPanel.setLayout(new GridLayout(2, 2));
 		upperLeftPanel.setVisible(true);
-		upperLeftPanel.setBackground(new Color(255, 0, 0));
+		// upperLeftPanel.setBackground(new Color(255, 0, 0));
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -219,7 +219,7 @@ public class WindowPanel extends JPanel {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		monthYearPanel = new MonthYearPanel(SM,this);
+		monthYearPanel = new MonthYearPanel(SM, this);
 		overviewPanel1.add(monthYearPanel);
 		monthOverview = new MonthOverview(SM, user, tempDate, false, this);
 		overviewPanel2.add(monthOverview);
@@ -255,7 +255,7 @@ public class WindowPanel extends JPanel {
 	}
 
 	public void getDeleteAndEditEventPage(Event event) {
-		
+
 		rightPanel.removeAll();
 		rightPanel.add(new EditEvent(this, user, event));
 		rightPanel.updateUI();
