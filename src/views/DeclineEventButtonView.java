@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 import database.SQLManager;
+import object.User;
 
 public class DeclineEventButtonView extends JButton {
 
@@ -15,7 +16,6 @@ public class DeclineEventButtonView extends JButton {
 	public DeclineEventButtonView(int sharedEventId, WindowPanel wp) {
 
 		this.wp = wp;
-
 		this.setText("Neka");
 
 		buttonId = sharedEventId;

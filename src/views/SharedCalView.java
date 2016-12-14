@@ -14,6 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import database.SQLManager;
 
@@ -23,6 +24,7 @@ public class SharedCalView extends JPanel {
 	private JPanel mainPanel, acceptCalPanel, noCalPanel, buttonPanel, acceptCalLeftPanel, acceptCalRightPanel;
 	private JButton updateButton;
 	private JLabel calNameLabel, noCalLabel;
+	private JScrollPane scroll;
 	private GridBagConstraints gbc;
 	private WindowPanel wp;
 
@@ -56,7 +58,14 @@ public class SharedCalView extends JPanel {
 		mainPanel.setLayout(new GridBagLayout());
 		// mainPanel.setBackground(new Color(255, 0, 0));
 
-		this.add(BorderLayout.CENTER, mainPanel);
+		scroll = new JScrollPane(mainPanel);
+		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll.revalidate();
+		mainPanel.revalidate();
+
+	
+
+		this.add(BorderLayout.CENTER, scroll);
 
 		SQLResult = SQLManager.getSharedCal();
 
@@ -66,6 +75,7 @@ public class SharedCalView extends JPanel {
 				acceptCalPanel.setPreferredSize(new Dimension(1075, 100));
 				acceptCalPanel.setLayout(new GridBagLayout());
 				acceptCalPanel.setBackground(new Color(100, 100, 100));
+				acceptCalPanel.revalidate();
 				// acceptEventPanel.setBorder(BorderFactory.createLineBorder(new
 				// Color(0, 0, 0)));
 

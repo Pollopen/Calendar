@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 import database.SQLManager;
+import object.User;
 
 public class AcceptEventButtonView extends JButton {
 
@@ -43,6 +44,8 @@ public class AcceptEventButtonView extends JButton {
 			SQLManager.acceptSharedEvent(buttonId);
 
 			wp.getSharedEventPage();
+			
+			
 
 		}
 	}
