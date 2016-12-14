@@ -7,16 +7,17 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
+import controller.StateMachine;
 import object.Event;
 
 public class FullDayEventWeek extends JButton  implements ActionListener {
 	private Event event;
-	public FullDayEventWeek(String name, Event event) {
+	public FullDayEventWeek(String name, Event event, StateMachine SM) {
 		super(name);
 		this.event=event;
 		setToolTipText(this.event.getName());
 		setMargin(new Insets(0, 0, 0, 0));
-		setBackground(new Color(175,255,255));
+		setBackground(SM.getColor(event.getColor()));
 		addActionListener(this);
 		// TODO Auto-generated constructor stub
 	}

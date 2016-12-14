@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controller.DateHandler;
+import controller.StateMachine;
 import object.Event;
 import weekView.FullDayEventWeek;
 import weekView.NormalEventWeek;
@@ -20,8 +21,10 @@ public class DayPanel extends JPanel {
 	private Event[] eventArray,fullDay,normal;
 	private GridBagConstraints gbc = new GridBagConstraints();
 	private String date;
-	public DayPanel(Event[] eventArray,String date, int h, boolean inweekview) {
+	private StateMachine SM;
+	public DayPanel(Event[] eventArray,String date, int h, boolean inweekview,StateMachine SM) {
 		this.eventArray=eventArray;
+		this.SM=SM;
 		this.date=date;
 		System.out.println("date= "+date);
 		
@@ -94,7 +97,7 @@ public class DayPanel extends JPanel {
 		//System.out.println("endTime: "+checkEventDayEnd);
 		fullDayEvents.setLayout(new GridLayout(1, fullDay.length));
 		for (int i = 0; i < fullDay.length; i++) {
-			fullDayEvents.add(new FullDayEventWeek(fullDay[i].getName(),fullDay[i]));
+			fullDayEvents.add(new FullDayEventWeek(fullDay[i].getName(),fullDay[i],SM));
 		}
 		normalEvents.setLayout(new GridLayout(1, normal.length));
 		//normalEvents.setBackground(new Color(255, 0, 0));
@@ -106,7 +109,7 @@ public class DayPanel extends JPanel {
 			normalEvents.add(tempPanel);
 			int height=595;
 			if(checkIfInProgress(normal[i])){
-				NormalEventWeek tempEventButton=new NormalEventWeek(normal[i].getName(),normal[i]);
+				NormalEventWeek tempEventButton=new NormalEventWeek(normal[i].getName(),normal[i],SM);
 				if(inweekview){
 					tempEventButton.setBounds(0, 0, 157/normal.length , height);
 				}else{
@@ -118,7 +121,7 @@ public class DayPanel extends JPanel {
 				int tempStartPoint = getStart(normal[i]);
 				int tempLength = getLength(normal[i]);
 				
-				NormalEventWeek tempEventButton=new NormalEventWeek(normal[i].getName(),normal[i]);
+				NormalEventWeek tempEventButton=new NormalEventWeek(normal[i].getName(),normal[i],SM);
 				if((tempLength+tempStartPoint)>595){
 					tempLength=height-tempStartPoint;
 				}

@@ -151,7 +151,7 @@ public class DayView extends JPanel {
 
 		
 
-		daypanels[1] = new DayPanel(filterDayEvents(dayOfWeek,eventArray, calArray),dayOfWeek,3,false);
+		daypanels[1] = new DayPanel(filterDayEvents(dayOfWeek,eventArray, calArray),dayOfWeek,3,false,SM);
 		center.add(daypanels[1]);
 
 	}
@@ -193,6 +193,7 @@ public class DayView extends JPanel {
 				for (int j = 0; j < aca.length; j++) {//If calendar is active
 					if(ca[aca[j]].getCal_id()==ea[i].getCal_id()){
 						Event tempEvent=ea[i];
+						tempEvent.setColorNum(j);
 						filteredList[k]=tempEvent;
 						k++;
 					}

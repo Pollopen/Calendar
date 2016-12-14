@@ -153,7 +153,7 @@ public class WeekView extends JPanel {
 		}
 		dayOfWeek=firstDay;
 		for (int i = 0; i < 7; i++) {
-			daypanels[i] = new DayPanel(filterDayEvents(dayOfWeek,eventArray, calArray),dayOfWeek,i,true);
+			daypanels[i] = new DayPanel(filterDayEvents(dayOfWeek,eventArray, calArray),dayOfWeek,i,true,SM);
 			center.add(daypanels[i]);
 			dayOfWeek=DateHandler.addToDateString(dayOfWeek, 1);
 		}
@@ -196,6 +196,7 @@ public class WeekView extends JPanel {
 				for (int j = 0; j < aca.length; j++) {//If calendar is active
 					if(ca[aca[j]].getCal_id()==ea[i].getCal_id()){
 						Event tempEvent=ea[i];
+						tempEvent.setColorNum(j);
 						filteredList[k]=tempEvent;
 						k++;
 					}

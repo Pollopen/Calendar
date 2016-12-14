@@ -27,7 +27,6 @@ public class OverviewDayButton extends JButton implements ActionListener {
 		addActionListener(this);
 		setBackground(new Color(200,200,200));
 		setMargin(new Insets(0, 0, 0, 0));
-		setToolTipText("Mer event finns!");
 		if(date.equals(SM.getEasyDate())){
 			setForeground(Color.BLUE);
 		}

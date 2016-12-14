@@ -18,6 +18,7 @@ public class Event extends JPanel {
 	private String edited;
 	private int notification;
 	private int fullDay;
+	private int colorNum;
 
 	public Event(int e_id, int cal_id, int create_id, String event_name, String event_location, String event_desc,
 			String event_created, String event_start, String event_end, String event_edited, int event_notice,
@@ -164,6 +165,14 @@ public class Event extends JPanel {
 
 	public int getNotification() {
 		return notification;
+	}
+
+	public int getColor() {
+		return colorNum;
+	}
+
+	public void setColorNum(int colorNum) {
+		this.colorNum = colorNum;
 	}
 
 }
