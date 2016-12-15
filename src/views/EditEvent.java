@@ -46,7 +46,7 @@ public class EditEvent extends JPanel {
 	private Event[] editEventArray;
 	private JButton editEventButton, deleteEventButton, userEditSearchButton;
 	private JTextArea editEventDescArea;
-	private JCheckBox editFullDayActivity;
+	private JCheckBox editFullDayActivity, notification;
 	private JSpinner editStartTimeSpinner, editEndTimeSpinner;
 	private JSpinner.DateEditor editStartTimeEditor, editEndTimeEditor;
 	private JDatePanelImpl editStartDatePanel, editEndDatePanel;
@@ -173,21 +173,6 @@ public class EditEvent extends JPanel {
 
 		editEventCenter.add(editEventRight, gbc);
 
-		// editEventArray = user.getEventArray();
-		// editEventDropDown = new JComboBox<String>();
-		//
-		// for (int i = 0; i < editEventArray.length; i++) {
-		// editEventObjectArray = editEventArray[i].getName();
-		// editEventDropDown.addItem(editEventObjectArray);
-		// }
-		//
-		// gbcLeft.gridx = 0;
-		// gbcLeft.gridy = 0;
-		// gbcLeft.insets = new Insets(0, 0, 0, 10);
-		// gbcLeft.anchor = GridBagConstraints.WEST;
-		//
-		// editEventTop.add(editEventDropDown, gbcLeft);
-
 		gbcLeft.gridx = 1;
 		gbcLeft.gridy = 0;
 		gbcLeft.insets = new Insets(0, 0, 0, 10);
@@ -265,6 +250,18 @@ public class EditEvent extends JPanel {
 		gbcLeft.anchor = GridBagConstraints.WEST;
 
 		editEventLeft.add(editFullDayActivity, gbcLeft);
+		
+		notification = new JCheckBox();
+		notification.setText("Notifikationer?");
+		notification.setSelected(true);
+		notification.setToolTipText("Vill du få notifikationer från det här eventet?");
+
+		gbcLeft.gridx = 1;
+		gbcLeft.gridy = 5;
+		gbcLeft.insets = new Insets(0, -120, 10, 0);
+		gbcLeft.anchor = GridBagConstraints.WEST;
+
+		editEventLeft.add(notification, gbcLeft);
 
 		editStartModel = new UtilDateModel();
 		editStartProperties = new Properties();
@@ -359,7 +356,9 @@ public class EditEvent extends JPanel {
 		String tempEventStart = event.getStart_time();
 		String tempEventEnd = event.getEnd_time();
 		int inputEventFullDay = event.getFullDay();
+		int inputEventNotification = event.getNotification();
 		boolean inputTempBool = false;
+		boolean inputNotifyBool = false;
 
 		String tempStartDateYear = tempEventStart.substring(0, 4);
 		String tempStartDateMonth = tempEventStart.substring(5, 7);
@@ -394,11 +393,18 @@ public class EditEvent extends JPanel {
 		} else {
 			inputTempBool = true;
 		}
+		
+		if (inputEventNotification == 0) {
+			inputNotifyBool = false;
+		} else {
+			inputNotifyBool = true;
+		}
 
 		editEventNameField.setText(inputEditEventName);
 		editEventLocationField.setText(inputEditEventLocation);
 		editEventDescArea.setText(inputEditEventTextArea);
 		editFullDayActivity.setSelected(inputTempBool);
+		notification.setSelected(inputNotifyBool);
 
 		if (editFullDayActivity.isSelected()) {
 			// centerLeft.remove(startTimeSpinner);
@@ -536,14 +542,21 @@ public class EditEvent extends JPanel {
 				int inputEventEndMonth = 0;
 				int inputEventEndYear = 0;
 				int inputEventId = event.getEvent_id();
+				int inputNotification;
 				String inputEventStartTime = "";
 				String inputEventEndTime = "";
 
 				String formatStartDate = "";
 				String formatEndDate = "";
+				
+				if (notification.isSelected()) {
+					inputNotification = 1;
+				} else {
+					inputNotification = 0;
+				}
 
 				if (editFullDayActivity.isSelected()) {
-
+		
 					inputFullDayEvent = 1;
 
 					inputEventStartYear = editStartDatePicker.getModel().getYear();
@@ -609,7 +622,7 @@ public class EditEvent extends JPanel {
 
 				if (checkFields == true) {
 					SQLManager.editEvent(inputEventName, inputEventLocation, inputEventTextArea, inputFullDayEvent,
-							inputEventId, formatStartDate, formatEndDate);
+							inputEventId, formatStartDate, formatEndDate, inputNotification);
 
 					user.reloadarrays();
 

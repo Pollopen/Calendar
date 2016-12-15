@@ -46,7 +46,7 @@ public class AddEvent extends JPanel {
 	private JList<Object> userList;
 	private JButton eventCreate, userSearchButton;
 	private JTextArea eventDescArea;
-	private JCheckBox fullDayActivity;
+	private JCheckBox fullDayActivity, notifications;
 	private JSpinner startTimeSpinner, endTimeSpinner;
 	private JSpinner.DateEditor startTimeEditor, endTimeEditor;
 	private JDatePanelImpl startDatePanel, endDatePanel;
@@ -264,6 +264,18 @@ public class AddEvent extends JPanel {
 
 		centerLeft.add(fullDayActivity, gbcLeft);
 
+		notifications = new JCheckBox();
+		notifications.setText("Notifikationer?");
+		notifications.setSelected(true);
+		notifications.setToolTipText("Vill du få notifikationer från det här eventet?");
+
+		gbcLeft.gridx = 1;
+		gbcLeft.gridy = 5;
+		gbcLeft.insets = new Insets(0, -120, 10, 0);
+		gbcLeft.anchor = GridBagConstraints.WEST;
+
+		centerLeft.add(notifications, gbcLeft);
+
 		startModel = new UtilDateModel();
 		// model.setDate(20,04,2014);
 		// Need this...
@@ -453,11 +465,18 @@ public class AddEvent extends JPanel {
 				int inputEventEndMonth = 0;
 				int inputEventEndYear = 0;
 				int inputCreateEventForCalendarId = user.getCalArray()[calDropDown.getSelectedIndex()].getCal_id();
+				int inputNotifications;
 				String inputEventStartTime = "";
 				String inputEventEndTime = "";
 
 				String formatStartDate = "";
 				String formatEndDate = "";
+				
+				if (notifications.isSelected()) {
+					inputNotifications = 1;
+				} else {
+					inputNotifications = 0;
+				}
 
 				if (fullDayActivity.isSelected()) {
 
@@ -526,7 +545,7 @@ public class AddEvent extends JPanel {
 
 				if (checkFields == true) {
 					SQLManager.addEvent(inputEventName, inputEventLocation, inputEventTextArea, inputFullDayEvent,
-							inputCreateEventForCalendarId, formatStartDate, formatEndDate);
+							inputCreateEventForCalendarId, formatStartDate, formatEndDate, inputNotifications);
 
 					// Send invite request to people in the list
 

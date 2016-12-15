@@ -160,19 +160,20 @@ public class SQLManager {
 	}
 
 	public static boolean addEvent(String inputEventName, String inputEventLocation, String inputEventTextArea,
-			int inputFullDayEvent, int inputCreateEventForCalendarId, String formatStartDate, String formatEndDate) {
+			int inputFullDayEvent, int inputCreateEventForCalendarId, String formatStartDate, String formatEndDate,
+			int inputNotifications) {
 
 		String SQL = "INSERT INTO event(cal_id, creator_id, name, location, description, start_time, end_time, notification, full_day) VALUES('"
 				+ inputCreateEventForCalendarId + "','" + user.getId() + "','" + inputEventName + "','"
 				+ inputEventLocation + "','" + inputEventTextArea + "','" + formatStartDate + "','" + formatEndDate
-				+ "','1','" + inputFullDayEvent + "' )";
+				+ "','" + inputNotifications + "','" + inputFullDayEvent + "' )";
 
 		db.execute(SQL);
 
 		SQL = "SELECT MAX(event_id) FROM event WHERE cal_id = '" + inputCreateEventForCalendarId
 				+ "' AND creator_id = '" + user.getId() + "' AND name = '" + inputEventName + "' AND description = '"
 				+ inputEventTextArea + "' AND start_time = '" + formatStartDate + "' AND end_time = '" + formatEndDate
-				+ "' AND notification = 1 AND full_day = '" + inputFullDayEvent + "'";
+				+ "' AND notification = '" + inputNotifications + "' AND full_day = '" + inputFullDayEvent + "'";
 
 		Object[][] data = db.getData(SQL);
 
@@ -248,36 +249,53 @@ public class SQLManager {
 
 	}
 
+	public static int getAmountOfCalInvites() {
+		
+		String SQL = "SELECT COUNT(sc_id) FROM shared_calendar WHERE user_id = " + user.getId() + " AND accepted = 0";
+		
+		Object[][] data = db.getData(SQL);
+		
+		int result = 0;
+		
+		if(data.length > 0) {
+			result = Integer.parseInt((String) data[0][0]);
+		} else {
+			result = 0;
+		}
+		
+		return result;
+	}
+	
+public static int getAmountOfEventInvites() {
+		
+		String SQL = "SELECT COUNT(se_id) FROM shared_event WHERE user_id = " + user.getId() + " AND accepted = 0";
+		
+		Object[][] data = db.getData(SQL);
+		
+		int result = 0;
+		
+		if(data.length > 0) {
+			result = Integer.parseInt((String) data[0][0]);
+		} else {
+			result = 0;
+		}
+		
+		return result;
+	}
+
 	public static boolean editEvent(String inputEventName, String inputEventLocation, String inputEventTextArea,
-			int inputFullDayEvent, int inputEventId, String formatStartDate, String formatEndDate) {
+			int inputFullDayEvent, int inputEventId, String formatStartDate, String formatEndDate,
+			int inputNotification) {
 
 		tempEventId = inputEventId;
 
 		String SQL = "UPDATE event SET name = '" + inputEventName + "', location = '" + inputEventLocation
 				+ "', description = '" + inputEventTextArea + "', start_time = '" + formatStartDate + "', end_time = '"
-				+ formatEndDate + "', full_day = '" + inputFullDayEvent + "' WHERE event_id = " + inputEventId;
+				+ formatEndDate + "', notification = '" + inputNotification + "', full_day = '" + inputFullDayEvent
+				+ "' WHERE event_id = " + inputEventId;
 
 		db.execute(SQL);
 
-		// SQL = "SELECT MAX(event_id) FROM event WHERE creator_id = '" +
-		// user.getId() + "' AND name = '" + inputEventName
-		// + "' AND description = '" + inputEventTextArea + "' AND start_time =
-		// '" + formatStartDate
-		// + "' AND end_time = '" + formatEndDate + "' AND notification = 1 AND
-		// full_day = '" + inputFullDayEvent
-		// + "'";
-		//
-		// Object[][] data = db.getData(SQL);
-		//
-		// for (int i = 0; i < data.length; i++) {
-		// tempEventId = Integer.parseInt((String) data[0][0]);
-		//
-		// System.out.println(tempEventId + "
-		// AYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY ");
-		//
-		// }
-		//
-		// db.execute(SQL);
 		return true;
 	}
 

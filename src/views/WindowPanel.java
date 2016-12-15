@@ -78,9 +78,11 @@ public class WindowPanel extends JPanel {
 		// Upper left panel
 		upperLeftPanel = new JPanel();
 		upperLeftPanel.setPreferredSize(new Dimension(200, 50));
-		upperLeftPanel.setLayout(new GridLayout(2, 2));
+		upperLeftPanel.setLayout(new GridLayout(1, 1));
 		upperLeftPanel.setVisible(true);
-		// upperLeftPanel.setBackground(new Color(255, 0, 0));
+		//upperLeftPanel.setBackground(new Color(255, 0, 0));
+		
+		getInviteView();
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -203,6 +205,12 @@ public class WindowPanel extends JPanel {
 		getViewViewer();
 
 		center.updateUI();
+	}
+	
+	public void getInviteView() {
+		upperLeftPanel.removeAll();
+		upperLeftPanel.add(new ManageInviteView(this));
+		upperLeftPanel.updateUI();
 	}
 
 	public void getOverview() {
