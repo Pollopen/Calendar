@@ -163,7 +163,7 @@ public class StateMachine {
 		setEasyDate(newDate);
 	}
 	public Color getColor(int num){
-		while (num>10){
+		while (num>9){
 			num-=10;
 		}
 		Color temp=eventColor[num];

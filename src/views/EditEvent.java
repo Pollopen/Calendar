@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Properties;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -24,6 +25,8 @@ import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -62,6 +65,7 @@ public class EditEvent extends JPanel {
 	private boolean checkFields;
 	private Event event;
 	private ArrayList checkEditList;
+	private Border etchedBorder;
 
 	public EditEvent(WindowPanel wp, User user, Event event) {
 
@@ -69,6 +73,8 @@ public class EditEvent extends JPanel {
 		this.user = user;
 		this.event = event;
 
+		etchedBorder = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
+		
 		editStartGregCal = new GregorianCalendar();
 		editEndGregCal = new GregorianCalendar();
 
@@ -157,6 +163,7 @@ public class EditEvent extends JPanel {
 		editListModel = new DefaultListModel();
 		userEditList.setModel(editListModel);
 		userEditList.setPreferredSize(new Dimension(300, 410));
+		userEditList.setBorder(etchedBorder);
 
 		JScrollPane listScrollPane = new JScrollPane(userEditList);
 
@@ -343,6 +350,7 @@ public class EditEvent extends JPanel {
 		editEventDescArea.setPreferredSize(new Dimension(300, 100));
 		editEventDescArea.setLineWrap(true);
 		editEventDescArea.setWrapStyleWord(true);
+		editEventDescArea.setBorder(etchedBorder);
 
 		gbc.gridx = 0;
 		gbc.gridy = 10;

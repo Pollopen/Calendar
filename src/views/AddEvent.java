@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Properties;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -24,6 +25,8 @@ import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -63,6 +66,7 @@ public class AddEvent extends JPanel {
 	private Event event;
 	private StateMachine SM;
 	private WindowPanel wp;
+	private Border etchedBorder;
 
 	public AddEvent(User user, Event event, WindowPanel wp, StateMachine SM) {
 
@@ -70,6 +74,9 @@ public class AddEvent extends JPanel {
 		this.event = event;
 		this.wp = wp;
 		this.SM = SM;
+		
+
+		etchedBorder = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 
 		startGregCal = new GregorianCalendar();
 		endGregCal = new GregorianCalendar();
@@ -103,8 +110,10 @@ public class AddEvent extends JPanel {
 		calDropDown = new JComboBox<String>();
 
 		for (int i = 0; i < eventCalArray.length; i++) {
-			eventCreateCalArray = eventCalArray[i].getName() + " " + eventCalArray[i].getCal_id();
-			calDropDown.addItem(eventCreateCalArray);
+			if(eventCalArray[i].getCreator_id()==user.getId()){
+				eventCreateCalArray = eventCalArray[i].getName();
+				calDropDown.addItem(eventCreateCalArray);
+			}
 		}
 
 		gbcLeft.gridx = 0;
@@ -192,6 +201,7 @@ public class AddEvent extends JPanel {
 		listModel = new DefaultListModel();
 		userList.setPreferredSize(new Dimension(300, 410));
 		userList.setModel(listModel);
+		userList.setBorder(etchedBorder);
 
 		JScrollPane listScrollPane = new JScrollPane(userList);
 
@@ -351,6 +361,7 @@ public class AddEvent extends JPanel {
 
 		eventDescLabel = new JLabel("Beskriv eventet här!");
 		eventDescLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+		
 
 		gbc.gridx = 0;
 		gbc.gridy = 9;
@@ -362,7 +373,8 @@ public class AddEvent extends JPanel {
 		eventDescArea.setPreferredSize(new Dimension(300, 100));
 		eventDescArea.setLineWrap(true);
 		eventDescArea.setWrapStyleWord(true);
-
+		eventDescArea.setBorder(etchedBorder);
+		
 		gbc.gridx = 0;
 		gbc.gridy = 10;
 		gbc.insets = new Insets(0, 0, 10, 0);

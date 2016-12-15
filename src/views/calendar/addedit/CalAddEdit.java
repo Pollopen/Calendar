@@ -173,10 +173,11 @@ public class CalAddEdit extends JPanel {
 
 	public void calendarEdit(int calID) {
 		addCalCenterRight.removeAll();
-
+		
 		editCalendar1 = new JPanel();
 		editCalendar1.setPreferredSize(new Dimension(675, 75));
 		editCalendar1.setLayout(new GridBagLayout());
+		editCalendar1.setBorder(etchedBorder);
 		// editCalendar1.setBackground(new Color(255, 0, 0));
 		editCalendar1.setVisible(true);
 
@@ -230,12 +231,14 @@ public class CalAddEdit extends JPanel {
 		// editCal2RPanel.setBackground(new Color(0, 255, 0));
 		editCal2RPanel.setVisible(true);
 
+		editCal2LPanel.setBorder(etchedBorder);
+		
 		editCalendar3 = new JPanel();
 		editCalendar3.setPreferredSize(new Dimension(675, 300));
 		editCalendar3.setLayout(new GridBagLayout());
 		// editCalendar3.setBackground(new Color(0, 0, 255));
 		editCalendar3.setVisible(true);
-
+		
 		gbcLeft = new GridBagConstraints();
 
 		calInfoLabel = new JLabel();
@@ -272,6 +275,7 @@ public class CalAddEdit extends JPanel {
 		listModel = new DefaultListModel();
 		userList.setModel(listModel);
 		userList.setPreferredSize(new Dimension(300, 200));
+		userList.setBorder(etchedBorder);
 
 		JScrollPane listScrollPane = new JScrollPane(userList);
 

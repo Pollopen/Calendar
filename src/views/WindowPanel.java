@@ -185,8 +185,6 @@ public class WindowPanel extends JPanel {
 
 		leftPanel.add(CalendarChoicePanel, gbc);
 
-		calArray = user.getCalArray();
-
 		calChoiceList();
 
 		getOverview();
@@ -285,8 +283,9 @@ public class WindowPanel extends JPanel {
 		}
 		gbc.gridx = 0;
 		gbc.gridy = 6;
-		calChooseList = new CalChooseList(calArray, SM, this);
+		calChooseList = new CalChooseList(user, SM, this);
 		CalendarChoicePanel.add(calChooseList, gbc);
+		CalendarChoicePanel.updateUI();
 	}
 
 	public void getViewViewer() {

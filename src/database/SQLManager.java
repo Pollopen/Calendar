@@ -117,7 +117,7 @@ public class SQLManager {
 	}
 
 	public static boolean addCalendar(Window window, String calName, String calDesc) {
-		if (calName.length() < 1 || calDesc.length() < 1) {
+		if (calName.length() > 1 || calDesc.length() > 1) {
 			String SQL = "INSERT INTO calendar(creator_id, name, description) VALUES('" + user.getId() + "','" + calName
 					+ "','" + calDesc + "');";
 			db.execute(SQL);
@@ -133,14 +133,14 @@ public class SQLManager {
 	public static boolean editCalendar(int calId, String calName, String calDesc, Window window) {
 
 		tempCalId = calId;
-		if (calName.length() < 1 || calDesc.length() < 1) {
+		if (calName.length() > 1 || calDesc.length() > 1) {
 			String SQL = "UPDATE calendar SET name='" + calName + "', description='" + calDesc + "' WHERE cal_id= '"
 					+ calId + "'";
 			db.execute(SQL);
 			return true;
 		} else {
 			JOptionPane.showMessageDialog(window, "Både namn och beskrivning måste ha ett värde!",
-					"Kalender uppdaterades INTE till!", JOptionPane.INFORMATION_MESSAGE);
+					"Kalender uppdaterades INTE!", JOptionPane.INFORMATION_MESSAGE);
 			return false;
 		}
 
@@ -346,7 +346,7 @@ public static int getAmountOfEventInvites() {
 
 	public static Object[][] getClosestEvent() {
 
-		String SQL = "SELECT event_id, name, start_time, end_time FROM event WHERE creator_id = " + user.getId()
+		String SQL = "SELECT event_id, name, start_time, end_time FROM event WHERE notification = 1 AND creator_id = " + user.getId()
 				+ " AND start_time > NOW() ORDER BY start_time LIMIT 1";
 
 		Object[][] data = db.getData(SQL);
