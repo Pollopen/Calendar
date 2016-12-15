@@ -17,6 +17,7 @@ import javax.swing.event.ListSelectionListener;
 
 import controller.StateMachine;
 import object.Calendar;
+import object.User;
 import views.WindowPanel;
 
 public class CalChooseList extends JPanel implements ListSelectionListener {
@@ -28,10 +29,12 @@ public class CalChooseList extends JPanel implements ListSelectionListener {
 	private WindowPanel wp;
 	private int[] list;
 	private GridBagConstraints gbc;
-	
-	public CalChooseList(Calendar[] calarray, StateMachine SM, WindowPanel wp){
+	private User user;
+	public CalChooseList(User user, StateMachine SM, WindowPanel wp){
+		this.user=user;
 		this.SM=SM;
 		this.wp=wp;
+		Calendar[] calarray= user.getCalArray();
 		gbc = new GridBagConstraints();
 		setLayout(new GridBagLayout());
 		calChoiceTitle=new JLabel("Synliga kalendrar:");

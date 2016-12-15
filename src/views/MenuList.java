@@ -135,7 +135,6 @@ public class MenuList {
 			}
 			if (e.getSource() == menuReload) {
 				user.reloadarrays();
-				user.getAll();
 				windowpanel.getIndexPage();
 			}
 			if (e.getSource() == menuView) {
