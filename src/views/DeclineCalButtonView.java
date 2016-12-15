@@ -1,5 +1,6 @@
 package views;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -19,6 +20,7 @@ public class DeclineCalButtonView extends JButton {
 
 		this.wp = wp;
 		this.setText("Neka");
+		this.setBackground(new Color(255, 150, 150));
 		
 		buttonId = sharedEventId;
 		

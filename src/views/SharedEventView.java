@@ -10,12 +10,13 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import database.SQLManager;
+import object.User;
 
 public class SharedEventView extends JPanel {
 
@@ -23,12 +24,15 @@ public class SharedEventView extends JPanel {
 	private JPanel mainPanel, acceptEventPanel, noEventPanel, buttonPanel, acceptEventLeftPanel, acceptEventRightPanel;
 	private JButton updateButton;
 	private JLabel eventNameLabel, noEventLabel;
+	private JScrollPane scroll;
 	private GridBagConstraints gbc;
 	private WindowPanel wp;
+	private User user;
 
-	public SharedEventView(WindowPanel wp) {
+	public SharedEventView(WindowPanel wp, User user) {
 
 		this.wp = wp;
+		this.user = user;
 
 		this.setPreferredSize(new Dimension(1175, 725));
 		this.setLayout(new BorderLayout());
@@ -52,8 +56,14 @@ public class SharedEventView extends JPanel {
 		buttonPanel.add(updateButton, gbc);
 
 		mainPanel = new JPanel();
-		mainPanel.setPreferredSize(new Dimension(1175, 675));
+		//mainPanel.setPreferredSize(new Dimension(1175, 675));
 		mainPanel.setLayout(new GridBagLayout());
+		
+		scroll = new JScrollPane(mainPanel);
+		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll.revalidate();
+		mainPanel.revalidate();
+		
 		// mainPanel.setBackground(new Color(255, 0, 0));
 
 		this.add(BorderLayout.CENTER, mainPanel);
@@ -66,6 +76,7 @@ public class SharedEventView extends JPanel {
 				acceptEventPanel.setPreferredSize(new Dimension(1075, 100));
 				acceptEventPanel.setLayout(new GridBagLayout());
 				acceptEventPanel.setBackground(new Color(100, 100, 100));
+				acceptEventPanel.revalidate();
 				// acceptEventPanel.setBorder(BorderFactory.createLineBorder(new
 				// Color(0, 0, 0)));
 
@@ -117,7 +128,7 @@ public class SharedEventView extends JPanel {
 
 				// System.out.println(sharedEventId);
 
-				acceptEventRightPanel.add(new AcceptEventButtonView(sharedEventId, wp), gbc);
+				acceptEventRightPanel.add(new AcceptEventButtonView(sharedEventId, wp, user), gbc);
 
 				gbc.gridx = 1;
 				gbc.gridy = 0;
@@ -164,6 +175,8 @@ public class SharedEventView extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 
 			if (e.getSource() == updateButton) {
+				
+				wp.getInviteView();
 				wp.getSharedEventPage();
 			}
 

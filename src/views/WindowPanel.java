@@ -327,13 +327,13 @@ public class WindowPanel extends JPanel {
 
 	public void getSharedEventPage() {
 		rightPanel.removeAll();
-		rightPanel.add(new SharedEventView(this));
+		rightPanel.add(new SharedEventView(this, user));
 		rightPanel.updateUI();
 	}
 
 	public void getSharedCalPage() {
 		rightPanel.removeAll();
-		rightPanel.add(new SharedCalView(this));
+		rightPanel.add(new SharedCalView(this, user));
 		rightPanel.updateUI();
 	}
 

@@ -10,13 +10,13 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import database.SQLManager;
+import object.User;
 
 public class SharedCalView extends JPanel {
 
@@ -27,10 +27,12 @@ public class SharedCalView extends JPanel {
 	private JScrollPane scroll;
 	private GridBagConstraints gbc;
 	private WindowPanel wp;
+	private User user;
 
-	public SharedCalView(WindowPanel wp) {
+	public SharedCalView(WindowPanel wp, User user) {
 
 		this.wp = wp;
+		this.user = user;
 
 		this.setPreferredSize(new Dimension(1175, 725));
 		this.setLayout(new BorderLayout());
@@ -54,7 +56,7 @@ public class SharedCalView extends JPanel {
 		buttonPanel.add(updateButton, gbc);
 
 		mainPanel = new JPanel();
-		mainPanel.setPreferredSize(new Dimension(1175, 675));
+		// mainPanel.setPreferredSize(new Dimension(1175, 675));
 		mainPanel.setLayout(new GridBagLayout());
 		// mainPanel.setBackground(new Color(255, 0, 0));
 
@@ -62,8 +64,6 @@ public class SharedCalView extends JPanel {
 		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scroll.revalidate();
 		mainPanel.revalidate();
-
-	
 
 		this.add(BorderLayout.CENTER, scroll);
 
@@ -127,7 +127,7 @@ public class SharedCalView extends JPanel {
 
 				// System.out.println(sharedEventId);
 
-				acceptCalRightPanel.add(new AcceptCalButtonView(sharedEventId, wp), gbc);
+				acceptCalRightPanel.add(new AcceptCalButtonView(sharedEventId, wp, user), gbc);
 
 				gbc.gridx = 1;
 				gbc.gridy = 0;
@@ -146,7 +146,7 @@ public class SharedCalView extends JPanel {
 			noCalLabel = new JLabel();
 			noCalLabel.setText("Du har inga nya kalender inbjudningar");
 			noCalLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
-			
+
 			gbc.gridx = 0;
 			gbc.gridy = 0;
 			gbc.insets = new Insets(0, 0, 10, 0);
@@ -174,6 +174,8 @@ public class SharedCalView extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 
 			if (e.getSource() == updateButton) {
+
+				wp.getInviteView();
 				wp.getSharedCalPage();
 			}
 
