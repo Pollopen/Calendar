@@ -132,10 +132,10 @@ public class SharedEventView extends JPanel {
 			noEventPanel = new JPanel();
 			noEventPanel.setPreferredSize(new Dimension(1075, 625));
 			noEventPanel.setLayout(new GridBagLayout());
-			noEventPanel.setBorder(BorderFactory.createLineBorder(new Color(255, 0, 0)));
 
 			noEventLabel = new JLabel();
 			noEventLabel.setText("Du har inga nya event inbjudningar");
+			noEventLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
 
 			gbc.gridx = 0;
 			gbc.gridy = 0;

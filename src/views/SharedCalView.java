@@ -142,11 +142,11 @@ public class SharedCalView extends JPanel {
 			noCalPanel = new JPanel();
 			noCalPanel.setPreferredSize(new Dimension(1075, 625));
 			noCalPanel.setLayout(new GridBagLayout());
-			noCalPanel.setBorder(BorderFactory.createLineBorder(new Color(255, 0, 0)));
 
 			noCalLabel = new JLabel();
 			noCalLabel.setText("Du har inga nya kalender inbjudningar");
-
+			noCalLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
+			
 			gbc.gridx = 0;
 			gbc.gridy = 0;
 			gbc.insets = new Insets(0, 0, 10, 0);
