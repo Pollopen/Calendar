@@ -85,10 +85,6 @@ public class MenuList {
 		menu.add(menuAddEvent);
 		menuAddEvent.addActionListener(lForButton);
 
-		menuEditEvent = new JMenuItem("Redigera en händelse");
-		menu.add(menuEditEvent);
-		menuEditEvent.addActionListener(lForButton);
-
 		menuSharedEvent = new JMenuItem("Hantera händelse inbjudningar");
 		menu.add(menuSharedEvent);
 		menuSharedEvent.addActionListener(lForButton);
@@ -110,7 +106,7 @@ public class MenuList {
 		menuLogout = new JMenuItem("Logga ut");
 		menu.add(menuLogout);
 		menuLogout.addActionListener(lForButton);
-
+/*
 		// a submenu
 		menu.addSeparator();
 		submenu = new JMenu("Extra");
@@ -122,7 +118,7 @@ public class MenuList {
 		submenu.add(menuItem);
 
 		menu.add(submenu);
-
+*/
 		return menuBar;
 	}
 
