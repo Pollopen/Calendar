@@ -250,36 +250,36 @@ public class SQLManager {
 	}
 
 	public static int getAmountOfCalInvites() {
-		
+
 		String SQL = "SELECT COUNT(sc_id) FROM shared_calendar WHERE user_id = " + user.getId() + " AND accepted = 0";
-		
+
 		Object[][] data = db.getData(SQL);
-		
+
 		int result = 0;
-		
-		if(data.length > 0) {
+
+		if (data.length > 0) {
 			result = Integer.parseInt((String) data[0][0]);
 		} else {
 			result = 0;
 		}
-		
+
 		return result;
 	}
-	
-public static int getAmountOfEventInvites() {
-		
+
+	public static int getAmountOfEventInvites() {
+
 		String SQL = "SELECT COUNT(se_id) FROM shared_event WHERE user_id = " + user.getId() + " AND accepted = 0";
-		
+
 		Object[][] data = db.getData(SQL);
-		
+
 		int result = 0;
-		
-		if(data.length > 0) {
+
+		if (data.length > 0) {
 			result = Integer.parseInt((String) data[0][0]);
 		} else {
 			result = 0;
 		}
-		
+
 		return result;
 	}
 
@@ -326,28 +326,51 @@ public static int getAmountOfEventInvites() {
 
 	public static boolean sendEventInvite(int tempSelectedUserId) {
 
-		String SQL = "INSERT INTO shared_event(event_id, user_id, accepted, notification) VALUES('" + tempEventId
-				+ "', '" + tempSelectedUserId + "', '0', '1')";
+		String SQL = "SELECT * FROM shared_event WHERE event_id = " + tempEventId + " AND user_id = "
+				+ tempSelectedUserId;
+
+		Object[][] data = db.getData(SQL);
 
 		db.execute(SQL);
 
+		if (data.length > 0) {
+			JOptionPane.showMessageDialog(null, "Personen du försökte bjuda in är redan en medlem i den kalendern");
+		} else {
+
+			SQL = "INSERT INTO shared_event(event_id, user_id, accepted, notification) VALUES('" + tempEventId + "', '"
+					+ tempSelectedUserId + "', '0', '1')";
+
+			db.execute(SQL);
+		}
 		return true;
 	}
 
 	public static boolean sendCalInvite(int tempSelectedUserId) {
 
-		String SQL = "INSERT INTO shared_calendar(cal_id, user_id, accepted, notification) VALUES('" + tempCalId
-				+ "', '" + tempSelectedUserId + "', '0', '1')";
+		String SQL = "SELECT * FROM shared_calendar WHERE cal_id = " + tempCalId + " AND user_id = "
+				+ tempSelectedUserId;
+
+		Object[][] data = db.getData(SQL);
 
 		db.execute(SQL);
+
+		if (data.length > 0) {
+			JOptionPane.showMessageDialog(null, "Personen du försökte bjuda in är redan en medlem i den kalendern");
+		} else {
+
+			SQL = "INSERT INTO shared_calendar(cal_id, user_id, accepted, notification) VALUES('" + tempCalId + "', '"
+					+ tempSelectedUserId + "', '0', '1')";
+
+			db.execute(SQL);
+		}
 
 		return true;
 	}
 
 	public static Object[][] getClosestEvent() {
 
-		String SQL = "SELECT event_id, name, start_time, end_time FROM event WHERE notification = 1 AND creator_id = " + user.getId()
-				+ " AND start_time > NOW() ORDER BY start_time LIMIT 1";
+		String SQL = "SELECT event_id, name, start_time, end_time FROM event WHERE notification = 1 AND creator_id = "
+				+ user.getId() + " AND start_time > NOW() ORDER BY start_time LIMIT 1";
 
 		Object[][] data = db.getData(SQL);
 
