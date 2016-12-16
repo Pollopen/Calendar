@@ -532,9 +532,9 @@ public class AddEvent extends JPanel {
 					int checkStart = inputEventStartYear + inputEventStartMonth + inputEventStartDay;
 					int checkEnd = inputEventEndYear + inputEventEndMonth + inputEventEndDay;
 
-					int checkStartTime = Integer.parseInt(inputEventStartTime.substring(0, 2))
+					int checkStartTime = (Integer.parseInt(inputEventStartTime.substring(0, 2))*60)
 							+ Integer.parseInt(inputEventStartTime.substring(3, 5));
-					int checkEndTime = Integer.parseInt(inputEventEndTime.substring(0, 2))
+					int checkEndTime = (Integer.parseInt(inputEventEndTime.substring(0, 2))*60)
 							+ Integer.parseInt(inputEventEndTime.substring(3, 5));
 
 					if (checkEnd < checkStart) {
@@ -544,7 +544,7 @@ public class AddEvent extends JPanel {
 
 					if (checkEnd == checkStart) {
 						if (checkEndTime <= checkStartTime) {
-							JOptionPane.showMessageDialog(null, "Eventet kan inte sluta innan det börjat!");
+							JOptionPane.showMessageDialog(null, "Eventet slutar innan det börjar eller är för kort!");
 							checkFields = false;
 						}
 					}

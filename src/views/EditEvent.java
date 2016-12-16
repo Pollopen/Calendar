@@ -46,7 +46,6 @@ public class EditEvent extends JPanel {
 	private JTextField editEventNameField, editEventLocationField, userEditSearchField;
 	private DefaultListModel editListModel;
 	private JList<Object> userEditList;
-	private Event[] editEventArray;
 	private JButton editEventButton, deleteEventButton, userEditSearchButton;
 	private JTextArea editEventDescArea;
 	private JCheckBox editFullDayActivity, notification;
@@ -58,7 +57,6 @@ public class EditEvent extends JPanel {
 	private Properties editStartProperties, editEndProperties;
 	private GridBagConstraints gbc, gbcLeft;
 	private JComboBox<String> editEventDropDown;
-	private String editEventObjectArray;
 	private GregorianCalendar editStartGregCal, editEndGregCal;
 	private WindowPanel wp;
 	private User user;
@@ -605,9 +603,9 @@ public class EditEvent extends JPanel {
 					int checkStart = inputEventStartYear + inputEventStartMonth + inputEventStartDay;
 					int checkEnd = inputEventEndYear + inputEventEndMonth + inputEventEndDay;
 
-					int checkStartTime = Integer.parseInt(inputEventStartTime.substring(0, 2))
+					int checkStartTime = (Integer.parseInt(inputEventStartTime.substring(0, 2))*60)
 							+ Integer.parseInt(inputEventStartTime.substring(3, 5));
-					int checkEndTime = Integer.parseInt(inputEventEndTime.substring(0, 2))
+					int checkEndTime = (Integer.parseInt(inputEventEndTime.substring(0, 2))*60)
 							+ Integer.parseInt(inputEventEndTime.substring(3, 5));
 
 					if (checkEnd < checkStart) {
