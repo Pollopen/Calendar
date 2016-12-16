@@ -575,7 +575,7 @@ public class EditEvent extends JPanel {
 
 					int checkStart = inputEventStartYear + inputEventStartMonth + inputEventStartDay;
 					int checkEnd = inputEventEndYear + inputEventEndMonth + inputEventEndDay;
-
+					
 					if (checkStart > checkEnd) {
 						JOptionPane.showMessageDialog(null, "Eventet kan inte sluta innan det börjat!");
 						checkFields = false;

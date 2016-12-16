@@ -74,7 +74,6 @@ public class AddEvent extends JPanel {
 		this.event = event;
 		this.wp = wp;
 		this.SM = SM;
-		
 
 		etchedBorder = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 
@@ -110,7 +109,7 @@ public class AddEvent extends JPanel {
 		calDropDown = new JComboBox<String>();
 
 		for (int i = 0; i < eventCalArray.length; i++) {
-			if(eventCalArray[i].getCreator_id()==user.getId()){
+			if (eventCalArray[i].getCreator_id() == user.getId()) {
 				eventCreateCalArray = eventCalArray[i].getName();
 				calDropDown.addItem(eventCreateCalArray);
 			}
@@ -361,7 +360,6 @@ public class AddEvent extends JPanel {
 
 		eventDescLabel = new JLabel("Beskriv eventet här!");
 		eventDescLabel.setFont(new Font("Serif", Font.PLAIN, 20));
-		
 
 		gbc.gridx = 0;
 		gbc.gridy = 9;
@@ -374,7 +372,7 @@ public class AddEvent extends JPanel {
 		eventDescArea.setLineWrap(true);
 		eventDescArea.setWrapStyleWord(true);
 		eventDescArea.setBorder(etchedBorder);
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 10;
 		gbc.insets = new Insets(0, 0, 10, 0);
@@ -483,7 +481,7 @@ public class AddEvent extends JPanel {
 
 				String formatStartDate = "";
 				String formatEndDate = "";
-				
+
 				if (notifications.isSelected()) {
 					inputNotifications = 1;
 				} else {
@@ -505,9 +503,12 @@ public class AddEvent extends JPanel {
 					int checkStart = inputEventStartYear + inputEventStartMonth + inputEventStartDay;
 					int checkEnd = inputEventEndYear + inputEventEndMonth + inputEventEndDay;
 
-					if (checkStart > checkEnd) {
+					if (inputEventStartYear < inputEventEndYear) {
+						checkFields = true;
+					} else if (checkStart > checkEnd) {
 						JOptionPane.showMessageDialog(null, "Eventet kan inte sluta innan det börjat!");
 						checkFields = false;
+
 					}
 
 					formatStartDate = inputEventStartYear + "-" + (inputEventStartMonth + 1) + "-" + inputEventStartDay
@@ -532,9 +533,9 @@ public class AddEvent extends JPanel {
 					int checkStart = inputEventStartYear + inputEventStartMonth + inputEventStartDay;
 					int checkEnd = inputEventEndYear + inputEventEndMonth + inputEventEndDay;
 
-					int checkStartTime = (Integer.parseInt(inputEventStartTime.substring(0, 2))*60)
+					int checkStartTime = (Integer.parseInt(inputEventStartTime.substring(0, 2)) * 60)
 							+ Integer.parseInt(inputEventStartTime.substring(3, 5));
-					int checkEndTime = (Integer.parseInt(inputEventEndTime.substring(0, 2))*60)
+					int checkEndTime = (Integer.parseInt(inputEventEndTime.substring(0, 2)) * 60)
 							+ Integer.parseInt(inputEventEndTime.substring(3, 5));
 
 					if (checkEnd < checkStart) {

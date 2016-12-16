@@ -66,7 +66,7 @@ public class SharedEventView extends JPanel {
 		
 		// mainPanel.setBackground(new Color(255, 0, 0));
 
-		this.add(BorderLayout.CENTER, mainPanel);
+		this.add(BorderLayout.CENTER, scroll);
 
 		SQLResult = SQLManager.getSharedEvent();
 
