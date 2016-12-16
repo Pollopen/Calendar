@@ -87,7 +87,7 @@ public class MonthOverview extends JPanel{
 			for (int i = 0; i < weekDays.length; i++) {
 				tempJP=new JPanel();
 				tempJP.setLayout(new GridBagLayout());
-				tempJP.setBackground(new Color(100,100,100));
+				tempJP.setBackground(new Color(150,150,150));
 				tempJP.setVisible(true);
 				add(tempJP);
 				JLabel day=new JLabel(weekDays[i]);
