@@ -416,9 +416,9 @@ public class EditEvent extends JPanel {
 			// centerLeft.remove(startTimeSpinner);
 			// centerLeft.remove(endTimeSpinner);
 			editStartDatePicker.setPreferredSize(new Dimension(300, 30));
-			editStartDatePicker.getModel().setYear(Integer.parseInt(tempEndDateYear));
-			editStartDatePicker.getModel().setMonth(Integer.parseInt(tempEndDateMonth) - 1);
-			editStartDatePicker.getModel().setDay(Integer.parseInt(tempEndDateDay));
+			editStartDatePicker.getModel().setYear(Integer.parseInt(tempStartDateYear));
+			editStartDatePicker.getModel().setMonth(Integer.parseInt(tempStartDateMonth) - 1);
+			editStartDatePicker.getModel().setDay(Integer.parseInt(tempStartDateDay));
 			editStartDatePicker.getModel().setSelected(true);
 
 			editEndDatePicker.setPreferredSize(new Dimension(300, 30));
@@ -437,9 +437,9 @@ public class EditEvent extends JPanel {
 		} else {
 
 			editStartDatePicker.setPreferredSize(new Dimension(202, 30));
-			editStartDatePicker.getModel().setYear(Integer.parseInt(tempEndDateYear));
-			editStartDatePicker.getModel().setMonth(Integer.parseInt(tempEndDateMonth) - 1);
-			editStartDatePicker.getModel().setDay(Integer.parseInt(tempEndDateDay));
+			editStartDatePicker.getModel().setYear(Integer.parseInt(tempStartDateYear));
+			editStartDatePicker.getModel().setMonth(Integer.parseInt(tempStartDateMonth) - 1);
+			editStartDatePicker.getModel().setDay(Integer.parseInt(tempStartDateDay));
 			editStartDatePicker.getModel().setSelected(true);
 
 			editEndDatePicker.setPreferredSize(new Dimension(202, 30));
