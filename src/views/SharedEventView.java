@@ -23,7 +23,7 @@ public class SharedEventView extends JPanel {
 	private Object[][] SQLResult;
 	private JPanel mainPanel, acceptEventPanel, noEventPanel, buttonPanel, acceptEventLeftPanel, acceptEventRightPanel;
 	private JButton updateButton;
-	private JLabel eventNameLabel, noEventLabel;
+	private JLabel eventNameLabel, noEventLabel, eventCreatorLabel;
 	private JScrollPane scroll;
 	private GridBagConstraints gbc;
 	private WindowPanel wp;
@@ -56,14 +56,14 @@ public class SharedEventView extends JPanel {
 		buttonPanel.add(updateButton, gbc);
 
 		mainPanel = new JPanel();
-		//mainPanel.setPreferredSize(new Dimension(1175, 675));
+		// mainPanel.setPreferredSize(new Dimension(1175, 675));
 		mainPanel.setLayout(new GridBagLayout());
-		
+
 		scroll = new JScrollPane(mainPanel);
 		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scroll.revalidate();
 		mainPanel.revalidate();
-		
+
 		// mainPanel.setBackground(new Color(255, 0, 0));
 
 		this.add(BorderLayout.CENTER, scroll);
@@ -116,9 +116,18 @@ public class SharedEventView extends JPanel {
 
 				gbc.gridx = 0;
 				gbc.gridy = 0;
-				gbc.insets = new Insets(0, 0, 0, 0);
+				gbc.insets = new Insets(0, 0, 10, 0);
 
 				acceptEventLeftPanel.add(eventNameLabel, gbc);
+
+				eventCreatorLabel = new JLabel();
+				eventCreatorLabel.setText("Event ägare: " + SQLResult[i][6].toString());
+
+				gbc.gridx = 0;
+				gbc.gridy = 1;
+				gbc.insets = new Insets(0, 0, 0, 0);
+
+				acceptEventLeftPanel.add(eventCreatorLabel, gbc);
 
 				gbc.gridx = 0;
 				gbc.gridy = 0;
@@ -175,7 +184,7 @@ public class SharedEventView extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 
 			if (e.getSource() == updateButton) {
-				
+
 				wp.getInviteView();
 				wp.getSharedEventPage();
 			}

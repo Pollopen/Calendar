@@ -23,7 +23,7 @@ public class SharedCalView extends JPanel {
 	private Object[][] SQLResult;
 	private JPanel mainPanel, acceptCalPanel, noCalPanel, buttonPanel, acceptCalLeftPanel, acceptCalRightPanel;
 	private JButton updateButton;
-	private JLabel calNameLabel, noCalLabel;
+	private JLabel calNameLabel, noCalLabel, calCreatorLabel;
 	private JScrollPane scroll;
 	private GridBagConstraints gbc;
 	private WindowPanel wp;
@@ -118,6 +118,15 @@ public class SharedCalView extends JPanel {
 				gbc.insets = new Insets(0, 0, 0, 0);
 
 				acceptCalLeftPanel.add(calNameLabel, gbc);
+				
+				calCreatorLabel = new JLabel();
+				calCreatorLabel.setText("Event ägare: " + SQLResult[i][6].toString());
+
+				gbc.gridx = 0;
+				gbc.gridy = 1;
+				gbc.insets = new Insets(0, 0, 0, 0);
+
+				acceptCalLeftPanel.add(calCreatorLabel, gbc);
 
 				gbc.gridx = 0;
 				gbc.gridy = 0;

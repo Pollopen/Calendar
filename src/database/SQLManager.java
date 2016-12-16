@@ -189,7 +189,7 @@ public class SQLManager {
 
 	public static Object[][] getSharedEvent() {
 
-		String SQL = "SELECT shared_event.se_id, shared_event.event_id, shared_event.user_id, event.creator_id, shared_event.created, event.name FROM shared_event LEFT JOIN event ON shared_event.event_id = event.event_id WHERE shared_event.user_id = "
+		String SQL = "SELECT shared_event.se_id, shared_event.event_id, shared_event.user_id, event.creator_id, shared_event.created, event.name, CONCAT(user.fname,' ', user.sname) AS name FROM shared_event LEFT JOIN event ON shared_event.event_id = event.event_id LEFT JOIN user ON user.user_id = event.creator_id WHERE shared_event.user_id = "
 				+ user.getId() + " AND accepted = 0";
 
 		Object[][] data = db.getData(SQL);
