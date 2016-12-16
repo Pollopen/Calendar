@@ -120,7 +120,7 @@ public class SharedCalView extends JPanel {
 				acceptCalLeftPanel.add(calNameLabel, gbc);
 				
 				calCreatorLabel = new JLabel();
-				calCreatorLabel.setText("Event ägare: " + SQLResult[i][6].toString());
+				calCreatorLabel.setText("Kalender ägare: " + SQLResult[i][6].toString());
 
 				gbc.gridx = 0;
 				gbc.gridy = 1;

@@ -201,7 +201,7 @@ public class SQLManager {
 
 	public static Object[][] getSharedCal() {
 
-		String SQL = "SELECT shared_calendar.sc_id, shared_calendar.cal_id, shared_calendar.user_id, calendar.creator_id, shared_calendar.created, calendar.name FROM shared_calendar LEFT JOIN calendar ON shared_calendar.cal_id = calendar.cal_id WHERE shared_calendar.user_id = "
+		String SQL = "SELECT shared_calendar.sc_id, shared_calendar.cal_id, shared_calendar.user_id, calendar.creator_id, shared_calendar.created, calendar.name, CONCAT(user.fname,' ', user.sname) AS name FROM shared_calendar LEFT JOIN calendar ON shared_calendar.cal_id = calendar.cal_id LEFT JOIN user ON user.user_id = calendar.creator_id WHERE shared_calendar.user_id = "
 				+ user.getId() + " AND accepted = 0";
 
 		Object[][] data = db.getData(SQL);
