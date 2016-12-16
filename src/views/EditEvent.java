@@ -72,7 +72,7 @@ public class EditEvent extends JPanel {
 		this.event = event;
 
 		etchedBorder = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
-		
+
 		editStartGregCal = new GregorianCalendar();
 		editEndGregCal = new GregorianCalendar();
 
@@ -255,7 +255,7 @@ public class EditEvent extends JPanel {
 		gbcLeft.anchor = GridBagConstraints.WEST;
 
 		editEventLeft.add(editFullDayActivity, gbcLeft);
-		
+
 		notification = new JCheckBox();
 		notification.setText("Notifikationer?");
 		notification.setSelected(true);
@@ -399,7 +399,7 @@ public class EditEvent extends JPanel {
 		} else {
 			inputTempBool = true;
 		}
-		
+
 		if (inputEventNotification == 0) {
 			inputNotifyBool = false;
 		} else {
@@ -554,7 +554,7 @@ public class EditEvent extends JPanel {
 
 				String formatStartDate = "";
 				String formatEndDate = "";
-				
+
 				if (notification.isSelected()) {
 					inputNotification = 1;
 				} else {
@@ -562,7 +562,7 @@ public class EditEvent extends JPanel {
 				}
 
 				if (editFullDayActivity.isSelected()) {
-		
+
 					inputFullDayEvent = 1;
 
 					inputEventStartYear = editStartDatePicker.getModel().getYear();
@@ -575,7 +575,7 @@ public class EditEvent extends JPanel {
 
 					int checkStart = inputEventStartYear + inputEventStartMonth + inputEventStartDay;
 					int checkEnd = inputEventEndYear + inputEventEndMonth + inputEventEndDay;
-					
+
 					if (checkStart > checkEnd) {
 						JOptionPane.showMessageDialog(null, "Eventet kan inte sluta innan det börjat!");
 						checkFields = false;
@@ -603,9 +603,9 @@ public class EditEvent extends JPanel {
 					int checkStart = inputEventStartYear + inputEventStartMonth + inputEventStartDay;
 					int checkEnd = inputEventEndYear + inputEventEndMonth + inputEventEndDay;
 
-					int checkStartTime = (Integer.parseInt(inputEventStartTime.substring(0, 2))*60)
+					int checkStartTime = (Integer.parseInt(inputEventStartTime.substring(0, 2)) * 60)
 							+ Integer.parseInt(inputEventStartTime.substring(3, 5));
-					int checkEndTime = (Integer.parseInt(inputEventEndTime.substring(0, 2))*60)
+					int checkEndTime = (Integer.parseInt(inputEventEndTime.substring(0, 2)) * 60)
 							+ Integer.parseInt(inputEventEndTime.substring(3, 5));
 
 					if (checkEnd < checkStart) {
@@ -662,6 +662,8 @@ public class EditEvent extends JPanel {
 				user.reloadarrays();
 
 				wp.getAddEventPage();
+
+				wp.getInviteView();
 
 				wp.getNotificationPage();
 			}

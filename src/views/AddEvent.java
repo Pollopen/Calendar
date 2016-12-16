@@ -578,7 +578,10 @@ public class AddEvent extends JPanel {
 					}
 
 					user.reloadarrays();
+
 					wp.getViewViewer();
+
+					wp.getInviteView();
 
 				}
 

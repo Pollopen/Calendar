@@ -80,8 +80,8 @@ public class WindowPanel extends JPanel {
 		upperLeftPanel.setPreferredSize(new Dimension(200, 50));
 		upperLeftPanel.setLayout(new GridLayout(1, 1));
 		upperLeftPanel.setVisible(true);
-		//upperLeftPanel.setBackground(new Color(255, 0, 0));
-		
+		// upperLeftPanel.setBackground(new Color(255, 0, 0));
+
 		getInviteView();
 
 		gbc.gridx = 0;
@@ -204,7 +204,7 @@ public class WindowPanel extends JPanel {
 
 		center.updateUI();
 	}
-	
+
 	public void getInviteView() {
 		upperLeftPanel.removeAll();
 		upperLeftPanel.add(new ManageInviteView(this));
@@ -350,6 +350,8 @@ public class WindowPanel extends JPanel {
 			// Check if the source of the event was the button
 			if (e.getSource() == addEventButton) {
 				getAddEventPage();
+				getInviteView();
+				getNotificationPage();
 			}
 
 		}

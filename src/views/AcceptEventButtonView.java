@@ -48,11 +48,11 @@ public class AcceptEventButtonView extends JButton {
 			SQLManager.acceptSharedEvent(buttonId);
 
 			user.reloadarrays();
-			
+
 			wp.getInviteView();
-		
+
 			wp.getOverview();
-			
+
 			wp.calChoiceList();
 
 			wp.getSharedEventPage();

@@ -143,7 +143,7 @@ public class SharedEventView extends JPanel {
 				gbc.gridy = 0;
 				gbc.insets = new Insets(0, 0, 0, 0);
 
-				acceptEventRightPanel.add(new DeclineEventButtonView(sharedEventId, wp), gbc);
+				acceptEventRightPanel.add(new DeclineEventButtonView(sharedEventId, wp, user), gbc);
 
 			}
 

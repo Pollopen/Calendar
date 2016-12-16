@@ -142,7 +142,7 @@ public class SharedCalView extends JPanel {
 				gbc.gridy = 0;
 				gbc.insets = new Insets(0, 0, 0, 0);
 
-				acceptCalRightPanel.add(new DeclineCalButtonView(sharedEventId, wp), gbc);
+				acceptCalRightPanel.add(new DeclineCalButtonView(sharedEventId, wp, user), gbc);
 
 			}
 
@@ -183,7 +183,6 @@ public class SharedCalView extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 
 			if (e.getSource() == updateButton) {
-
 				wp.getInviteView();
 				wp.getSharedCalPage();
 			}

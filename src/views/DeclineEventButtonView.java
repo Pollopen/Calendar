@@ -13,10 +13,12 @@ public class DeclineEventButtonView extends JButton {
 
 	private int buttonId;
 	private WindowPanel wp;
+	private User user;
 
-	public DeclineEventButtonView(int sharedEventId, WindowPanel wp) {
+	public DeclineEventButtonView(int sharedEventId, WindowPanel wp, User user) {
 
 		this.wp = wp;
+		this.user = user;
 		this.setText("Neka");
 		this.setBackground(new Color(255, 150, 150));
 
@@ -43,6 +45,14 @@ public class DeclineEventButtonView extends JButton {
 		public void actionPerformed(ActionEvent e) {
 
 			SQLManager.declineSharedEvent(buttonId);
+
+			user.reloadarrays();
+
+			wp.getInviteView();
+
+			wp.getOverview();
+
+			wp.calChoiceList();
 
 			wp.getSharedEventPage();
 

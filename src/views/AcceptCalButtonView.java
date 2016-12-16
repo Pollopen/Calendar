@@ -18,8 +18,8 @@ public class AcceptCalButtonView extends JButton {
 	public AcceptCalButtonView(int sharedEventId, WindowPanel wp, User user) {
 
 		this.wp = wp;
-		this.user = user;	
-		
+		this.user = user;
+
 		this.setText("Acceptera");
 		this.setBackground(new Color(150, 255, 150));
 
@@ -46,15 +46,15 @@ public class AcceptCalButtonView extends JButton {
 		public void actionPerformed(ActionEvent e) {
 
 			SQLManager.acceptSharedCal(buttonId);
-			
+
 			user.reloadarrays();
-			
+
 			wp.getInviteView();
-			
+
 			wp.getOverview();
-			
+
 			wp.calChoiceList();
-			
+
 			wp.getSharedCalPage();
 
 		}

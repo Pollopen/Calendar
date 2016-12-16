@@ -11,26 +11,25 @@ import object.User;
 
 public class DeclineCalButtonView extends JButton {
 
-	
-	
 	private int buttonId;
 	private WindowPanel wp;
+	private User user;
 
-	public DeclineCalButtonView(int sharedEventId, WindowPanel wp) {
+	public DeclineCalButtonView(int sharedEventId, WindowPanel wp, User user) {
 
 		this.wp = wp;
+		this.user = user;
 		this.setText("Neka");
 		this.setBackground(new Color(255, 150, 150));
-		
+
 		buttonId = sharedEventId;
-		
+
 		ListenForButton lForButton = new ListenForButton();
-		
+
 		this.addActionListener(lForButton);
-		
-		
+
 	}
-	
+
 	public int getButtonId() {
 		return buttonId;
 	}
@@ -44,14 +43,20 @@ public class DeclineCalButtonView extends JButton {
 		// This method is called when an event occurs
 
 		public void actionPerformed(ActionEvent e) {
-	
-				SQLManager.declineSharedCal(buttonId);
-				
-				wp.getSharedCalPage();
+
+			SQLManager.declineSharedCal(buttonId);
+
+			user.reloadarrays();
+
+			wp.getInviteView();
+
+			wp.getOverview();
+
+			wp.calChoiceList();
+
+			wp.getSharedCalPage();
 
 		}
 	}
 
-
-	
 }
