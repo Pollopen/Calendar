@@ -36,6 +36,7 @@ public class ManageInviteView extends JPanel {
 		gbc = new GridBagConstraints();
 
 		calButton = new JButton();
+		calButton.setMargin(new Insets(0, 0, 0, 0));
 		calButton.setText("(" + calInvites + ")");
 		calButton.setToolTipText("Antal kalender inbjudningar");
 		calButton.setBackground(new Color(220, 220, 220));
@@ -48,6 +49,7 @@ public class ManageInviteView extends JPanel {
 		this.add(calButton, gbc);
 
 		eventButton = new JButton();
+		eventButton.setMargin(new Insets(0, 0, 0, 0));
 		eventButton.setText("(" + eventInvites + ")");
 		eventButton.setToolTipText("Antal event inbjudningar");
 		eventButton.setBackground(new Color(220, 220, 220));
